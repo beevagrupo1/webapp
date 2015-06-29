@@ -1,0 +1,32 @@
+{% extends "webapp/base.html" %}
+{% load staticfiles %}
+
+{% block main %}
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="panel panel-default panel-body text-center">
+                {% if user.is_authenticated %}
+                    <div class="col-md-12 col-xs-12"><h2
+                            class="navbar-text text-red text-center">Hola, {{ user.profile.get.display_name }}</h2>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><a
+                            href="">Perfil</a></div>
+                    <div class="col-md-6 col-xs-6"><a
+                            href="">Salir</a></div>
+
+                    <br/>
+                {% else %}
+                    <br/>
+
+                    <div class="col-md-12 col-xs-12 "><a class="btn btn-default btn-eathub"
+                                                                            href=""
+                                                                            role="button">Accede</a>
+                    </div>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
