@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': 'webapp/login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout,{'next_page':'main'}, name='logout'),
     url(r'^profile/(?P<username>[.\w]+)/$', views.main, name='profile'),
+    url(r'^activity/creation/$', views.activity_creation, name='activity_creation'),
 ]
