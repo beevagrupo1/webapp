@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'Druzi',
     'social.apps.django_app.default',
     'bootstrap3',
+    'geoposition',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -139,6 +140,7 @@ TEMPLATE_DIRS = (
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     # Login social
     'social.apps.django_app.context_processors.backends',
+    'django.core.context_processors.request',
     'social.apps.django_app.context_processors.login_redirect',
 )
 

@@ -1,0 +1,31 @@
+{% extends "webapp/base.html" %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block main %}
+    <div class="row">
+
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default panel-body text-center">
+                {% if user.is_authenticated %}
+                    <form role="form" method="post">
+                        {% csrf_token %}
+                        {{ form.media }}
+                        {% bootstrap_form form %}
+                        {% buttons submit='Enviar' reset="Reset"%}{% endbuttons %}
+                    </form>
+                    <br/>
+                {% else %}
+                    <br/>
+
+                    <div class="col-md-12 col-xs-12 "><a class="btn btn-default btn-eathub"
+                                                         href=""
+                                                         role="button">Accede</a>
+                    </div>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

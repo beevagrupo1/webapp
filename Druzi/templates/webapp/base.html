@@ -1,6 +1,7 @@
 {# Load the tag library #}
 {% load bootstrap3 %}
 {% load staticfiles %}
+{% load gravatar %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,65 +10,55 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{% static 'webapp/image/favicon.ico' %}">
+    <script src="{% static 'webapp/js/jquery.min.js' %}"></script>
     <title>Druzi</title>
     {# Load CSS and JavaScript #}
     {% bootstrap_css %}
-    {% bootstrap_javascript %}
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
     <link href="{% static 'webapp/css/theme.css' %}" rel="stylesheet">
+    <link href="{% static 'webapp/css/style.css' %}" rel="stylesheet">
     {% block custom_css %}    {% endblock %}
 </head>
 <body>
 <header>
     {% bootstrap_messages %}
     {% block navbar %}
-    {# Display django.contrib.messages as Bootstrap alerts #}
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{% url 'main' %}">Druzi</a>
-            </div>
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'main' %}">Druzi</a>
+                </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-               <ul class="nav navbar-nav navbar-right">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="{% navactive request 'main' %}"><a href="{% url 'main' %}">Inicio<span
+                                class="sr-only">(current)</span></a></li>
+                        <li class="{% navactive request 'activity_creation' %}"><a href="{% url 'activity_creation' %}">Crear
+                            Actividad</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-default">Buscar</button>
+                        </form>
                         {% if user.is_authenticated %}
-                            <li><p class="navbar-text text-white">Hola, {{ user.profile.get.display_name }}.</p>
-                            </li>
                             <li class="dropdown">
                                 <a class="profile-image dropdown-toggle" data-toggle="dropdown"
-                                   href="/profile/{{ user.username }}">
-                                    <img src=""/>
+                                   href="/profile/{{ user.username }}">Hola {{ user.username }}
+                                    <img class="img-circle" src="{% gravatar_url user.email %}"><span
+                                            class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="{% url 'profile' user.username %}">Perfil</a></li>
@@ -76,21 +67,94 @@
                                 </ul>
                             </li>
                         {% else %}
-                            <a class="btn btn-default btn-eathub-red" href="{% url 'login' %}"
-                               role="button">Acceder</a>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown"
+                                   href="#">Acceder
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <p class="col-md-12">
+                                        Accede con una de tus cuentas sociales
+                                    </p>
+
+                                    <div class="row col-md-12">
+                                        <div class="col-md-6">
+                                            <a class="btn btn-primary social-login-btn social-facebook"
+                                               href="{% url 'social:begin' 'facebook' %}?next={% url 'main' %}"><i
+                                                    class="fa fa-facebook"></i></a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a class="btn btn-primary social-login-btn social-twitter" href="#"><i
+                                                    class="fa fa-twitter"></i></a>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row col-md-12">
+                                        <div class="col-md-6">
+                                            <a class="btn btn-primary social-login-btn social-linkedin"
+                                               href="#"><i class="fa fa-linkedin"></i></a>
+                                        </div>
+                                        <div class="col-md-6" id="googleBtn">
+                                            <a class="btn btn-primary social-login-btn social-google"><i
+                                                    class="fa fa-google-plus"></i></a>
+
+                                            <form id="google-plus" method="post"
+                                                  action="{% url 'social:complete' "google-plus" %}"
+                                                  style="display: none">
+                                                {% csrf_token %}
+                                                <input id="at" type="hidden" name="access_token" value=""/>
+                                                <input id="code" type="hidden" name="code" value=""/>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </li>
                         {% endif %}
+                </div>
+                <!-- /.navbar-collapse -->
             </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
+            <!-- /.container-fluid -->
+        </nav>
     {% endblock navbar %}
 </header>
 <main>
     {% block main %}{% endblock %}
 </main>
 <footer>
-    <script src="{% static 'webapp/js/jquery.min.js' %}"></script>
+    <script>
+        (function () {
+            var po = document.createElement('script');
+            po.type = 'text/javascript';
+            po.async = true;
+            po.src = 'https://apis.google.com/js/client:plusone.js?onload=render';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(po, s);
+        })();
+        function render() {
+            gapi.signin.render('googleBtn', {
+                'callback': 'signinCallback',
+                'clientid': "531503359712-4j44d1d1vov42c75i8bujmo1eer7bh4m.apps.googleusercontent.com",
+                'cookiepolicy': 'single_host_origin',
+                'requestvisibleactions': 'http://schemas.google.com/AddActivity',
+                'scope': 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email'
+                //'approvalprompt': 'force'
+            });
+        }
+        var signinCallback = function (result) {
+            if (result['g-oauth-window']) {
+                if (result['error']) {
+                    alert('Google+ sign-in - An error happened:', result['error']);
+                } else {
+                    $('#code').attr('value', result['code']);
+                    $('#at').attr('value', result['access_token']);
+                    $('#google-plus').submit();
+                }
+            } else {
+                gapi.auth.signOut();
+            }
+        };
+    </script>
+    {% bootstrap_javascript %}
     {% block custom_js %} {% endblock %}
 </footer>
 {# Read the documentation for more information #}
