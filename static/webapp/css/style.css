@@ -135,3 +135,8 @@ body {
   background-color: #466b99;
   border-color: #3b5a7c;
 }
+
+.social-buttons {
+  padding: 0px;
+  margin: 5px;
+}
