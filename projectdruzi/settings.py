@@ -145,9 +145,11 @@ TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
 )
 
 AUTHENTICATION_BACKENDS = (
-      'social.backends.google.GooglePlusAuth',
-      'social.backends.facebook.FacebookOAuth2',
-      'django.contrib.auth.backends.ModelBackend',
+    'social.backends.github.GithubOAuth2',
+    'social.backends.google.GooglePlusAuth',
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.twitter.TwitterOAuth',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 SOCIAL_AUTH_GOOGLE_PLUS_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_PLUS_KEY', "")
@@ -156,6 +158,15 @@ SOCIAL_AUTH_GOOGLE_PLUS_SECRET  = os.getenv('SOCIAL_AUTH_GOOGLE_PLUS_SECRET', ""
 SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('SOCIAL_AUTH_FACEBOOK_KEY', "")
 SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('SOCIAL_AUTH_FACEBOOK_SECRET', "")
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+SOCIAL_AUTH_TWITTER_KEY = os.getenv('SOCIAL_AUTH_TWITTER_KEY', "")
+SOCIAL_AUTH_TWITTER_SECRET = os.getenv('SOCIAL_AUTH_TWITTER_SECRET', "")
+
+SOCIAL_AUTH_GITHUB_KEY = os.getenv('SOCIAL_AUTH_GITHUB_KEY', "")
+SOCIAL_AUTH_GITHUB_SECRET = os.getenv('SOCIAL_AUTH_GITHUB_SECRET', "")
+SOCIAL_AUTH_GITHUB_SCOPE = ['user:email ']
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 
 SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.social_details',
