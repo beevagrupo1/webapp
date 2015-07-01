@@ -76,36 +76,32 @@
                                         Accede con una de tus cuentas sociales
                                     </p>
 
-                                    <div class="row col-md-12">
-                                        <div class="social-buttons col-md-6">
-                                            <a class=" btn btn-primary social-login-btn social-facebook"
-                                               href="{% url 'social:begin' 'facebook' %}?next={% url 'main' %}"><i
-                                                    class="fa fa-facebook"></i></a>
-                                        </div>
-                                        <div class="social-buttons col-md-6">
-                                            <a class="btn btn-primary social-login-btn social-twitter" href="#"><i
-                                                    class="fa fa-twitter"></i></a>
-                                        </div>
+                                    <div class="social-buttons col-md-12">
+                                        <a class=" btn btn-primary social-login-btn social-facebook"
+                                           href="{% url 'social:begin' 'facebook' %}?next={% url 'main' %}"><i
+                                                class="fa fa-facebook"></i></a>
+                                    </div>
+                                    <div class="social-buttons col-md-12">
+                                        <a class="btn btn-primary social-login-btn social-twitter" href="{% url 'social:begin' 'twitter' %}"><i
+                                                class="fa fa-twitter"></i></a>
                                     </div>
 
 
-                                    <div class="row col-md-12">
-                                        <div class="social-buttons col-md-6">
-                                            <a class="btn btn-primary social-login-btn social-linkedin"
-                                               href="#"><i class="fa fa-linkedin"></i></a>
-                                        </div>
-                                        <div class="social-buttons col-md-6" id="googleBtn">
-                                            <a class="btn btn-primary social-login-btn social-google"><i
-                                                    class="fa fa-google-plus"></i></a>
+                                    <div class="social-buttons col-md-12">
+                                        <a class="btn btn-primary social-login-btn social-github"
+                                           href="{% url 'social:begin' 'github' %}"><i class="fa fa-github"></i></a>
+                                    </div>
+                                    <div class="social-buttons col-md-12" id="googleBtn">
+                                        <a class="btn btn-primary social-login-btn social-google"><i
+                                                class="fa fa-google-plus"></i></a>
 
-                                            <form id="google-plus" method="post"
-                                                  action="{% url 'social:complete' "google-plus" %}"
-                                                  style="display: none">
-                                                {% csrf_token %}
-                                                <input id="at" type="hidden" name="access_token" value=""/>
-                                                <input id="code" type="hidden" name="code" value=""/>
-                                            </form>
-                                        </div>
+                                        <form id="google-plus" method="post"
+                                              action="{% url 'social:complete' "google-plus" %}"
+                                              style="display: none">
+                                            {% csrf_token %}
+                                            <input id="at" type="hidden" name="access_token" value=""/>
+                                            <input id="code" type="hidden" name="code" value=""/>
+                                        </form>
                                     </div>
                                 </ul>
                             </li>
