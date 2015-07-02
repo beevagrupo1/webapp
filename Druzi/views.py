@@ -47,6 +47,66 @@ def activity_pagination(request,page="1"):
 
     return render(request, 'webapp/activity_list.html', {"activity_list": list})
 
+def activity_ultimos_propuestos_pagination(request,page="1"):
+    activity_list = Activity.objects.all()
+    paginator = Paginator(activity_list, 10)
+
+    try:
+        list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        list = paginator.page(paginator.num_pages)
+
+    return render(request, 'webapp/activity_list.html', {"activity_list": list})
+
+def activity_mas_buscados_pagination(request,page="1"):
+    activity_list = Activity.objects.all()
+    paginator = Paginator(activity_list, 10)
+
+    try:
+        list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        list = paginator.page(paginator.num_pages)
+
+    return render(request, 'webapp/activity_list.html', {"activity_list": list})
+
+def activity_mas_baratos_pagination(request,page="1"):
+    activity_list = Activity.objects.all()
+    paginator = Paginator(activity_list, 10)
+
+    try:
+        list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        list = paginator.page(paginator.num_pages)
+
+    return render(request, 'webapp/activity_list.html', {"activity_list": list})
+
+def activity_mas_propuestos_pagination(request,page="1"):
+    activity_list = Activity.objects.all()
+    paginator = Paginator(activity_list, 10)
+
+    try:
+        list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        list = paginator.page(paginator.num_pages)
+
+    return render(request, 'webapp/activity_list.html', {"activity_list": list})
+
 @login_required
 def activity_enrrolment(request,id):
     activity = Activity.objects.get(id = id)

@@ -2,6 +2,11 @@ body {
   padding-top: 70px;
 }
 
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
 .navbar-brand,
 .navbar-nav li a {
     line-height: 50px;

@@ -1,32 +1,65 @@
 {% extends "webapp/base.html" %}
 {% load staticfiles %}
 
+{% block custom_css %}
+
+{% endblock %}
+
 {% block main %}
-    <div class="row">
+    <div class="starter-template">
+        <h1>D R U Z I</h1>
+        <p class="lead">Busca por palabras clave planes ya propuestos por la comunidad Druzi.<br>
+          Además, descubre los planes más buscados, más baratos, más raros y más propuestos en un solo click!
+          <br>Anímate también a crear tus propios planes ganando popularidad en Druzi</p>
+      </div>
 
-        <div class="col-md-12">
-            <div class="panel panel-default panel-body text-center">
-                {% if user.is_authenticated %}
-                    <div class="col-md-12 col-xs-12"><h2
-                            class="navbar-text text-red text-center">Hola, {{ user.profile.get.display_name }}</h2>
-                    </div>
-                    <div class="col-md-6 col-xs-6"><a
-                            href="">Perfil</a></div>
-                    <div class="col-md-6 col-xs-6"><a
-                            href="">Salir</a></div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Busca planes por palabras clave separadas por comas...">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Buscar</button>
+            </span>
+          </div><!-- /input-group -->
+        </div><!-- /.col-lg-12 -->
+      </div><!-- /.row -->
 
-                    <br/>
-                {% else %}
-                    <br/>
+      <br></br>
 
-                    <div class="col-md-12 col-xs-12 "><a class="btn btn-default btn-eathub"
-                                                                            href=""
-                                                                            role="button">Accede</a>
-                    </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div style="text-align: center;">
+            <img class="img-rounded" src="{% static 'webapp/images/weird_orange.jpg' %}" alt="Generic placeholder image" height="200" width="75%">
+            <h2>Últimos planes planes propuestos</h2>
+            <p><a class="btn btn-default" href="{% url 'activity_mas_baratos_pagination' %}" role="button">Ver planes »</a></p>
+          </div>
+        </div><!-- /.col-lg-6 -->
+        <div class="col-lg-6">
+          <div style="text-align: center;">
+            <img class="img-rounded" src="{% static 'webapp/images/trending_orange.png' %}" alt="Generic placeholder image" height="200" width="75%">
+            <h2>Los más buscados</h2>
+            <p><a class="btn btn-default" href="{% url 'activity_mas_buscados_pagination' %}" role="button">Ver planes »</a></p>
+          </div>
+        </div><!-- /.col-lg-6 -->
 
-                {% endif %}
-            </div>
-        </div>
-    </div>
+        <div class="col-lg-6">
+          <div style="text-align: center;">
+            <img class="img-rounded" src="{% static 'webapp/images/money_orange.jpg' %}" alt="Generic placeholder image" height="200" width="75%">
+            <h2>Los más baratos</h2>
+            <p><a class="btn btn-default" href="{% url 'activity_ultimos_propuestos_pagination' %}" role="button">Ver planes »</a></p>
+          </div>
+        </div><!-- /.col-lg-6 -->
+        <div class="col-lg-6">
+          <div style="text-align: center;">
+            <img class="img-rounded" src="{% static 'webapp/images/infinite_orange.jpg' %}" alt="Generic placeholder image" height="200" width="75%">
+            <h2>Los más propuestos</h2>
+            <p><a class="btn btn-default" href="{% url 'activity_mas_propuestos_pagination' %}" role="button">Ver planes »</a></p>
+          </div>
+        </div><!-- /.col-lg-6 -->
+      </div>
 
+{% endblock %}
+
+{% block custom_js %}
+    <script src="{% static 'webapp/js/ie-emulation-modes-warning.js' %}"></script>
 {% endblock %}
