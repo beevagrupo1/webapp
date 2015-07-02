@@ -2,15 +2,15 @@ import django
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-import views
 from .forms import ActivityForm
-from .models import Activity
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 def main(request):
     return render(request, 'webapp/main.html')
 
+@login_required
 def activity_creation(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
