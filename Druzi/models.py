@@ -16,7 +16,19 @@ class Activity(models.Model):
     parent = models.ForeignKey("self", null=True)
     price = models.FloatField(default=0.0)
     limit_participants = models.IntegerField(null=True)
-    participants = models.ManyToManyField(User, through="Enrollment", related_name="participants")
+    participants = models.ManyToManyField(User, default=0, through="Enrollment", related_name="participants")
+    tags = models.ManyToManyField("Tag", through="TagAppear", related_name="tags")
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50, primary_key=True)
+    count = models.IntegerField(default=0)
+    activity = models.ManyToManyField("Activity", through="TagAppear", related_name="activities")
+
+class TagAppear(models.Model):
+    activity = models.ForeignKey("Activity")
+    tag = models.ForeignKey("Tag")
+    position = models.IntegerField()
 
 class Enrollment(models.Model):
     activity = models.ForeignKey("Activity")

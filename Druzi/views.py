@@ -1,4 +1,5 @@
-from Druzi.models import Activity, Enrollment
+import re
+from Druzi.models import Activity, Enrollment, Tag, TagAppear
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
@@ -23,6 +24,17 @@ def activity_creation(request):
             activity = form.save(commit=False)
             activity.user_own = request.user
             activity.save()
+            tags = re.compile("\S*#(?:\[[^\]]+\]|\S+)").findall(activity.description)
+            for t in tags:
+                pos =  activity.description.index(t)
+                temp = Tag.objects.get_or_create(name = t[1:])[0]
+                temp.count = temp.count+1
+                temp.save()
+                if temp:
+                    TagAppear(activity = activity, tag = temp, position = pos).save()
+                else:
+                    tag = Tag(name = t[1:]).save()
+                    TagAppear(activity = activity, tag = tag, position = pos).save()
             messages.success(request, 'Se ha creado correctamente la actividad')
             return HttpResponseRedirect('/')
 
