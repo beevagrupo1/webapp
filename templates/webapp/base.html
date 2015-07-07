@@ -17,6 +17,7 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
     <link href="{% static 'webapp/css/theme.css' %}" rel="stylesheet">
     <link href="{% static 'webapp/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'webapp/css/bootstrap-tagsinput.css' %}" rel="stylesheet">
     {% block custom_css %}    {% endblock %}
 </head>
 <body>
@@ -35,7 +36,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{% url 'main' %}"><img height="50" src="{% static 'webapp/images/logo.png' %}"/></a>
+                    <a class="navbar-brand" href="{% url 'main' %}"><img height="50"
+                                                                         src="{% static 'webapp/images/logo.png' %}"/></a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -44,14 +46,16 @@
                         <li class="{% navactive request 'main' %}"><a href="{% url 'main' %}">Inicio<span
                                 class="sr-only">(current)</span></a></li>
                         {% if user.is_authenticated %}
-                        <li class="{% navactive request 'activity_creation' %}"><a href="{% url 'activity_creation' %}">Crear
-                            Actividad</a></li>
+                            <li class="{% navactive request 'activity_creation' %}"><a
+                                    href="{% url 'activity_creation' %}">Crear
+                                Actividad</a></li>
                         {% endif %}
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <form class="navbar-form navbar-left" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
+                        <form class="navbar-form navbar-left" method="post" role="search" action="{% url 'search' %}">
+                            {% csrf_token %}
+                            <div id="remote" class="form-group">
+                                <input name="query" data-role="tagsinput" type="text" class="typeahead form-control" placeholder="Busca...">
                             </div>
                             <button type="submit" class="btn btn-default">Buscar</button>
                         </form>
@@ -84,14 +88,15 @@
                                                 class="fa fa-facebook"></i></a>
                                     </div>
                                     <div class="social-buttons col-md-12">
-                                        <a class="btn btn-primary social-login-btn social-twitter" href="{% url 'social:begin' 'twitter' %}"><i
+                                        <a class="btn btn-primary social-login-btn social-twitter"
+                                           href="{% url 'social:begin' 'twitter' %}"><i
                                                 class="fa fa-twitter"></i></a>
                                     </div>
 
 
                                     <div class="social-buttons col-md-12">
                                         <a class="btn btn-primary social-login-btn social-github"
-                                           href="{% url 'social:begin' 'github' %}"><i class="fa fa-github"></i></a>
+                                           href="{% url 'social:begin' 'disqus' %}"><i class="fa fa-disqus"></i></a>
                                     </div>
                                     <div class="social-buttons col-md-12" id="googleBtn">
                                         <a class="btn btn-primary social-login-btn social-google"><i
@@ -121,6 +126,8 @@
     {% endblock %}
 </main>
 <footer>
+    <script src="{% static 'webapp/js/typeahead.bundle.js' %}"></script>
+    <script src="{% static 'webapp/js/bootstrap-tagsinput.js' %}"></script>
     <script>
         (function () {
             var po = document.createElement('script');
@@ -153,6 +160,24 @@
                 gapi.auth.signOut();
             }
         };
+        var tags = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('pk'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '/tags/%QUERY',
+                wildcard: '%QUERY'
+            }
+        });
+
+        $('.typeahead').tagsinput({
+            typeaheadjs: {
+            name: 'tags',
+            displayKey: 'pk',
+            valueKey: 'pk',
+            source: tags
+          }
+        });
+
     </script>
     {% bootstrap_javascript %}
     {% block custom_js %} {% endblock %}
