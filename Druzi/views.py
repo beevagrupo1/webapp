@@ -1,9 +1,12 @@
+from django.db.models import Q
+import operator
 import re
 from Druzi.models import Activity, Enrollment, Tag, TagAppear
 from django.contrib import messages
+from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import ActivityForm
 from django.contrib.auth.decorators import login_required
@@ -134,3 +137,39 @@ def activity_unenrrolment(request,id):
     enrollment.delete()
     messages.success(request,"Te has borrado correctamente a la actividad")
     return HttpResponseRedirect(reverse('activity_list'))
+
+def tags_autocomplete(request, text):
+    text = text.replace('+','')
+    tags = Tag.objects.filter(name__startswith = text)
+    for tag in tags:
+        tag.name = '#' + tag.name
+    data = serializers.serialize('json', tags)
+    return HttpResponse(data, content_type='application/json')
+
+def search(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        query = request.POST
+        first = True
+        list = None
+        for i, criteria in enumerate(query["query"].split(',')):
+            if criteria[0]=='#':
+                if (first):
+                    list = Activity.objects.filter(tags__name=criteria.replace('#',''))
+                    first = False
+                else:
+                    list = list.filter(tags__name=criteria.replace('#',''))
+            else:
+                if (first):
+                    list = Activity.objects.filter(description__search=criteria)
+                    first = False
+                else:
+                    list = list.filter(description__search=criteria)
+        return render(request, 'webapp/activity_list.html', {"activity_list": list})
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        return HttpResponseRedirect('/')
+
+def activity_details(request,id):
+    activity = Activity.objects.get(id=id)
+    return render(request, 'webapp/activity_details.html', {"activity": activity})
