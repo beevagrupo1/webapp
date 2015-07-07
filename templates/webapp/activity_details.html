@@ -1,0 +1,21 @@
+{% extends "webapp/base.html" %}
+{% load staticfiles %}
+{% load disqus_tags %}
+
+{% block main %}
+    <div class="row">
+
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default panel-body text-center">
+                    {{ activity.title }}
+                    {% if user in activity.participants.all %}
+                        <a href="{% url 'activity_unenrrollment' activity.id %}">Borrate</a>
+                    {% else %}
+                        <a href="{% url 'activity_enrrollment' activity.id %}">Apuntate</a>
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+    {% disqus_show_comments %}
+
+{% endblock %}

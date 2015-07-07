@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'social.apps.django_app.default',
     'bootstrap3',
     'geoposition',
+    'disqus',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -129,7 +130,7 @@ TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'social.backends.github.GithubOAuth2',
+    'social.backends.disqus.DisqusOAuth2',
     'social.backends.google.GooglePlusAuth',
     'social.backends.facebook.FacebookOAuth2',
     'social.backends.twitter.TwitterOAuth',
@@ -149,6 +150,12 @@ SOCIAL_AUTH_TWITTER_SECRET = os.getenv('SOCIAL_AUTH_TWITTER_SECRET', "")
 SOCIAL_AUTH_GITHUB_KEY = os.getenv('SOCIAL_AUTH_GITHUB_KEY', "")
 SOCIAL_AUTH_GITHUB_SECRET = os.getenv('SOCIAL_AUTH_GITHUB_SECRET', "")
 SOCIAL_AUTH_GITHUB_SCOPE = ['user:email ']
+
+DISQUS_API_KEY = os.getenv('SOCIAL_AUTH_DISQUS_KEY', "")
+DISQUS_WEBSITE_SHORTNAME = os.getenv('DISQUS_WEBSITE_SHORTNAME', "")
+
+SOCIAL_AUTH_DISQUS_KEY = os.getenv('SOCIAL_AUTH_DISQUS_KEY', "")
+SOCIAL_AUTH_DISQUS_SECRET = os.getenv('SOCIAL_AUTH_DISQUS_SECRET', "")
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 
