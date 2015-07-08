@@ -1,6 +1,7 @@
 from django.db.models import Q
 import operator
 import re
+from datetime import datetime
 from Druzi.models import Activity, Enrollment, Tag, TagAppear
 from django.contrib import messages
 from django.core import serializers
@@ -63,7 +64,7 @@ def activity_pagination(request,page="1"):
     return render(request, 'webapp/activity_list.html', {"activity_list": list})
 
 def activity_ultimos_propuestos_pagination(request,page="1"):
-    activity_list = Activity.objects.all().order_by('-creation_date')
+    activity_list = Activity.objects.filter(activity_date__gte = datetime.now()).order_by('-creation_date')
     paginator = Paginator(activity_list, 10)
 
     try:
@@ -93,7 +94,7 @@ def activity_mas_buscados_pagination(request,page="1"):
     return render(request, 'webapp/activity_list.html', {"activity_list": list})
 
 def activity_mas_baratos_pagination(request,page="1"):
-    activity_list = Activity.objects.all().order_by('-price')
+    activity_list = Activity.objects.filter(activity_date__gte = datetime.now()).order_by('price')
     paginator = Paginator(activity_list, 10)
 
     try:
@@ -108,7 +109,7 @@ def activity_mas_baratos_pagination(request,page="1"):
     return render(request, 'webapp/activity_list.html', {"activity_list": list})
 
 def activity_mas_propuestos_pagination(request,page="1"):
-    activity_list = Activity.objects.all()
+    activity_list = Activity.objects.filter(activity_date__gte = datetime.now())
     paginator = Paginator(activity_list, 10)
 
     try:
