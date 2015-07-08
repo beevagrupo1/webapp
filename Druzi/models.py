@@ -18,6 +18,7 @@ class Activity(models.Model):
     limit_participants = models.IntegerField(null=True)
     participants = models.ManyToManyField(User, default=0, through="Enrollment", related_name="participants")
     tags = models.ManyToManyField("Tag", through="TagAppear", related_name="tags")
+    visit_count = models.IntegerField(default=0)
 
 
 class Tag(models.Model):

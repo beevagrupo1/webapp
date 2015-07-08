@@ -79,7 +79,7 @@ def activity_ultimos_propuestos_pagination(request,page="1"):
     return render(request, 'webapp/activity_list.html', {"activity_list": list})
 
 def activity_mas_buscados_pagination(request,page="1"):
-    activity_list = Activity.objects.all()
+    activity_list = Activity.objects.all().order_by("-visit_count")
     paginator = Paginator(activity_list, 10)
 
     try:
@@ -173,4 +173,6 @@ def search(request):
 
 def activity_details(request,id):
     activity = Activity.objects.get(id=id)
+    activity.visit_count = activity.visit_count+1
+    activity.save()
     return render(request, 'webapp/activity_details.html', {"activity": activity})
