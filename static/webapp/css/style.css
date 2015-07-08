@@ -179,7 +179,6 @@ a {
 a:hover {
   text-decoration: underline;
 }
-
 .table-of-contents li {
   display: inline-block;
   *display: inline;
