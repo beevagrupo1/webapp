@@ -159,7 +159,7 @@ html {
 }
 
 .container {
-  max-width: 750px;
+  max-width: 90%;
   margin: 0 auto;
   text-align: center;
 }
@@ -295,3 +295,11 @@ p + p {
 .bootstrap-tagsinput {
   margin-bottom: 0px !important;
 }
+
+.prueba {
+  margin-bottom: 25px;
+}
+.busqueda{
+  margin: 0 auto;
+}
+
