@@ -93,7 +93,7 @@ def activity_mas_buscados_pagination(request,page="1"):
     return render(request, 'webapp/activity_list.html', {"activity_list": list})
 
 def activity_mas_baratos_pagination(request,page="1"):
-    activity_list = Activity.objects.all()
+    activity_list = Activity.objects.all().order_by('-price')
     paginator = Paginator(activity_list, 10)
 
     try:
