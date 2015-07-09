@@ -125,6 +125,22 @@ def activity_mas_propuestos_pagination(request,page="1"):
     return render(request, 'webapp/activity_list.html', {"activity_list": lista})
 
 @login_required
+def activity_mylist_pagination(request,page="1"):
+    activity_list = Activity.objects.filter(participants = request.user).order_by('activity_date')
+    paginator = Paginator(activity_list, 10)
+    paginator._count = len(list(activity_list))
+    try:
+        lista = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        lista = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        lista = paginator.page(paginator.num_pages)
+
+    return render(request, 'webapp/activity_list.html', {"activity_list": lista})
+
+@login_required
 def activity_enrrolment(request,id):
     activity = Activity.objects.get(id = id)
     enrollment = Enrollment(activity = activity,user = request.user)
