@@ -179,7 +179,6 @@ a {
 a:hover {
   text-decoration: underline;
 }
-
 .table-of-contents li {
   display: inline-block;
   *display: inline;
@@ -302,4 +301,30 @@ p + p {
 .busqueda{
   margin: 0 auto;
 }
+.bloque {
+  border-style: solid;
+  border-color: #ED7721;
+  border-width: 1px;
+}
+.description {
+  text-align: left;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0);
+}
+.descriptionplan {
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0);
+}
+.panel {
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0);
+
 
