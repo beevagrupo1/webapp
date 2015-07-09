@@ -7,3 +7,4 @@ python-social-auth==0.2.11
 django-geoposition
 urllib3
 django-disqus
+django-bootstrap3-datetimepicker
