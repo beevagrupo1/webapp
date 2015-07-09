@@ -80,7 +80,7 @@ def activity_ultimos_propuestos_pagination(request,page="1"):
     return render(request, 'webapp/activity_list.html', {"activity_list": list})
 
 def activity_mas_buscados_pagination(request,page="1"):
-    activity_list = Activity.objects.all().order_by("-visit_count")
+    activity_list = Activity.objects.filter(activity_date__gte = datetime.now()).order_by("-visit_count")
     paginator = Paginator(activity_list, 10)
 
     try:
@@ -130,7 +130,7 @@ def activity_enrrolment(request,id):
     enrollment = Enrollment(activity = activity,user = request.user)
     enrollment.save()
     messages.success(request,"Te has apuntado correctamente a la actividad")
-    return HttpResponseRedirect(reverse('activity_list'))
+    return HttpResponseRedirect(reverse('activity_details', kwargs={'id':id}))
 
 @login_required
 def activity_unenrrolment(request,id):
@@ -138,7 +138,7 @@ def activity_unenrrolment(request,id):
     enrollment = Enrollment.objects.get(activity = activity,user = request.user)
     enrollment.delete()
     messages.success(request,"Te has borrado correctamente a la actividad")
-    return HttpResponseRedirect(reverse('activity_list'))
+    return HttpResponseRedirect(reverse('activity_details', kwargs={'id':id}))
 
 def tags_autocomplete(request, text):
     text = text.replace('+','')
