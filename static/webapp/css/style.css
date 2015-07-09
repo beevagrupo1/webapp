@@ -305,6 +305,7 @@ p + p {
   border-style: solid;
   border-color: #ED7721;
   border-width: 1px;
+  margin-bottom: 5px;
 }
 .description {
   text-align: left;
