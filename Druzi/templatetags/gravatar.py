@@ -10,7 +10,7 @@
 
 from django import template
 import urllib, hashlib
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy, resolve
 
 register = template.Library()
 
@@ -19,6 +19,37 @@ def navactive(request, urls):
     if request.path in ( reverse(url) for url in urls.split() ):
         return "active"
     return ""
+
+@register.simple_tag(takes_context=True)
+def metadata(context):
+    request = context['request']
+    if resolve(request.path).url_name  == 'activity_details':
+        activity = context['activity']
+        meta = metadatos_generico(activity.title,activity.description,"prueba","http://www.fondosescritoriogratis.net/wp-content/uploads/2011/08/mirada-felina-curiosa.jpg", "http://127.0.0.1:8000")
+    else:
+        meta = metadatos_generico("Druzi","Druzi, un lugar donde conocer gente acudiendo a actividades o creando tus propias actividades","prueba","http://www.fondosescritoriogratis.net/wp-content/uploads/2011/08/mirada-felina-curiosa.jpg", "http://127.0.0.1:8000")
+    return meta
+
+def metadatos_generico(title,description,keywords, image, url):
+    meta = '<title>%s</title>' \
+           '<meta name="title" content="%s"></meta>' \
+           '<meta name="description" content="%s"></meta>' \
+            '<meta name="keywords" content="%s"></meta>' \
+           '<meta name="og:locale" content="es_ES"></meta>' \
+           '<meta name="og:type" content="article"></meta>' \
+           '<meta name="og:title" content="%s"></meta>' \
+           '<meta name="og:description" content="%s"></meta>' \
+           '<meta name="og:url" content="%s"></meta>' \
+           '<meta name="og:site_name" content="Druzi"></meta>' \
+           '<meta name="article:publisher" content="https://www.facebook.com/elestudiodelpintor/"></meta>' \
+           '<meta name="fb:admins" content="1024020701"></meta>' \
+           '<meta name="og:image" content="%s"></meta>' \
+            '<meta name="twitter:card" content="summary_large_image"></meta>' \
+            '<meta name="twitter:title" content="%s"></meta>' \
+            '<meta name="twitter:site" content="@ElEstudioPintor"></meta>' \
+            '<meta name="twitter:domain" content="Druzi"></meta>' \
+            '<meta name="twitter:image:src" content="%s"></meta>' % (title,title,description, keywords, title, description, url,image, title,image)
+    return meta
 
 class GravatarUrlNode(template.Node):
     def __init__(self, email):
