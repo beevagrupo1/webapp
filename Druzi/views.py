@@ -130,7 +130,7 @@ def activity_enrrolment(request,id):
     enrollment = Enrollment(activity = activity,user = request.user)
     enrollment.save()
     messages.success(request,"Te has apuntado correctamente a la actividad")
-    return HttpResponseRedirect(reverse('activity_list'))
+    return HttpResponseRedirect(reverse('activity_details',kwargs={'id':id}))
 
 @login_required
 def activity_unenrrolment(request,id):
@@ -138,7 +138,7 @@ def activity_unenrrolment(request,id):
     enrollment = Enrollment.objects.get(activity = activity,user = request.user)
     enrollment.delete()
     messages.success(request,"Te has borrado correctamente a la actividad")
-    return HttpResponseRedirect(reverse('activity_list'))
+    return HttpResponseRedirect(reverse('activity_details', kwargs={'id':id}))
 
 def tags_autocomplete(request, text):
     text = text.replace('+','')
