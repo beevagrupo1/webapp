@@ -4,21 +4,31 @@
 {% load gravatar %}
 
 
+{% block custom_css %}
+ <link rel="stylesheet" href="{% static 'webapp/css/jquery.rateyo.min.css' %}"/>
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+{% endblock %}
 {% block main %}
     <div class="row">
-        <div class="col-lg-6">
-            <b>Lugar del plan:</b>
-
-            <p>{{ activity.place_name }}</p>
+        <div class="col-lg-3">
+            {% if user.is_authenticated %}
+                <div id="rateYo"></div>
+            {%else%}
+                <div class="col-md-6 col-xs-6 "><a class="btn btn-default btn-eathub"
+                                                         href=""
+                                                         role="button">Accede</a>
+            {% endif %}
         </div>
-        <!-- /.col-lg-6 -->
-        <div class="col-lg-4">
+
+        <div class="col-lg-3">
             <b>Usuario creador del plan:</b>
 
             <p>{{ activity.user_own.username }}</p>
         </div>
+        <!-- /.col-lg-6 -->
+        
         <!-- /.col-lg-4 -->
-        <div class="col-lg-1">
+        <div class="col-lg-3">
             <button type="button">Evento anterior</button>
         </div>
         <!-- /.col-lg-1 -->
@@ -29,7 +39,9 @@
         <!-- /.col-lg-1 -->
     </div><!-- /.row -->
     <br>
-    <div class="row">
+
+    <div class="row block_description_plan">
+
         <div class="col-lg-6">
 
             <div id="map-canvas" style="height:380px;"></div>
@@ -54,6 +66,10 @@
         </div>
         <!-- /.col-lg-6 -->
         <div class="col-lg-6">
+            <b>Lugar del plan:</b>
+
+            <p>{{ activity.place_name }}</p>
+            <br>
             <b>Título del plan:</b>
 
             <p>{{ activity.title }}</p><br>
@@ -101,6 +117,27 @@
                 {% endfor %}
             </div>
         </div>
+
+<h1 style="margin-top:150px" align="center"></h1>
+
+    
+    
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{% static 'webapp/js/jquery.rateyo.js' %}"></script>
+
+    <script>
+
+      $(function () {
+ 
+  $("#rateYo").rateYo({
+    rating: 3.6
+  });
+ 
+});
+
+    </script>
+
+
     </div>
     {% disqus_show_comments %}
 
