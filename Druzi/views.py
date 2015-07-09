@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.db.models import Count
 import operator
 import re
 from datetime import datetime
@@ -109,19 +110,19 @@ def activity_mas_baratos_pagination(request,page="1"):
     return render(request, 'webapp/activity_list.html', {"activity_list": list})
 
 def activity_mas_propuestos_pagination(request,page="1"):
-    activity_list = Activity.objects.filter(activity_date__gte = datetime.now())
+    activity_list = Activity.objects.raw('SELECT *, COUNT(*) AS "repeat" FROM Druzi_activity WHERE Druzi_activity.parent_id IS NOT NULL GROUP BY Druzi_activity.parent_id ORDER BY 13 DESC')
     paginator = Paginator(activity_list, 10)
-
+    paginator._count = len(list(activity_list))
     try:
-        list = paginator.page(page)
+        lista = paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        list = paginator.page(1)
+        lista = paginator.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        list = paginator.page(paginator.num_pages)
+        lista = paginator.page(paginator.num_pages)
 
-    return render(request, 'webapp/activity_list.html', {"activity_list": list})
+    return render(request, 'webapp/activity_list.html', {"activity_list": lista})
 
 @login_required
 def activity_enrrolment(request,id):
