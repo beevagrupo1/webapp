@@ -1,6 +1,8 @@
 {% extends "webapp/base.html" %}
 {% load staticfiles %}
 {% load disqus_tags %}
+{% load gravatar %}
+
 
 {% block main %}
     <div class="row">
@@ -73,7 +75,7 @@
             <b>Precio:</b>
 
             <p>{{ activity.price }}</p><br>
-    </div>
+        </div>
         <!-- /.col-lg-4 -->
         <div class="col-lg-4">
             <b>Número máximo de personas:</b>
@@ -82,6 +84,24 @@
         </div>
         <!-- /.col-lg-4 -->
     </div><!-- /.row -->
+
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Participantes inscritos</h3>
+            </div>
+            <div class="panel-body">
+                {% if activity.participants.all == None %}
+                <h3>No hay participantes inscritos</h3>
+                {% endif %}
+                {% for user in activity.participants.all %}
+                <a title="{{ user.username }}" onclick="return false;">
+                    <img src="{% gravatar_url user.email %}" alt="{{ user.username }}">
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
     {% disqus_show_comments %}
 
 {% endblock %}
