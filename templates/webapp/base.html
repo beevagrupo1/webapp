@@ -14,10 +14,10 @@
     <title>Druzi</title>
     {# Load CSS and JavaScript #}
     {% bootstrap_css %}
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+    <link href="{% static 'webapp/css/bootstrap-tagsinput.css' %}" rel="stylesheet">
     <link href="{% static 'webapp/css/theme.css' %}" rel="stylesheet">
     <link href="{% static 'webapp/css/style.css' %}" rel="stylesheet">
-    <link href="{% static 'webapp/css/bootstrap-tagsinput.css' %}" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
     {% block custom_css %}    {% endblock %}
 </head>
 <body>

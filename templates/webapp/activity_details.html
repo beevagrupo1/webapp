@@ -1,18 +1,104 @@
 {% extends "webapp/base.html" %}
 {% load staticfiles %}
 {% load disqus_tags %}
+{% load gravatar %}
+
 
 {% block main %}
     <div class="row">
+        <div class="col-lg-6">
+            <b>Lugar del plan:</b>
 
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default panel-body text-center">
-                    {{ activity.title }}
-                    {% if user in activity.participants.all %}
-                        <a href="{% url 'activity_unenrrollment' activity.id %}">Borrate</a>
-                    {% else %}
-                        <a href="{% url 'activity_enrrollment' activity.id %}">Apuntate</a>
-                    {% endif %}
+            <p>{{ activity.place_name }}</p>
+        </div>
+        <!-- /.col-lg-6 -->
+        <div class="col-lg-4">
+            <b>Usuario creador del plan:</b>
+
+            <p>{{ activity.user_own.username }}</p>
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-1">
+            <button type="button">Evento anterior</button>
+        </div>
+        <!-- /.col-lg-1 -->
+        <div class="col-lg-1">
+            <button type="button"><img class="img-rounded" src="static/images/share_orange.png" alt="Compartir"
+                                       height="41" width="75%"></button>
+        </div>
+        <!-- /.col-lg-1 -->
+    </div><!-- /.row -->
+    <br>
+    <div class="row">
+        <div class="col-lg-6">
+
+            <div id="map-canvas" style="height:380px;"></div>
+
+            <script src="https://maps.googleapis.com/maps/api/js"></script>
+            <script>
+                function initialize() {
+                    var myLatlng = new google.maps.LatLng({{ activity.position.latitude|safe }}, {{ activity.position.longitude|safe }});
+                    var mapProp = {
+                        zoom: 16,
+                        center: myLatlng
+                    };
+                    var map = new google.maps.Map(document.getElementById('map-canvas'), mapProp);
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        map: map,
+                        title: '{{ activity.place_name }}'
+                    });
+                }
+                google.maps.event.addDomListener(window, 'load', initialize);
+            </script>
+        </div>
+        <!-- /.col-lg-6 -->
+        <div class="col-lg-6">
+            <b>Título del plan:</b>
+
+            <p>{{ activity.title }}</p><br>
+            <b>Descripción:</b>
+
+            <p>{{ activity.description }}</p><br>
+        </div>
+        <!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+    <br><br>
+    <div class="row">
+        <div class="col-lg-4">
+            <b>Fecha:</b>
+
+            <p>{{ activity.activity_date }}</p><br>
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+            <b>Precio:</b>
+
+            <p>{{ activity.price }}</p><br>
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+            <b>Número máximo de personas:</b>
+
+            <p>{{ activity.limit_participants }}</p><br>
+        </div>
+        <!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Participantes inscritos</h3>
+            </div>
+            <div class="panel-body">
+                {% if activity.participants.all == None %}
+                <h3>No hay participantes inscritos</h3>
+                {% endif %}
+                {% for user in activity.participants.all %}
+                <a title="{{ user.username }}" onclick="return false;">
+                    <img src="{% gravatar_url user.email %}" alt="{{ user.username }}">
+                </a>
+                {% endfor %}
             </div>
         </div>
     </div>
