@@ -84,7 +84,7 @@ def activity_ultimos_propuestos_pagination(request,page="1"):
     return render(request, 'webapp/activity_list.html', {"activity_list": list,"page":int(page),"last":paginator.num_pages, 'url': 'activity_ultimos_propuestos_pagination'})
 
 def activity_mas_buscados_pagination(request,page="1"):
-    activity_list = Activity.objects.all().order_by("-visit_count")
+    activity_list = Activity.objects.filter(activity_date__gte = datetime.now()).order_by("-visit_count")
     paginator = Paginator(activity_list, 10)
 
     try:
