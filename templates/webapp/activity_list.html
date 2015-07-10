@@ -42,19 +42,21 @@
                             </div>
                         </div>
                     {% endfor %}
-                    <nav>
-                        <ul class="pager">
-                            {% if page != 1 %}
-                                <li class="previous"><a
-                                        href="{% url url page|add:"-1" %}"><span aria-hidden="true">&larr;</span>
-                                    Anteriores</a></li>
-                            {% endif %}
-                            {% if page != last %}
-                                <li class="next"><a href="{% url url page|add:"1" %}">Siguientes
-                                    <span aria-hidden="true">&rarr;</span></a></li>
-                            {% endif %}
-                        </ul>
-                    </nav>
+                    {% if page %}
+                        <nav>
+                            <ul class="pager">
+                                {% if page != 1 %}
+                                    <li class="previous"><a
+                                            href="{% url url page|add:"-1" %}"><span aria-hidden="true">&larr;</span>
+                                        Anteriores</a></li>
+                                {% endif %}
+                                {% if page != last %}
+                                    <li class="next"><a href="{% url url page|add:"1" %}">Siguientes
+                                        <span aria-hidden="true">&rarr;</span></a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
                 </div>
             {% else %}
                 <h3>No hay planes activos</h3>
