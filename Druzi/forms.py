@@ -9,9 +9,9 @@ from datetime import datetime
 
 class ActivityForm(forms.ModelForm):
     activity_date = forms.DateTimeField(label='Fecha de la actividad',
-        required=False,
-        widget=DateTimePicker(options={"format": "DD-MM-YYYY HH:mm",
-                                       "pickSeconds": True, "startDate" :datetime.now().__str__()}))
+        required=True,
+        widget=DateTimePicker(options={"format": "YYYY-MM-DD HH:mm",
+                                       "pickSeconds": False, "startDate" :datetime.now().__str__()}))
     
     title = forms.CharField(label='Titulo')
     description = forms.CharField(label='Descripcion', 
