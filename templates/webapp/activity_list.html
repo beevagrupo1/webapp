@@ -3,8 +3,11 @@
 {% load gravatar %}
 
 {% block menu_list %}
-    <li class="active"><a href="{{ request.path }}">Listado<span
-            class="sr-only">(current)</span></a></li>
+    {% url 'my_list' as my_url %}
+    {% if request.path != my_url %}
+        <li class="active"><a href="{{ request.path }}">Listado<span
+                class="sr-only">(current)</span></a></li>
+    {% endif %}
 {% endblock %}
 {% block main %}
     <div class="row">

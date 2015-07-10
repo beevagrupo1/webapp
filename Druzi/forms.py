@@ -19,7 +19,8 @@ class ActivityForm(forms.ModelForm):
     place_name = forms.CharField(label='Nombre del lugar')  
     price = forms.IntegerField(label='Precio')
     limit_participants = forms.IntegerField(label='Limite de participantes')
-     
+    position = GeopositionField(label="Posicion")
+
     class Meta:
         model = Activity
         fields = ['title','description', 'activity_date', 'place_name', 'position', 'price', 'limit_participants']
