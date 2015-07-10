@@ -37,5 +37,8 @@ urlpatterns = [
     url(r'^activity/get/(?P<id>[.\w]+)/enrollment$', views.activity_enrrolment, name='activity_enrrollment'),
     url(r'^activity/get/(?P<id>[.\w]+)/unenrollment$', views.activity_unenrrolment, name='activity_unenrrollment'),
     url(r'^search/$', views.search, name='search'),
+    url(r'^search/tag/(?P<tag>.*)/$', views.search_tag, name='search_tag'),
     url(ur'^tags/(?P<text>.*)/$', views.tags_autocomplete, name='tags_autocomplete'),
+    url(r'^activity/mylist/list/$', views.activity_mylist_pagination, name='my_list'),
+    url(r'^activity/mylist/list/page/(?P<page>[0-9]+)/$', views.activity_mylist_pagination, name='my_list'),
 ]

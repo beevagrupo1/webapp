@@ -30,9 +30,11 @@ def activity_creation(request):
             activity.user_own = request.user
             activity.save()
             tags = re.compile("\S*#(?:\[[^\]]+\]|\S+)").findall(activity.description)
+            description = activity.description
             for t in tags:
                 pos =  activity.description.index(t)
                 temp = Tag.objects.get_or_create(name = t[1:])[0]
+                description = description.replace(t,'<a href="/search/tag/'+ temp.name +'/">' + t + '</a>')
                 temp.count = temp.count+1
                 temp.save()
                 if temp:
@@ -40,6 +42,8 @@ def activity_creation(request):
                 else:
                     tag = Tag(name = t[1:]).save()
                     TagAppear(activity = activity, tag = tag, position = pos).save()
+            activity.description = description
+            activity.save()
             messages.success(request, 'Se ha creado correctamente la actividad')
             return HttpResponseRedirect('/')
 
@@ -62,7 +66,7 @@ def activity_pagination(request,page="1"):
         # If page is out of range (e.g. 9999), deliver last page of results.
         list = paginator.page(paginator.num_pages)
 
-    return render(request, 'webapp/activity_list.html', {"activity_list": list})
+    return render(request, 'webapp/activity_list.html', {"activity_list": list,"page":page,"last":paginator.num_pages, 'url': 'activity_list_page'})
 
 def activity_ultimos_propuestos_pagination(request,page="1"):
     activity_list = Activity.objects.filter(activity_date__gte = datetime.now()).order_by('-creation_date')
@@ -77,7 +81,7 @@ def activity_ultimos_propuestos_pagination(request,page="1"):
         # If page is out of range (e.g. 9999), deliver last page of results.
         list = paginator.page(paginator.num_pages)
 
-    return render(request, 'webapp/activity_list.html', {"activity_list": list})
+    return render(request, 'webapp/activity_list.html', {"activity_list": list,"page":int(page),"last":paginator.num_pages, 'url': 'activity_ultimos_propuestos_pagination'})
 
 def activity_mas_buscados_pagination(request,page="1"):
     activity_list = Activity.objects.filter(activity_date__gte = datetime.now()).order_by("-visit_count")
@@ -92,7 +96,7 @@ def activity_mas_buscados_pagination(request,page="1"):
         # If page is out of range (e.g. 9999), deliver last page of results.
         list = paginator.page(paginator.num_pages)
 
-    return render(request, 'webapp/activity_list.html', {"activity_list": list})
+    return render(request, 'webapp/activity_list.html', {"activity_list": list,"page":int(page),"last":paginator.num_pages, 'url': 'activity_mas_buscados_pagination'})
 
 def activity_mas_baratos_pagination(request,page="1"):
     activity_list = Activity.objects.filter(activity_date__gte = datetime.now()).order_by('price')
@@ -107,10 +111,26 @@ def activity_mas_baratos_pagination(request,page="1"):
         # If page is out of range (e.g. 9999), deliver last page of results.
         list = paginator.page(paginator.num_pages)
 
-    return render(request, 'webapp/activity_list.html', {"activity_list": list})
+    return render(request, 'webapp/activity_list.html', {"activity_list": list,"page":int(page),"last":paginator.num_pages, 'url': 'activity_mas_baratos_pagination'})
 
 def activity_mas_propuestos_pagination(request,page="1"):
     activity_list = Activity.objects.raw('SELECT *, COUNT(*) AS "repeat" FROM Druzi_activity WHERE Druzi_activity.parent_id IS NOT NULL GROUP BY Druzi_activity.parent_id ORDER BY 13 DESC')
+    paginator = Paginator(activity_list, 10)
+    paginator._count = len(list(activity_list))
+    try:
+        lista = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        lista = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        lista = paginator.page(paginator.num_pages)
+
+    return render(request, 'webapp/activity_list.html', {"activity_list": lista,"page": int(page),"last":paginator.num_pages, 'url': 'activity_mas_propuestos_pagination'})
+
+@login_required
+def activity_mylist_pagination(request,page="1"):
+    activity_list = Activity.objects.filter(participants = request.user).order_by('activity_date')
     paginator = Paginator(activity_list, 10)
     paginator._count = len(list(activity_list))
     try:
@@ -130,7 +150,7 @@ def activity_enrrolment(request,id):
     enrollment = Enrollment(activity = activity,user = request.user)
     enrollment.save()
     messages.success(request,"Te has apuntado correctamente a la actividad")
-    return HttpResponseRedirect(reverse('activity_details', kwargs={'id':id}))
+    return HttpResponseRedirect(reverse('activity_details',kwargs={'id':id}))
 
 @login_required
 def activity_unenrrolment(request,id):
@@ -171,6 +191,10 @@ def search(request):
     # if a GET (or any other method) we'll create a blank form
     else:
         return HttpResponseRedirect('/')
+
+def search_tag(request,tag):
+    list = Activity.objects.filter(tags__name=tag)
+    return render(request, 'webapp/activity_list.html', {"activity_list": list})
 
 def activity_details(request,id):
     activity = Activity.objects.get(id=id)

@@ -15,11 +15,11 @@ class Activity(models.Model):
     user_own = models.ForeignKey(User)
     parent = models.ForeignKey("self", null=True)
     price = models.FloatField(default=0.0)
-    limit_participants = models.IntegerField(null=True)
+    limit_participants = models.IntegerField(null=True, default=0)
     participants = models.ManyToManyField(User, default=0, through="Enrollment", related_name="participants")
     tags = models.ManyToManyField("Tag", through="TagAppear", related_name="tags")
-    visit_count = models.IntegerField(default=0)
 
+    visit_count = models.IntegerField(default=0)
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, primary_key=True)
