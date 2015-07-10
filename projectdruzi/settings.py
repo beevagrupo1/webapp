@@ -74,7 +74,7 @@ WSGI_APPLICATION = 'projectdruzi.wsgi.application'
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] =  dj_database_url.config(os.getenv('CLEARDB_DATABASE_URL', "mysql://root:root@localhost/druzi?reconnect=true"))
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
