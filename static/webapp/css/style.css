@@ -318,8 +318,10 @@ p + p {
 }
 
 .descriptionplan {
-    margin-bottom: 20px;
-    background-color: #ffffff;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    background-color: #FFFFFF;
+    color: #000000;
     border: 1px solid transparent;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0);
@@ -425,3 +427,14 @@ p + p {
     margin-top: 30px;
 }
 
+.grupo {
+  position: relative;
+  display: block;
+  padding: 13px 13px;
+  margin-bottom: -1px;
+  background-color: rgba(255, 101, 46, 0.4) !important;
+  color: #FFFFFF;
+  border: 1px solid #dddddd;
+  border-color: #FF5722;
+  font-size: 11pt; 
+}
