@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^activity/list/$', views.activity_pagination, name='activity_list'),
     url(r'^activity/list/page/(?P<page>[0-9]+)/$', views.activity_pagination, name='activity_list_page'),
     url(r'^activity/get/(?P<id>[.\w]+)/repeat/list/$', views.activity_list_repeat, name='activity_list_repeat'),
-    url(r'^activity/get/(?P<id>[.\w]+)/repeat/list/page/(?P<page>[0-9]+)/$', views.activity_list_repeat, name='activity_list_repeat'),
+    url(r'^activity/get/(?P<id>[.\w]+)/repeat/list/page/(?P<page>[0-9]+)/$', views.activity_list_repeat, name='activity_list_repeat_page'),
     url(r'^activity/baratas/list/$', views.activity_mas_baratos_pagination, name='activity_mas_baratos_pagination'),
     url(r'^activity/baratas/list/page/(?P<page>[0-9]+)/$', views.activity_mas_baratos_pagination, name='activity_mas_baratos_pagination'),
     url(r'^activity/buscados/list/$', views.activity_mas_buscados_pagination, name='activity_mas_buscados_pagination'),
@@ -43,5 +43,5 @@ urlpatterns = [
     url(r'^search/tag/(?P<tag>.*)/$', views.search_tag, name='search_tag'),
     url(ur'^tags/(?P<text>.*)/$', views.tags_autocomplete, name='tags_autocomplete'),
     url(r'^activity/mylist/list/$', views.activity_mylist_pagination, name='my_list'),
-    url(r'^activity/mylist/list/page/(?P<page>[0-9]+)/$', views.activity_mylist_pagination, name='my_list'),
+    url(r'^activity/mylist/list/page/(?P<page>[0-9]+)/$', views.activity_mylist_pagination, name='my_list_page'),
 ]
