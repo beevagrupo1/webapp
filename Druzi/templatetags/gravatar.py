@@ -27,7 +27,7 @@ def metadata(context):
         activity = context['activity']
         meta = metadatos_generico(activity.title,activity.description,"prueba","http://www.fondosescritoriogratis.net/wp-content/uploads/2011/08/mirada-felina-curiosa.jpg", "http://127.0.0.1:8000")
     else:
-        meta = metadatos_generico("Druzi","Druzi, un lugar donde conocer gente acudiendo a actividades o creando tus propias actividades","prueba","http://www.fondosescritoriogratis.net/wp-content/uploads/2011/08/mirada-felina-curiosa.jpg", "http://127.0.0.1:8000")
+        meta = metadatos_generico("Druzi","Druzi, un lugar donde conocer gente acudiendo a actividades o creando tus propias actividades","actividades,social,amigos,eventos","http://127.0.0.1:8000/static/webapp/images/logo-color.png", "http://127.0.0.1:8000")
     return meta
 
 def metadatos_generico(title,description,keywords, image, url):
@@ -46,7 +46,7 @@ def metadatos_generico(title,description,keywords, image, url):
            '<meta name="og:image" content="%s"></meta>' \
             '<meta name="twitter:card" content="summary_large_image"></meta>' \
             '<meta name="twitter:title" content="%s"></meta>' \
-            '<meta name="twitter:site" content="@ElEstudioPintor"></meta>' \
+            '<meta name="twitter:site" content="@BeevaDruzi"></meta>' \
             '<meta name="twitter:domain" content="Druzi"></meta>' \
             '<meta name="twitter:image:src" content="%s"></meta>' % (title,title,description, keywords, title, description, url,image, title,image)
     return meta
