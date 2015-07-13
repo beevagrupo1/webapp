@@ -178,7 +178,7 @@ def activity_unenrrolment(request, id):
     enrollment = Enrollment.objects.get(activity=activity, user=request.user)
     enrollment.delete()
     messages.success(request, "Te has borrado correctamente a la actividad")
-    return HttpResponseRedirect(reverse('activity_details', kwargs={'id': id}))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required
 def activity_repeat(request, id):
