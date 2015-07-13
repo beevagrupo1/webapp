@@ -50,6 +50,7 @@ INSTALLED_APPS = (
     'bootstrap3',
     'geoposition',
     'disqus',
+    'bootstrap3_datetime'
 )
 
 MIDDLEWARE_CLASSES = (
