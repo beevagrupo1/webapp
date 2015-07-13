@@ -20,6 +20,11 @@
                     {% else %}
                         <span class="label label-danger">Cerrada</span>
                     {% endif %}
+                    {% if activity.parent == None %}
+                        <span class="label label-primary">Original</span>
+                    {% else %}
+                        <span class="label label-primary">Repetida</span>
+                    {% endif %}
                 </small>
             </h1>
             <div class="input-group col-md-2">
@@ -27,8 +32,10 @@
                         class="fa fa-code-fork"></i>
                     Repetir
                 </a>
+
                 <div class="input-group-btn">
-                    <a href="{% url 'activity_list_repeat' activity.get_id_repeat %}" class="btn btn-default"><span class="badge">{{ activity.num_repeats }}</span></a>
+                    <a href="{% url 'activity_list_repeat' activity.get_id_repeat %}" class="btn btn-default"><span
+                            class="badge">{{ activity.num_repeats }}</span></a>
                 </div>
             </div>
         </div>
