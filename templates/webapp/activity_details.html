@@ -1,21 +1,204 @@
 {% extends "webapp/base.html" %}
 {% load staticfiles %}
 {% load disqus_tags %}
+{% load gravatar %}
 
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'webapp/css/jquery.rateyo.min.css' %}"/>
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link href="{% static 'webapp/css/normalize.min.css' %}" rel="stylesheet">
+    <link href="{% static 'webapp/css/rrssb.css' %}" rel="stylesheet">
+{% endblock %}
 {% block main %}
-    <div class="row">
-
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default panel-body text-center">
-                    {{ activity.title }}
-                    {% if user in activity.participants.all %}
-                        <a href="{% url 'activity_unenrrollment' activity.id %}">Borrate</a>
+    <div class="col-md-8 col-md-offset-2">
+        <div class="page-header">
+            <h1>{{ activity.title }}
+                <small>{{ activity.activity_date|date:"l j \d\e F \d\e\l Y \a \l\a\s H:i" }}
+                    {% if activity.is_open %}
+                        <span class="label label-success">Abierta</span>
                     {% else %}
-                        <a href="{% url 'activity_enrrollment' activity.id %}">Apuntate</a>
+                        <span class="label label-danger">Cerrada</span>
                     {% endif %}
+                    {% if activity.parent == None %}
+                        <span class="label label-primary">Original</span>
+                    {% else %}
+                        <span class="label label-primary">Repetida</span>
+                    {% endif %}
+                </small>
+            </h1>
+            <div class="input-group col-md-2">
+                <a href="{% url 'activity_repeat' activity.get_id_repeat %}" class="form-control btn btn-primary"><i
+                        class="fa fa-code-fork"></i>
+                    Repetir
+                </a>
+
+                <div class="input-group-btn">
+                    <a href="{% url 'activity_list_repeat' activity.get_id_repeat %}" class="btn btn-default"><span
+                            class="badge">{{ activity.num_repeats }}</span></a>
+                </div>
             </div>
         </div>
-    </div>
-    {% disqus_show_comments %}
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="rrssb-buttons clearfix">
+                    <ul class="rrssb-buttons">
+                        <li class="rrssb-facebook">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.path }}"
+                               class="popup">
+                        <span class="rrssb-icon"><svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"
+                                                      width="29" height="29" viewBox="0 0 29 29">
+                            <path d="M26.4 0H2.6C1.714 0 0 1.715 0 2.6v23.8c0 .884 1.715 2.6 2.6 2.6h12.393V17.988h-3.996v-3.98h3.997v-3.062c0-3.746 2.835-5.97 6.177-5.97 1.6 0 2.444.173 2.845.226v3.792H21.18c-1.817 0-2.156.9-2.156 2.168v2.847h5.045l-.66 3.978h-4.386V29H26.4c.884 0 2.6-1.716 2.6-2.6V2.6c0-.885-1.716-2.6-2.6-2.6z"
+                                  class="cls-2" fill-rule="evenodd"/>
+                        </svg></span>
+                                <span class="rrssb-text">facebook</span>
+                            </a>
+                        </li>
+                        <li class="rrssb-twitter">
+                            <a href="https://twitter.com/intent/tweet?text=Share your activity!&url=http%3A%2F%2F127.0.0.1:8000{{request.path}}"
+                               class="popup">
+                        <span class="rrssb-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                      viewBox="0 0 28 28">
+                            <path d="M24.253 8.756C24.69 17.08 18.297 24.182 9.97 24.62c-3.122.162-6.22-.646-8.86-2.32 2.702.18 5.375-.648 7.507-2.32-2.072-.248-3.818-1.662-4.49-3.64.802.13 1.62.077 2.4-.154-2.482-.466-4.312-2.586-4.412-5.11.688.276 1.426.408 2.168.387-2.135-1.65-2.73-4.62-1.394-6.965C5.574 7.816 9.54 9.84 13.802 10.07c-.842-2.738.694-5.64 3.434-6.48 2.018-.624 4.212.043 5.546 1.682 1.186-.213 2.318-.662 3.33-1.317-.386 1.256-1.248 2.312-2.4 2.942 1.048-.106 2.07-.394 3.02-.85-.458 1.182-1.343 2.15-2.48 2.71z"/>
+                        </svg></span>
+                                <span class="rrssb-text">twitter</span>
+                            </a>
+                        </li>
+                        <li class="rrssb-googleplus">
+                            <a href="https://plus.google.com/share?url=http://127.0.0.1:8000{{request.path}}" class="popup">
+                        <span class="rrssb-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                      viewBox="0 0 28 28">
+                            <path d="M14.703 15.854l-1.22-.948c-.37-.308-.88-.715-.88-1.46 0-.747.51-1.222.95-1.662 1.42-1.12 2.84-2.31 2.84-4.817 0-2.58-1.62-3.937-2.4-4.58h2.098l2.203-1.384h-6.67c-1.83 0-4.467.433-6.398 2.027C3.768 4.287 3.06 6.018 3.06 7.576c0 2.634 2.02 5.328 5.603 5.328.34 0 .71-.033 1.083-.068-.167.408-.336.748-.336 1.324 0 1.04.55 1.685 1.01 2.297-1.523.104-4.37.273-6.466 1.562-1.998 1.187-2.605 2.915-2.605 4.136 0 2.512 2.357 4.84 7.288 4.84 5.822 0 8.904-3.223 8.904-6.41.008-2.327-1.36-3.49-2.83-4.73h-.01zM10.27 11.95c-2.913 0-4.232-3.764-4.232-6.036 0-.884.168-1.797.744-2.51.543-.68 1.49-1.12 2.372-1.12 2.807 0 4.256 3.797 4.256 6.24 0 .613-.067 1.695-.845 2.48-.537.55-1.438.947-2.295.95v-.003zm.032 13.66c-3.62 0-5.957-1.733-5.957-4.143 0-2.408 2.165-3.223 2.91-3.492 1.422-.48 3.25-.545 3.556-.545.34 0 .52 0 .767.034 2.574 1.838 3.706 2.757 3.706 4.48-.002 2.072-1.736 3.664-4.982 3.648l.002.017zM23.254 11.89V8.52H21.57v3.37H18.2v1.714h3.367v3.4h1.684v-3.4h3.4V11.89"/>
+                        </svg></span>
+                                <span class="rrssb-text">google+</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Author overlay -->
+                <a class="recipe-author-link" href="#">
+                    <div class="img-circle recipe-author recipe-author-picture-container">
+                        <div class="img-circle recipe-author-picture"
+                             style="background-image: url('{% gravatar_url activity.user_own.email %}')">
+                            <img class="img-circle recipe-author"
+                                 src="{% gravatar_url activity.user_own.email %}">
+                        </div>
+                    </div>
+                    <h5 class="recipe-author recipe-author-name">By {{ activity.user_own.username }}</h5>
+                </a>
 
+                <div id="map-canvas" style="height:380px;"></div>
+
+                <script src="https://maps.googleapis.com/maps/api/js"></script>
+                <script>
+                    function initialize() {
+                        var myLatlng = new google.maps.LatLng({{ activity.position.latitude|safe }}, {{ activity.position.longitude|safe }});
+                        var mapProp = {
+                            zoom: 16,
+                            center: myLatlng
+                        };
+                        var map = new google.maps.Map(document.getElementById('map-canvas'), mapProp);
+                        var marker = new google.maps.Marker({
+                            position: myLatlng,
+                            map: map,
+                            title: '{{ activity.place_name }}'
+                        });
+                        var contentString = '<div id="content">' +
+                                '<div id="siteNotice">' +
+                                '</div>' +
+                                '<h3 id="firstHeading" class="firstHeading">{{ activity.place_name }}</h3>' +
+                                '<div id="bodyContent">' +
+                                '<p>{{ activity.description|safe }}</p>' +
+                                '</div>' +
+                                '</div>';
+                        var infowindow = new google.maps.InfoWindow({
+                            content: contentString
+                        });
+                        google.maps.event.addListener(marker, 'click', function () {
+                            infowindow.open(map, marker);
+                        });
+                        infowindow.open(map, marker);
+                    }
+                    google.maps.event.addDomListener(window, 'load', initialize);
+                </script>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group input-primary">
+                    <span class="input-group-addon" id="basic-addon1">Precio</span>
+                    <input type="text" class="form-control" disabled placeholder="Username"
+                           aria-describedby="basic-addon1" value="{{ activity.price }}">
+                    <span class="input-group-addon" id="basic-addon1">€</span>
+                </div>
+            </div>
+            <!-- /.col-lg-4 -->
+            <div class="col-md-6">
+                <div class="input-group input-primary">
+                    <span class="input-group-addon" id="basic-addon1">Nº max.</span>
+                    <input type="text" class="form-control" disabled placeholder="Username"
+                           aria-describedby="basic-addon1" value="{{ activity.limit_participants }}">
+                    <span class="input-group-addon" id="basic-addon1">P</span>
+                </div>
+            </div>
+            <div class='share-button share-button-bottom'></div>
+        </div>
+    </div>
+
+    <div class="col-md-8 col-md-offset-2">
+        {% if user.is_authenticated %}
+            <div id="rateYo"></div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-12 text-center">
+                {% if activity.participants.all %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Participantes inscritos</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% for userP in activity.participants.all %}
+                                <a title="{{ userP.username }}" onclick="return false;">
+                                    <img src="{% gravatar_url userP.email %}" alt="{{ userP.username }}">
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <h3>No hay participantes inscritos, se el primero en inscribirte</h3>
+                {% endif %}
+                {% if user in activity.participants.all %}
+                    <a class="btn btn-lg btn-primary" href="{% url 'activity_unenrrollment' activity.id %}">Borrate</a>
+                {% else %}
+                    <a class="btn btn-lg btn-primary" href="{% url 'activity_enrrollment' activity.id %}">Inscribete</a>
+                {% endif %}
+            </div>
+        </div>
+        {% disqus_show_comments %}
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script src="{% static 'webapp/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js' %}"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{% static 'webapp/js/vendor/jquery.min.js' %}"><\/script>')</script>
+    <script src="{% static 'webapp/js/rrssb.min.js' %}"></script>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{% static 'webapp/js/jquery.rateyo.js' %}"></script>
+
+    <script>
+
+        $(function () {
+
+            $("#rateYo").rateYo({
+                halfStar: true,
+                ratedFill: "#ff5722"
+            });
+        });
+
+    </script>
 {% endblock %}
