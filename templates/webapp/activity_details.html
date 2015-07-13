@@ -172,9 +172,9 @@
                     <h3>No hay participantes inscritos, se el primero en inscribirte</h3>
                 {% endif %}
                 {% if user in activity.participants.all %}
-                    <a class="btn btn-lg btn-primary" href="{% url 'activity_unenrrollment' activity.id %}">Borrate</a>
+                    <a class="btn btn-lg btn-danger" href="{% url 'activity_unenrrollment' activity.id %}">Borrate</a>
                 {% else %}
-                    <a class="btn btn-lg btn-primary" href="{% url 'activity_enrrollment' activity.id %}">Inscribete</a>
+                    <a class="btn btn-lg btn-success" href="{% url 'activity_enrrollment' activity.id %}">Inscribete</a>
                 {% endif %}
             </div>
         </div>

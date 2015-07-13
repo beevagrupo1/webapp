@@ -307,7 +307,7 @@ p + p {
 .bloque {
     border-style: solid;
     border-color: #ED7721;
-    border-width: 1px;
+    border-width: 2px;
     margin-bottom: 5px;
 }
 
@@ -474,3 +474,6 @@ p + p {
 
 .socicon-disqus:before { content: ":"; }
 
+.margen{
+  margin-top: 10px;
+}
