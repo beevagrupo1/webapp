@@ -215,7 +215,8 @@ def activity_repeat(request, id):
         activity = Activity.objects.get(id=id)
         new_activity = activity.clone(request.user)
         form =  ActivityForm(instance=new_activity)
-        return render(request, 'webapp/actvity_creation.html', {'form': form})
+
+    return render(request, 'webapp/actvity_creation.html', {'form': form})
 
 
 def tags_autocomplete(request, text):
