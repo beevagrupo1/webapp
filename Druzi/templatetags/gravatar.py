@@ -25,7 +25,7 @@ def metadata(context):
     request = context['request']
     if resolve(request.path).url_name  == 'activity_details':
         activity = context['activity']
-        meta = metadatos_generico(activity.title,activity.description,"prueba","http://www.fondosescritoriogratis.net/wp-content/uploads/2011/08/mirada-felina-curiosa.jpg", "http://127.0.0.1:8000")
+        meta = metadatos_generico(activity.title,activity.description,activity.get_keywords, "https://maps.googleapis.com/maps/api/staticmap?center=" + activity.position.latitude + "," +  activity.position.longitude + "&zoom=13&size=250x250&maptype=roadmap&markers=color:red%7Clabel: %7C" + activity.position.latitude + "," +  activity.position.longitude,reverse('activity_details',{'id' : activity.id}))
     else:
         meta = metadatos_generico("Druzi","Druzi, un lugar donde conocer gente acudiendo a actividades o creando tus propias actividades","actividades,social,amigos,eventos","http://127.0.0.1:8000/static/webapp/images/logo-color.png", "http://127.0.0.1:8000")
     return meta

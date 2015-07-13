@@ -48,6 +48,12 @@ class Activity(models.Model):
         else:
             return self.parent.id
 
+    @property
+    def get_keywords(self):
+        keywords = ""
+        for tag in self.tags:
+            keywords = keywords.join(tag.name)
+        return keywords
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, primary_key=True)
