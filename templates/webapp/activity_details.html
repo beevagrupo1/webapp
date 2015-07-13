@@ -14,8 +14,30 @@
     <div class="col-md-8 col-md-offset-2">
         <div class="page-header">
             <h1>{{ activity.title }}
-                <small>{{ activity.activity_date|date:"l j \d\e F \d\e\l Y \a \l\a\s H:i" }}</small>
+                <small>{{ activity.activity_date|date:"l j \d\e F \d\e\l Y \a \l\a\s H:i" }}
+                    {% if activity.is_open %}
+                        <span class="label label-success">Abierta</span>
+                    {% else %}
+                        <span class="label label-danger">Cerrada</span>
+                    {% endif %}
+                    {% if activity.parent == None %}
+                        <span class="label label-primary">Original</span>
+                    {% else %}
+                        <span class="label label-primary">Repetida</span>
+                    {% endif %}
+                </small>
             </h1>
+            <div class="input-group col-md-2">
+                <a href="{% url 'activity_repeat' activity.get_id_repeat %}" class="form-control btn btn-primary"><i
+                        class="fa fa-code-fork"></i>
+                    Repetir
+                </a>
+
+                <div class="input-group-btn">
+                    <a href="{% url 'activity_list_repeat' activity.get_id_repeat %}" class="btn btn-default"><span
+                            class="badge">{{ activity.num_repeats }}</span></a>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-8 col-md-offset-2">

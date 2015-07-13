@@ -341,6 +341,7 @@ p + p {
     right: -30px;
     background-color: #ff5722;
     color: #fff;
+}
 
 .recipe-author:hover, .recipe-author.hover {
     background-color: #fff;
@@ -423,5 +424,11 @@ p + p {
 
 .row {
     margin-top: 30px;
+}
+
+.etiqueta-original {
+    position: absolute;
+    top: 19px;
+    left: 16px;
 }
 
