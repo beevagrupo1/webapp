@@ -343,6 +343,7 @@ p + p {
     right: -30px;
     background-color: #ff5722;
     color: #fff;
+}
 
 .recipe-author:hover, .recipe-author.hover {
     background-color: #fff;
@@ -438,3 +439,10 @@ p + p {
   border-color: #FF5722;
   font-size: 11pt; 
 }
+
+.etiqueta-original {
+    position: absolute;
+    top: 19px;
+    left: 16px;
+}
+

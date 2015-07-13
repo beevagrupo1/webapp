@@ -17,8 +17,13 @@
                     {% for activity in activity_list %}
                         <div class="row bloque">
                             <div class="panel">
-                                <a href="{% url 'activity_details' activity.id %}"><h4>{{ activity.title }}</h4></a>
-
+                                <a href="{% url 'activity_details' activity.id %}"><h4>{{ activity.title }}</h4>
+                                </a>
+                                {% if url == 'activity_list_repeat' %}
+                                    {% if activity.id == origin %}
+                                        <h3><span class="label label-primary etiqueta-original">Original</span></h3>
+                                    {% endif %}
+                                {% endif %}
                                 <div class="col-md-7 description">
                                     <p class="description">{{ activity.description|safe }}<p>
                                 </div>
