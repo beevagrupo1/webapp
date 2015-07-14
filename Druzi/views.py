@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import ActivityForm
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 
 # Create your views here.
 
@@ -201,6 +202,7 @@ def activity_details(request,id):
     activity.save()
     return render(request, 'webapp/activity_details.html', {"activity": activity})
 
-def stars_post(request, text):
-    
-    return ok
+def stars_post(request, id):
+    if request.method == 'POST':
+        rating = request.POST['rating']
+    return HttpResponse(rating, content_type='application/json')
