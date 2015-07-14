@@ -27,6 +27,13 @@ class Activity(models.Model):
         return Activity(title=self.title, description=strip_tags(self.description), position = self.position, place_name = self.place_name, parent = self, price=self.price, limit_participants = self.limit_participants, user_own = user)
 
     @property
+    def is_editable(self):
+        a = datetime.now() - self.creation_date
+        if a.total_seconds() < 10*60: #10*60 are 10 minutes
+            return True
+        return False    
+    
+    @property
     def is_open(self):
         if self.activity_date > timezone.now():
             return True

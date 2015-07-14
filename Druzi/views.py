@@ -46,7 +46,7 @@ def activity_creation(request):
             activity.description = description
             activity.save()
             messages.success(request, 'Se ha creado correctamente la actividad')
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('activity_details', kwargs={'id': activity.id}))
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -147,7 +147,7 @@ def activity_mas_propuestos_pagination(request, page="1"):
 
 @login_required
 def activity_mylist_pagination(request, page="1"):
-    activity_list = Activity.objects.filter(participants=request.user).order_by('activity_date')
+    activity_list = Activity.objects.filter(participants=request.user).order_by('-activity_date')
     paginator = Paginator(activity_list, 10)
     try:
         lista = paginator.page(page)
