@@ -76,12 +76,6 @@ WSGI_APPLICATION = 'projectdruzi.wsgi.application'
 # Parse database configuration from $DATABASE_URL
 DATABASES = { 'default' : dj_database_url.config()}
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-    }
-}
-
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
