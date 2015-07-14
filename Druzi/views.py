@@ -283,3 +283,15 @@ def activity_list_repeat(request, id, page="1"):
     return render(request, 'webapp/activity_list.html',
                   {"activity_list": lista, "page": int(page), "last": paginator.num_pages,
                    'url': 'activity_list_repeat', 'origin' : int(id)})
+                   
+@login_required
+def activity_remove(request, id):
+    activity = Activity.objects.get(id=id)
+    if request.user == activity.user_own:
+        if activity.is_enable:
+            activity.remove()
+            messages.success(request, "Has borrado correctamente a la actividad")
+        else:
+            messages.warning(request, "Estas intentando borrar una actividad en un tiempo excesivo")
+    return HttpResponseRedirect('/')
+        
