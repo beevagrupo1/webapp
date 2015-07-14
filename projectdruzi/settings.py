@@ -74,7 +74,7 @@ WSGI_APPLICATION = 'projectdruzi.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 # Parse database configuration from $DATABASE_URL
-DATABASES = { 'default' : dj_database_url.config(os.getenv('CLEARDB_DATABASE_URL', "mysql://root:root@localhost/druzi?reconnect=true"))}
+DATABASES = { 'default' : dj_database_url.config()}
 
 DATABASES = {
     "default": {
