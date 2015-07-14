@@ -42,12 +42,22 @@ class Activity(models.Model):
             return num
 
     @property
+    def get_description_text(self):
+        return strip_tags(self.description)
+
+    @property
     def get_id_repeat(self):
         if self.parent == None:
             return self.id
         else:
             return self.parent.id
 
+    @property
+    def get_keywords(self):
+        keywords = ""
+        for tag in self.tags.all():
+            keywords = keywords.join(tag.name + ",")
+        return keywords
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, primary_key=True)
