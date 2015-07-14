@@ -10,7 +10,7 @@
 
 from django import template
 import urllib, hashlib
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, resolve
 
 register = template.Library()
 
@@ -37,6 +37,37 @@ class GravatarUrlNode(template.Node):
         gravatar_url += urllib.urlencode({'s':str(size), 'd' : 'monsterid'})
 
         return gravatar_url
+
+@register.simple_tag(takes_context=True)
+def metadata(context):
+    request = context['request']
+    if resolve(request.path).url_name  == 'activity_details':
+        activity = context['activity']
+        meta = metadatos_generico(activity.title,activity.get_description_text,activity.get_keywords, "https://maps.googleapis.com/maps/api/staticmap?center=" + str(activity.position.latitude) + "," +  str(activity.position.longitude) + "&zoom=13&size=250x250&maptype=roadmap&markers=color:red%7Clabel: %7C" + str(activity.position.latitude) + "," +  str(activity.position.longitude),request.build_absolute_uri(reverse('activity_details',args=[activity.id])))
+    else:
+        meta = metadatos_generico("Druzi","Druzi, un lugar donde conocer gente acudiendo a actividades o creando tus propias actividades","actividades,social,amigos,eventos","http://127.0.0.1:8000/static/webapp/images/logo-color.png", "http://127.0.0.1:8000")
+    return meta
+
+def metadatos_generico(title,description,keywords, image, url):
+    meta = '<title>%s</title>' \
+           '<meta name="title" content="%s"></meta>' \
+           '<meta name="description" content="%s"></meta>' \
+            '<meta name="keywords" content="%s"></meta>' \
+           '<meta name="og:locale" content="es_ES"></meta>' \
+           '<meta name="og:type" content="article"></meta>' \
+           '<meta name="og:title" content="%s"></meta>' \
+           '<meta name="og:description" content="%s"></meta>' \
+           '<meta name="og:url" content="%s"></meta>' \
+           '<meta name="og:site_name" content="Druzi"></meta>' \
+           '<meta name="article:publisher" content="https://www.facebook.com/elestudiodelpintor/"></meta>' \
+           '<meta name="fb:admins" content="1024020701"></meta>' \
+           '<meta name="og:image" content="%s"></meta>' \
+            '<meta name="twitter:card" content="summary_large_image"></meta>' \
+            '<meta name="twitter:title" content="%s"></meta>' \
+            '<meta name="twitter:site" content="@BeevaDruzi"></meta>' \
+            '<meta name="twitter:domain" content="Druzi"></meta>' \
+            '<meta name="twitter:image:src" content="%s"></meta>' % (title,title,description, keywords, title, description, url,image, title,image)
+    return meta
 
 @register.tag
 def gravatar_url(parser, token):
