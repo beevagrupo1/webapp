@@ -8,3 +8,9 @@ django-geoposition
 urllib3
 django-disqus
 django-bootstrap3-datetimepicker
+dj-database-url
+dj-static
+gunicorn
+psycopg2
+static
+wsgiref
