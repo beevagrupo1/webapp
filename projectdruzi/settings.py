@@ -117,7 +117,7 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     #os.path.join(BASE_DIR, '..', 'templates').replace('\\','/')
-    os.path.join(BASE_DIR, '../templates').replace('\\', '/'),
+    os.path.join(BASE_DIR, '..', 'templates').replace('\\', '/'),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
