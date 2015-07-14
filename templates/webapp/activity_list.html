@@ -3,8 +3,11 @@
 {% load gravatar %}
 
 {% block menu_list %}
-    <li class="active"><a href="{{ request.path }}">Listado<span
-            class="sr-only">(current)</span></a></li>
+    {% url 'my_list' as my_url %}
+    {% if request.path != my_url %}
+        <li class="active"><a href="{{ request.path }}">Listado<span
+                class="sr-only">(current)</span></a></li>
+    {% endif %}
 {% endblock %}
 {% block main %}
     <div class="row">
@@ -14,28 +17,33 @@
                     {% for activity in activity_list %}
                         <div class="row bloque">
                             <div class="panel">
-                                <a href="{% url 'activity_details' activity.id %}"><h4>{{ activity.title }}</h4></a>
-
+                                {% if url == 'activity_list_repeat' %}
+                                    {% if activity.id == origin %}
+                                        <h3><span class="label label-primary etiqueta-original">Original</span></h3>
+                                    {% endif %}
+                                {% endif %}
                                 <div class="col-md-7 description">
+                                    <a href="{% url 'activity_details' activity.id %}"><h4>{{ activity.title }}</h4>
+                                    </a>
                                     <p class="description">{{ activity.description|safe }}<p>
+                                    <li class="label descriptionplan list-group-item grupo">                                    
+                                        {{ activity.activity_date }}
+                                    </li>
+                                    <li class="label descriptionplan list-group-item grupo">                                    
+                                        {{ activity.price }} €
+                                    </li>
                                 </div>
                                 <div class="col-md-5 description">
-                                    <img class="img-rounded"
+                                    <img class="img-rounded img-responsive margen"
                                          src="https://maps.googleapis.com/maps/api/staticmap?center={{ activity.position.latitude|safe }},{{ activity.position.longitude|safe }}&zoom=13&size=250x250&maptype=roadmap
                                 &markers=color:red%7Clabel: %7C{{ activity.position.latitude|safe }},{{ activity.position.longitude|safe }}">
                                 </div>
-                                <div class="col-md-4 col-md descriptionplan">
-                                    {{ activity.activity_date }}
-                                </div>
-                                <div class="col-md-4 col-md descriptionplan">
-                                    {{ activity.price }} €
-                                </div>
                                 {% if user.is_authenticated %}
-                                    <div class="col-md-4 col-md descriptionplan">
+                                    <div class="col-md-12 col-md descriptionplan">
                                         {% if user in activity.participants.all %}
-                                            <a href="{% url 'activity_unenrrollment' activity.id %}">Borrate</a>
+                                            <a class="btn btn-lg btn-danger" href="{% url 'activity_unenrrollment' activity.id %}">Borrate</a>
                                         {% else %}
-                                            <a href="{% url 'activity_enrrollment' activity.id %}">Apuntate</a>
+                                            <a class="btn btn-lg btn-success" href="{% url 'activity_enrrollment' activity.id %}">Inscribete</a>
                                         {% endif %}
                                     </div>
                                 {% endif %}

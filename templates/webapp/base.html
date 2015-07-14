@@ -8,6 +8,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
+    {% metadata %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{% static 'webapp/images/favicon.ico' %}">
     <script src="{% static 'webapp/js/jquery.min.js' %}"></script>
@@ -99,8 +100,8 @@
 
 
                                     <div class="social-buttons col-md-12">
-                                        <a class="btn btn-primary social-login-btn social-github"
-                                           href="{% url 'social:begin' 'disqus' %}"><i class="fa fa-disqus"></i></a>
+                                        <a class="btn btn-primary social-login-btn social-disqus"
+                                           href="{% url 'social:begin' 'disqus' %}"><span class="socicon socicon-disqus"></span></a>
                                     </div>
                                     <div class="social-buttons col-md-12" id="googleBtn">
                                         <a class="btn btn-primary social-login-btn social-google"><i

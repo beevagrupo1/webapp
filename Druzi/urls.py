@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^activity/propuestos/list/$', views.activity_mas_propuestos_pagination, name='activity_mas_propuestos_pagination'),
     url(r'^activity/propuestos/list/page/(?P<page>[0-9]+)/$', views.activity_mas_propuestos_pagination, name='activity_mas_propuestos_pagination'),
     url(r'^activity/get/(?P<id>[.\w]+)/$', views.activity_details, name='activity_details'),
+    url(r'^activity/get/(?P<id>[.\w]+)/repeat$', views.activity_repeat, name='activity_repeat'),
     url(r'^activity/get/(?P<id>[.\w]+)/enrollment$', views.activity_enrrolment, name='activity_enrrollment'),
     url(r'^activity/get/(?P<id>[.\w]+)/unenrollment$', views.activity_unenrrolment, name='activity_unenrrollment'),
     url(r'^search/$', views.search, name='search'),
