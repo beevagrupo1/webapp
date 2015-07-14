@@ -135,16 +135,16 @@ body {
     color: #4c699e;
 }
 
-.social-github {
-    background-color: #000000;
-    border-color: #ffffff;
-    color: #ffffff;
+.social-disqus {
+    background-color: #ffffff;
+    border-color: #2E9FFF;
+    color: #2E9FFF;
 }
 
-.social-github:hover {
-    background-color: #ffffff;
-    border-color: #000000;
-    color: #000000;
+.social-disqus:hover {
+    background-color: #2E9FFF;
+    border-color: #2E9FFF;
+    color: #ffffff;
 }
 
 .social-buttons {
@@ -318,8 +318,10 @@ p + p {
 }
 
 .descriptionplan {
-    margin-bottom: 20px;
-    background-color: #ffffff;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    background-color: #FFFFFF;
+    color: #000000;
     border: 1px solid transparent;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0);
@@ -425,4 +427,50 @@ p + p {
 .row {
     margin-top: 30px;
 }
+
+.grupo {
+  position: relative;
+  display: block;
+  padding: 13px 13px;
+  margin-bottom: -1px;
+  background-color: rgba(255, 101, 46, 0.4) !important;
+  color: #FFFFFF;
+  border: 1px solid #dddddd;
+  border-color: #FF5722;
+  font-size: 11pt; 
+}
+
+.etiqueta-original {
+    position: absolute;
+    top: 19px;
+    left: 16px;
+}
+
+@font-face {
+    font-family: 'socicon';
+    src: url('socicon/font/socicon.eot');
+    src: url('socicon/font/socicon.eot?#iefix') format('embedded-opentype'),
+         url('socicon/font/socicon.woff') format('woff'),
+         url('socicon/font/socicon.ttf') format('truetype'),
+         url('socicon/font/socicon.svg#sociconregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    text-transform: initial;
+}
+
+.socicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'socicon';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+.socicon:empty{
+    width: 1em;
+}
+
+.socicon-disqus:before { content: ":"; }
 

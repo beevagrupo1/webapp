@@ -17,7 +17,7 @@ class ActivityForm(forms.ModelForm):
     description = forms.CharField(label='Descripcion', 
                         widget=forms.Textarea(attrs={'placeholder': 'Descripcion, usa hastags para hacer tu plan mas visible a los usuarios...'}))    
     place_name = forms.CharField(label='Nombre del lugar')  
-    price = forms.IntegerField(label='Precio')
+    price = forms.FloatField(label='Precio')
     limit_participants = forms.IntegerField(label='Limite de participantes')
     position = GeopositionField(label="Posicion")
 

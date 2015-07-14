@@ -178,7 +178,45 @@ def activity_unenrrolment(request, id):
     enrollment = Enrollment.objects.get(activity=activity, user=request.user)
     enrollment.delete()
     messages.success(request, "Te has borrado correctamente a la actividad")
-    return HttpResponseRedirect(reverse('activity_details', kwargs={'id': id}))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+def activity_repeat(request, id):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = ActivityForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            activity = form.save(commit=False)
+            activity.user_own = request.user
+            activity.parent_id = id
+            activity.save()
+            tags = re.compile("\S*#(?:\[[^\]]+\]|\S+)").findall(activity.description)
+            description = activity.description
+            for t in tags:
+                pos = activity.description.index(t)
+                temp = Tag.objects.get_or_create(name=t[1:])[0]
+                description = description.replace(t, '<a href="/search/tag/' + temp.name + '/">' + t + '</a>')
+                temp.count = temp.count + 1
+                temp.save()
+                if temp:
+                    TagAppear(activity=activity, tag=temp, position=pos).save()
+                else:
+                    tag = Tag(name=t[1:]).save()
+                    TagAppear(activity=activity, tag=tag, position=pos).save()
+            activity.description = description
+            activity.save()
+            messages.success(request, 'Se ha creado correctamente la actividad')
+            return HttpResponseRedirect('/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        activity = Activity.objects.get(id=id)
+        new_activity = activity.clone(request.user)
+        form =  ActivityForm(instance=new_activity)
+
+    return render(request, 'webapp/actvity_creation.html', {'form': form})
 
 
 def tags_autocomplete(request, text):
@@ -228,3 +266,20 @@ def activity_details(request, id):
     activity.visit_count = activity.visit_count + 1
     activity.save()
     return render(request, 'webapp/activity_details.html', {"activity": activity})
+
+@login_required
+def activity_list_repeat(request, id, page="1"):
+    activity_list = Activity.objects.filter(Q(parent_id=id) | Q(id=id))
+    paginator = Paginator(activity_list, 10)
+    try:
+        lista = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        lista = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        lista = paginator.page(paginator.num_pages)
+
+    return render(request, 'webapp/activity_list.html',
+                  {"activity_list": lista, "page": int(page), "last": paginator.num_pages,
+                   'url': 'activity_list_repeat', 'origin' : int(id)})
