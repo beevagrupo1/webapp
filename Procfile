@@ -1,1 +1,1 @@
-web: gunicorn Druzi.wsgi --log-file -
+web: gunicorn projectdruzi.wsgi --log-file -
