@@ -200,3 +200,7 @@ def activity_details(request,id):
     activity.visit_count = activity.visit_count+1
     activity.save()
     return render(request, 'webapp/activity_details.html', {"activity": activity})
+
+def stars_post(request, text):
+    
+    return ok

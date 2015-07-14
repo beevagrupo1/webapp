@@ -41,4 +41,5 @@ urlpatterns = [
     url(ur'^tags/(?P<text>.*)/$', views.tags_autocomplete, name='tags_autocomplete'),
     url(r'^activity/mylist/list/$', views.activity_mylist_pagination, name='my_list'),
     url(r'^activity/mylist/list/page/(?P<page>[0-9]+)/$', views.activity_mylist_pagination, name='my_list'),
+    url(r'^activity/get/(?P<id>[.\w]+)/stars_post/$', views.stars_post, name='stars_post'),
 ]
