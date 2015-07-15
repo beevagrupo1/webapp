@@ -173,8 +173,8 @@ def activity_enrrolment(request, slug, id):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else :
          enrollment.save()
-        messages.success(request, "Te has apuntado correctamente a la actividad")
-        return HttpResponseRedirect(reverse('activity_details', kwargs={'slug' : slug, 'id': id}))
+         messages.success(request, "Te has apuntado correctamente a la actividad")
+         return HttpResponseRedirect(reverse('activity_details', kwargs={'slug' : slug, 'id': id}))
 
 @login_required
 def activity_unenrrolment(request, slug, id):
