@@ -41,7 +41,8 @@
             <div class="input-group col-md-6">
                 {% if activity.is_enable %}
                     {% if activity.user_own == user %}
-                        <a class="btn btn-primary margen" href="{% url 'activity_remove' activity.id %}">Eliminar actividad</a>  
+                        <a class="btn btn-primary margen" href="{% url 'activity_remove' activity.id %}">Eliminar actividad</a> 
+                        <a class="btn btn-primary margen" href="{% url 'activity_modify' activity.id %}">Modificar actividad</a>   
                     {% endif %}
                 {% endif %}
             </div>

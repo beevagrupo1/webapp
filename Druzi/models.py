@@ -29,7 +29,7 @@ class Activity(models.Model):
     @property
     def is_enable(self):
         a = timezone.now() - self.creation_date
-        if a.total_seconds() < 10*60: #10*60 are 10 minutes
+        if a.total_seconds() < 5*60: #5*60 are 5 minutes
             return True
         return False    
     
