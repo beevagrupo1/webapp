@@ -72,7 +72,7 @@ def activity_pagination(request, page="1"):
         list = paginator.page(paginator.num_pages)
 
     return render(request, 'webapp/activity_list.html',
-                  {"activity_list": list, "page": page, "last": paginator.num_pages, 'url': 'activity_list_page'})
+                  {"activity_list": list, 'url': 'activity_list_page'})
 
 
 def activity_ultimos_propuestos_pagination(request, page="1"):
@@ -89,8 +89,7 @@ def activity_ultimos_propuestos_pagination(request, page="1"):
         list = paginator.page(paginator.num_pages)
 
     return render(request, 'webapp/activity_list.html',
-                  {"activity_list": list, "page": int(page), "last": paginator.num_pages,
-                   'url': 'activity_ultimos_propuestos_pagination'})
+                  {"activity_list": list, 'url': 'activity_ultimos_propuestos_pagination'})
 
 
 def activity_mas_buscados_pagination(request, page="1"):
@@ -107,8 +106,7 @@ def activity_mas_buscados_pagination(request, page="1"):
         list = paginator.page(paginator.num_pages)
 
     return render(request, 'webapp/activity_list.html',
-                  {"activity_list": list, "page": int(page), "last": paginator.num_pages,
-                   'url': 'activity_mas_buscados_pagination'})
+                  {"activity_list": list, 'url': 'activity_mas_buscados_pagination'})
 
 
 def activity_mas_baratos_pagination(request, page="1"):
@@ -125,8 +123,7 @@ def activity_mas_baratos_pagination(request, page="1"):
         list = paginator.page(paginator.num_pages)
 
     return render(request, 'webapp/activity_list.html',
-                  {"activity_list": list, "page": int(page), "last": paginator.num_pages,
-                   'url': 'activity_mas_baratos_pagination'})
+                  {"activity_list": list, 'url': 'activity_mas_baratos_pagination'})
 
 
 def activity_mas_propuestos_pagination(request, page="1"):
@@ -144,8 +141,7 @@ def activity_mas_propuestos_pagination(request, page="1"):
         lista = paginator.page(paginator.num_pages)
 
     return render(request, 'webapp/activity_list.html',
-                  {"activity_list": lista, "page": int(page), "last": paginator.num_pages,
-                   'url': 'activity_mas_propuestos_pagination'})
+                  {"activity_list": lista, 'url': 'activity_mas_propuestos_pagination'})
 
 
 @login_required
@@ -162,8 +158,7 @@ def activity_mylist_pagination(request, page="1"):
         lista = paginator.page(paginator.num_pages)
 
     return render(request, 'webapp/activity_list.html',
-                  {"activity_list": lista, "page": int(page), "last": paginator.num_pages,
-                   'url': 'activity_mylist_pagination'})
+                  {"activity_list": lista, 'url': 'activity_mylist_pagination'})
 
 
 @login_required
@@ -312,8 +307,7 @@ def activity_list_repeat(request, slug, id, page="1"):
         lista = paginator.page(paginator.num_pages)
 
     return render(request, 'webapp/activity_list.html',
-                  {"activity_list": lista, "page": int(page), "last": paginator.num_pages,
-                   'url': 'activity_list_repeat', 'origin' : int(id)})
+                  {"activity_list": lista, 'url': 'activity_list_repeat', 'origin' : int(id)})
                    
 @login_required
 def activity_remove(request, slug, id):
