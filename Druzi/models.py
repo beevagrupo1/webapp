@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from geoposition.fields import GeopositionField
 from django.contrib.auth.models import User
-import datetime
+from datetime import datetime
 from django.utils.html import strip_tags
 from django.utils import timezone
 
@@ -28,7 +28,7 @@ class Activity(models.Model):
 
     @property
     def is_enable(self):
-        a = datetime.now() - self.creation_date
+        a = timezone.now() - self.creation_date
         if a.total_seconds() < 10*60: #10*60 are 10 minutes
             return True
         return False    

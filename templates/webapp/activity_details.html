@@ -38,6 +38,13 @@
                             class="badge">{{ activity.num_repeats }}</span></a>
                 </div>
             </div>
+            <div class="input-group col-md-6">
+                {% if activity.is_enable %}
+                    {% if activity.user_own == user %}
+                        <a class="btn btn-primary margen" href="{% url 'activity_remove' activity.id %}">Eliminar actividad</a>  
+                    {% endif %}
+                {% endif %}
+            </div>
         </div>
         <div class="row">
             <div class="col-md-8 col-md-offset-2">

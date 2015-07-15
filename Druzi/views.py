@@ -289,9 +289,11 @@ def activity_remove(request, id):
     activity = Activity.objects.get(id=id)
     if request.user == activity.user_own:
         if activity.is_enable:
-            activity.remove()
+            activity.delete()
             messages.success(request, "Has borrado correctamente a la actividad")
         else:
             messages.warning(request, "Estas intentando borrar una actividad en un tiempo excesivo")
+    else:
+        messages.warning(request, "Estas intentando borrar una actividad que no has creado tu ")
     return HttpResponseRedirect('/')
         
