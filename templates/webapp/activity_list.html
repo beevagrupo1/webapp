@@ -40,10 +40,12 @@
                                 </div>
                                 {% if user.is_authenticated %}
                                     <div class="col-md-12 col-md descriptionplan">
-                                        {% if user in activity.participants.all %}
-                                            <a class="btn btn-lg btn-danger" href="{% url 'activity_unenrrollment' activity.get_slug activity.id  %}">Borrate</a>
-                                        {% else %}
-                                            <a class="btn btn-lg btn-success" href="{% url 'activity_enrrollment' activity.get_slug activity.id  %}">Inscribete</a>
+                                        {% if activity.is_open %}
+                                            {% if user in activity.participants.all %}
+                                                <a class="btn btn-lg btn-danger" href="{% url 'activity_unenrrollment' activity.get_slug activity.id  %}">Borrate</a>
+                                            {% else %}
+                                                <a class="btn btn-lg btn-success" href="{% url 'activity_enrrollment' activity.get_slug activity.id  %}">Inscribete</a>
+                                            {% endif %}
                                         {% endif %}
                                     </div>
                                 {% endif %}
