@@ -243,7 +243,7 @@ def search(request):
         first = True
         list = []
         if query["query"] == "":
-            messages.info(request, "Tienes que introducir algun valor de busqueda")
+            messages.info(request, "Tienes que introducir algun valor de busqueda, si ya lo has introducido, recuerda pulsar al ENTER antes de dar al boton Buscar")
             return HttpResponseRedirect('/')
         else:
             for i, criteria in enumerate(query["query"].split(',')):
