@@ -28,15 +28,23 @@
                 </small>
             </h1>
             <div class="input-group col-md-2">
-                <a href="{% url 'activity_repeat' activity.get_id_repeat %}" class="form-control btn btn-primary"><i
+                <a href="{% url 'activity_repeat' activity.get_slug activity.get_id_repeat %}" class="form-control btn btn-primary"><i
                         class="fa fa-code-fork"></i>
                     Repetir
                 </a>
 
                 <div class="input-group-btn">
-                    <a href="{% url 'activity_list_repeat' activity.get_id_repeat %}" class="btn btn-default"><span
+                    <a href="{% url 'activity_list_repeat' activity.get_slug activity.get_id_repeat %}" class="btn btn-default"><span
                             class="badge">{{ activity.num_repeats }}</span></a>
                 </div>
+            </div>
+            <div class="input-group col-md-6">
+                {% if activity.is_enable %}
+                    {% if activity.user_own == user %}
+                        <a class="btn btn-primary margen" href="{% url 'activity_remove' activity.get_slug activity.id %}">Eliminar actividad</a>
+                        <a class="btn btn-primary margen" href="{% url 'activity_modify' activity.get_slug activity.id %}">Modificar actividad</a>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
         <div class="row">
@@ -172,9 +180,9 @@
                     <h3>No hay participantes inscritos, se el primero en inscribirte</h3>
                 {% endif %}
                 {% if user in activity.participants.all %}
-                    <a class="btn btn-lg btn-danger" href="{% url 'activity_unenrrollment' activity.id %}">Borrate</a>
+                    <a class="btn btn-lg btn-danger" href="{% url 'activity_unenrrollment' activity.get_slug activity.id %}">Borrate</a>
                 {% else %}
-                    <a class="btn btn-lg btn-success" href="{% url 'activity_enrrollment' activity.id %}">Inscribete</a>
+                    <a class="btn btn-lg btn-success" href="{% url 'activity_enrrollment' activity.get_slug activity.id %}">Inscribete</a>
                 {% endif %}
             </div>
         </div>
