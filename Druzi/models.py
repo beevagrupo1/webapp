@@ -1,10 +1,13 @@
+from unicodedata import decimal
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import permalink
 from geoposition.fields import GeopositionField
 from django.contrib.auth.models import User
-import datetime
+from datetime import datetime
 from django.utils.html import strip_tags
 from django.utils import timezone
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 class Activity(models.Model):
@@ -22,10 +25,21 @@ class Activity(models.Model):
     participants = models.ManyToManyField(User, default=0, through="Enrollment", related_name="participants")
     tags = models.ManyToManyField("Tag", through="TagAppear", related_name="tags")
     visit_count = models.IntegerField(default=0)
+    sum_rating = models.FloatField(default=0.0)
+    count_rating = models.IntegerField(default=0)
 
     def clone(self, user):
-        return Activity(title=self.title, description=strip_tags(self.description), position = self.position, place_name = self.place_name, parent = self, price=self.price, limit_participants = self.limit_participants, user_own = user)
+        return Activity(title=self.title, description=strip_tags(self.description), position=self.position,
+                        place_name=self.place_name, parent=self, price=self.price,
+                        limit_participants=self.limit_participants, user_own=user)
 
+    @property
+    def is_enable(self):
+        a = timezone.now() - self.creation_date
+        if a.total_seconds() < 5*60: #5*60 are 5 minutes
+            return True
+        return False    
+    
     @property
     def is_open(self):
         if self.activity_date > timezone.now():
@@ -35,11 +49,18 @@ class Activity(models.Model):
     @property
     def num_repeats(self):
         if self.parent == None:
-            num = Activity.objects.filter(parent = self).count()
+            num = Activity.objects.filter(parent=self).count()
             return num
         else:
-            num = Activity.objects.filter(parent = self.parent).count()
+            num = Activity.objects.filter(parent=self.parent).count()
             return num
+
+    @property
+    def get_rating(self):
+        if self.count_rating==0:
+            return 0
+        else:
+            return float(self.sum_rating / self.count_rating).__format__("f")
 
     @property
     def get_description_text(self):
@@ -58,6 +79,23 @@ class Activity(models.Model):
         for tag in self.tags.all():
             keywords = keywords.join(tag.name + ",")
         return keywords
+
+    @property
+    def get_slug(self):
+        return slugify(self.title)
+
+    @permalink
+    def get_absolute_url(self):
+        return ('activity_details', (),  {
+            'slug': self.get_slug,
+            'id': self.id,
+        })
+
+class Rating(models.Model):
+    activity = models.ForeignKey("Activity")
+    user = models.ForeignKey(User)
+    creation_date = models.DateTimeField(auto_now_add=True)
+    rating = models.FloatField(default=0.0)
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, primary_key=True)

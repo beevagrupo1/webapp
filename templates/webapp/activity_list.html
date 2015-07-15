@@ -23,13 +23,14 @@
                                     {% endif %}
                                 {% endif %}
                                 <div class="col-md-7 description">
-                                    <a href="{% url 'activity_details' activity.id %}"><h4>{{ activity.title }}</h4>
+                                    <a href="{{ activity.get_absolute_url }}"><h4>{{ activity.title }}</h4>
                                     </a>
+
                                     <p class="description">{{ activity.description|safe }}<p>
-                                    <li class="label descriptionplan list-group-item grupo">                                    
+                                    <li class="label descriptionplan list-group-item grupo">
                                         {{ activity.activity_date }}
                                     </li>
-                                    <li class="label descriptionplan list-group-item grupo">                                    
+                                    <li class="label descriptionplan list-group-item grupo">
                                         {{ activity.price }} €
                                     </li>
                                 </div>
@@ -40,34 +41,45 @@
                                 </div>
                                 {% if user.is_authenticated %}
                                     <div class="col-md-12 col-md descriptionplan">
-                                        {% if user in activity.participants.all %}
-                                            <a class="btn btn-lg btn-danger" href="{% url 'activity_unenrrollment' activity.id %}">Borrate</a>
+                                        {% if activity.is_open %}
+                                            {% if user in activity.participants.all %}
+                                                <a class="btn btn-lg btn-danger"
+                                                   href="{% url 'activity_unenrrollment' activity.get_slug activity.id %}">Borrate</a>
+                                            {% else %}
+                                                <a class="btn btn-lg btn-success"
+                                                   href="{% url 'activity_enrrollment' activity.get_slug activity.id %}">Inscribete</a>
+                                            {% endif %}
                                         {% else %}
-                                            <a class="btn btn-lg btn-success" href="{% url 'activity_enrrollment' activity.id %}">Inscribete</a>
+                                            <a class="btn btn-lg btn-warning fin"
+                                               href="{{ activity.get_absolute_url }}">Plan terminado, entra a
+                                                valorarlo!</a>
                                         {% endif %}
+                                        
                                     </div>
                                 {% endif %}
                             </div>
                         </div>
                     {% endfor %}
-                    {% if page %}
-                        <nav>
-                            <ul class="pager">
-                                {% if page != 1 %}
-                                    <li class="previous"><a
-                                            href="{% url url page|add:"-1" %}"><span aria-hidden="true">&larr;</span>
-                                        Anteriores</a></li>
-                                {% endif %}
-                                {% if page != last %}
-                                    <li class="next"><a href="{% url url page|add:"1" %}">Siguientes
-                                        <span aria-hidden="true">&rarr;</span></a></li>
-                                {% endif %}
-                            </ul>
-                        </nav>
-                    {% endif %}
+                    <nav>
+                        <ul class="pager">
+                            {% if activity_list.has_previous %}
+                                <li class="previous"><a
+                                        href="{% url url activity_list.previous_page_number %}"><span
+                                        aria-hidden="true">&larr;</span>
+                                    Anteriores</a></li>
+                            {% endif %}
+                            <li class="current">
+                                <span aria-hidden="true">Pagina {{ activity_list.number }} de {{ activity_list.paginator.num_pages }}</span>
+                            </li>
+                            {% if activity_list.has_next %}
+                                <li class="next"><a href="{% url url activity_list.next_page_number %}">Siguientes
+                                    <span aria-hidden="true">&rarr;</span></a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
                 </div>
             {% else %}
-                <h3>No hay planes activos</h3>
+                <h3 align="center">No se encuentra ningun plan con estos parametros de busqueda</h3>
             {% endif %}
         </div>
     </div>

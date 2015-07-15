@@ -43,7 +43,7 @@ def metadata(context):
     request = context['request']
     if resolve(request.path).url_name  == 'activity_details':
         activity = context['activity']
-        meta = metadatos_generico(activity.title,activity.get_description_text,activity.get_keywords, "https://maps.googleapis.com/maps/api/staticmap?center=" + str(activity.position.latitude) + "," +  str(activity.position.longitude) + "&zoom=13&size=250x250&maptype=roadmap&markers=color:red%7Clabel: %7C" + str(activity.position.latitude) + "," +  str(activity.position.longitude),request.build_absolute_uri(reverse('activity_details',args=[activity.id])))
+        meta = metadatos_generico(activity.title,activity.get_description_text,activity.get_keywords, "https://maps.googleapis.com/maps/api/staticmap?center=" + str(activity.position.latitude) + "," +  str(activity.position.longitude) + "&zoom=13&size=250x250&maptype=roadmap&markers=color:red%7Clabel: %7C" + str(activity.position.latitude) + "," +  str(activity.position.longitude),request.build_absolute_uri(reverse('activity_details',args=[activity.get_slug, activity.id])))
     else:
         meta = metadatos_generico("Druzi","Druzi, un lugar donde conocer gente acudiendo a actividades o creando tus propias actividades","actividades,social,amigos,eventos","http://127.0.0.1:8000/static/webapp/images/logo-color.png", "http://127.0.0.1:8000")
     return meta
@@ -66,7 +66,7 @@ def metadatos_generico(title,description,keywords, image, url):
             '<meta name="twitter:title" content="%s"></meta>' \
             '<meta name="twitter:site" content="@BeevaDruzi"></meta>' \
             '<meta name="twitter:domain" content="Druzi"></meta>' \
-            '<meta name="twitter:image:src" content="%s"></meta>' % (title,title,description, keywords, title, description, url,image, title,image)
+            '<meta name="twitter:image" content="%s"></meta>' % (title,title,description, keywords, title, description, url,image, title,image)
     return meta
 
 @register.tag

@@ -28,15 +28,23 @@
                 </small>
             </h1>
             <div class="input-group col-md-2">
-                <a href="{% url 'activity_repeat' activity.get_id_repeat %}" class="form-control btn btn-primary"><i
+                <a href="{% url 'activity_repeat' activity.get_slug activity.get_id_repeat %}" class="form-control btn btn-primary"><i
                         class="fa fa-code-fork"></i>
                     Repetir
                 </a>
 
                 <div class="input-group-btn">
-                    <a href="{% url 'activity_list_repeat' activity.get_id_repeat %}" class="btn btn-default"><span
+                    <a href="{% url 'activity_list_repeat' activity.get_slug activity.get_id_repeat %}" class="btn btn-default"><span
                             class="badge">{{ activity.num_repeats }}</span></a>
                 </div>
+            </div>
+            <div class="input-group col-md-6">
+                {% if activity.is_enable %}
+                    {% if activity.user_own == user %}
+                        <a class="btn btn-primary margen" href="{% url 'activity_remove' activity.get_slug activity.id %}">Eliminar actividad</a>
+                        <a class="btn btn-primary margen" href="{% url 'activity_modify' activity.get_slug activity.id %}">Modificar actividad</a>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
         <div class="row">
@@ -44,7 +52,7 @@
                 <div class="rrssb-buttons clearfix">
                     <ul class="rrssb-buttons">
                         <li class="rrssb-facebook">
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.path }}"
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=http://{{ request.META.HTTP_HOST }}{{ activity.get_absolute_url }}"
                                class="popup">
                         <span class="rrssb-icon"><svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"
                                                       width="29" height="29" viewBox="0 0 29 29">
@@ -55,7 +63,7 @@
                             </a>
                         </li>
                         <li class="rrssb-twitter">
-                            <a href="https://twitter.com/intent/tweet?text=Share your activity!&url=http%3A%2F%2F127.0.0.1:8000{{request.path}}"
+                            <a href="https://twitter.com/intent/tweet?&url=http://{{ request.META.HTTP_HOST }}{{ activity.get_absolute_url }}"
                                class="popup">
                         <span class="rrssb-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
                                                       viewBox="0 0 28 28">
@@ -65,7 +73,7 @@
                             </a>
                         </li>
                         <li class="rrssb-googleplus">
-                            <a href="https://plus.google.com/share?url=http://127.0.0.1:8000{{request.path}}" class="popup">
+                            <a href="https://plus.google.com/share?url=http://{{ request.META.HTTP_HOST }}{{ activity.get_absolute_url }}" class="popup">
                         <span class="rrssb-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
                                                       viewBox="0 0 28 28">
                             <path d="M14.703 15.854l-1.22-.948c-.37-.308-.88-.715-.88-1.46 0-.747.51-1.222.95-1.662 1.42-1.12 2.84-2.31 2.84-4.817 0-2.58-1.62-3.937-2.4-4.58h2.098l2.203-1.384h-6.67c-1.83 0-4.467.433-6.398 2.027C3.768 4.287 3.06 6.018 3.06 7.576c0 2.634 2.02 5.328 5.603 5.328.34 0 .71-.033 1.083-.068-.167.408-.336.748-.336 1.324 0 1.04.55 1.685 1.01 2.297-1.523.104-4.37.273-6.466 1.562-1.998 1.187-2.605 2.915-2.605 4.136 0 2.512 2.357 4.84 7.288 4.84 5.822 0 8.904-3.223 8.904-6.41.008-2.327-1.36-3.49-2.83-4.73h-.01zM10.27 11.95c-2.913 0-4.232-3.764-4.232-6.036 0-.884.168-1.797.744-2.51.543-.68 1.49-1.12 2.372-1.12 2.807 0 4.256 3.797 4.256 6.24 0 .613-.067 1.695-.845 2.48-.537.55-1.438.947-2.295.95v-.003zm.032 13.66c-3.62 0-5.957-1.733-5.957-4.143 0-2.408 2.165-3.223 2.91-3.492 1.422-.48 3.25-.545 3.556-.545.34 0 .52 0 .767.034 2.574 1.838 3.706 2.757 3.706 4.48-.002 2.072-1.736 3.664-4.982 3.648l.002.017zM23.254 11.89V8.52H21.57v3.37H18.2v1.714h3.367v3.4h1.684v-3.4h3.4V11.89"/>
@@ -150,13 +158,23 @@
     </div>
 
     <div class="col-md-8 col-md-offset-2">
-        {% if user.is_authenticated %}
-            <div id="rateYo"></div>
+        {% if not activity.is_open %}
+            {% if user.is_authenticated %}
+                {% if user in activity.participants.all %}
+                    <div class="col-md-4 pull-left margen"><center class="text-danger">Tu Rating</center>
+                        <center><div id="rateYo"></div></center>
+                    </div>  
+                {% endif %}
+            {% endif %}
+            <div class="col-md-4 pull-right margen"><center class="text-danger"><strong style="font-size:20px">Rating general</strong></center>
+                <center><div id="rateYo2"></div></center>
+            </div>
         {% endif %}
+        
         <div class="row">
             <div class="col-md-12 text-center">
                 {% if activity.participants.all %}
-                    <div class="panel panel-default">
+                    <div class="panel panel-default margen">
                         <div class="panel-heading">
                             <h3 class="panel-title">Participantes inscritos</h3>
                         </div>
@@ -171,10 +189,14 @@
                 {% else %}
                     <h3>No hay participantes inscritos, se el primero en inscribirte</h3>
                 {% endif %}
-                {% if user in activity.participants.all %}
-                    <a class="btn btn-lg btn-danger" href="{% url 'activity_unenrrollment' activity.id %}">Borrate</a>
-                {% else %}
-                    <a class="btn btn-lg btn-success" href="{% url 'activity_enrrollment' activity.id %}">Inscribete</a>
+                {% if user.is_authenticated %}
+                    {% if activity.is_open %}
+                        {% if user in activity.participants.all %}
+                            <a class="btn btn-lg btn-danger" href="{% url 'activity_unenrrollment' activity.get_slug activity.id %}">Borrate</a>
+                        {% else %}
+                            <a class="btn btn-lg btn-success" href="{% url 'activity_enrrollment' activity.get_slug activity.id %}">Inscribete</a>
+                        {% endif %}
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
@@ -191,14 +213,70 @@
     <script type="text/javascript" src="{% static 'webapp/js/jquery.rateyo.js' %}"></script>
 
     <script>
-
         $(function () {
+            // using jQuery
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            var csrftoken = getCookie('csrftoken');
 
-            $("#rateYo").rateYo({
-                halfStar: true,
-                ratedFill: "#ff5722"
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+            {% if user_rating %}
+            $("#rateYo").rateYo({rating : {{ user_rating.rating|safe }}, readOnly: true});
+            {% else %}
+            $("#rateYo").rateYo();
+            {% endif %}
+            $("#rateYo").on("rateyo.set", function (e, data) {
+                    $.ajax({
+                        url: "{% url 'stars_post' activity.id %}",
+                        type: "post",
+                        data: data,
+
+                        success: function(response) {
+                            if (response=="ok") {
+                                alert("Se ha recibido el voto correctamente");
+                                var count_rating = {{ activity.count_rating|safe }}
+                                var sum_rating = {{ activity.sum_rating|safe }}
+                                var ratM = $("#rateYo").rateYo("option","rating");
+                                $("#rateYo2").rateYo("option", "rating", (sum_rating + ratM)/(count_rating+1));
+                                $("#rateYo").rateYo("option","readOnly",true);
+                            } else {
+                                alert(response)
+                            }
+                        },
+
+                        error: function() {
+                            alert("Error en la votación, prueba en un rato")
+                        }
+
+
+                    });
             });
         });
+
+            $("#rateYo2").rateYo({rating : {{ activity.get_rating }}, readOnly: true, starWidth: "40px"});
 
     </script>
 {% endblock %}
