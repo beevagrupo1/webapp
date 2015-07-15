@@ -66,7 +66,7 @@ def metadatos_generico(title,description,keywords, image, url):
             '<meta name="twitter:title" content="%s"></meta>' \
             '<meta name="twitter:site" content="@BeevaDruzi"></meta>' \
             '<meta name="twitter:domain" content="Druzi"></meta>' \
-            '<meta name="twitter:image:src" content="%s"></meta>' % (title,title,description, keywords, title, description, url,image, title,image)
+            '<meta name="twitter:image" content="%s"></meta>' % (title,title,description, keywords, title, description, url,image, title,image)
     return meta
 
 @register.tag
