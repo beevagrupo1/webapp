@@ -3,7 +3,7 @@ from django.db.models import Count
 import operator
 import re
 from datetime import datetime
-from Druzi.models import Activity, Enrollment, Tag, TagAppear
+from Druzi.models import Activity, Enrollment, Tag, TagAppear, Rating
 from django.contrib import messages
 from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -269,9 +269,20 @@ def activity_details(request, id):
     return render(request, 'webapp/activity_details.html', {"activity": activity})
 
 def stars_post(request, id):
-    if request.method == 'POST':
-        rating = request.POST['rating']
-    return HttpResponse(rating, content_type='application/json')
+    activity = Activity.objects.get(id=id)
+    rating = Rating.objects.filter(activity=activity, user=request.user)
+    if rating.count() == 0:
+        if request.method == 'POST':
+            rating_val = request.POST['rating']
+            rating_val = float(rating_val)
+            rating_obj = Rating(activity=activity, user = request.user, rating=rating_val)
+            activity.sum_rating = activity.sum_rating + rating_val
+            activity.count_rating = activity.count_rating + 1
+            activity.save()
+            rating_obj.save()
+        return HttpResponse("ok", content_type='application/text')
+    else:
+        return HttpResponse("Ya habias votado esta actividad", content_type='application/text')
 
 @login_required
 def activity_list_repeat(request, id, page="1"):

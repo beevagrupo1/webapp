@@ -442,5 +442,6 @@
   $.fn.rateYo = rateYo;
 
 }(jQuery));
-
-
+  
+$('#rateYo').clone().prependTo('#rateYo');
+$('.rateYo').clone().appendTo('#rateYo').show();

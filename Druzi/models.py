@@ -22,6 +22,8 @@ class Activity(models.Model):
     participants = models.ManyToManyField(User, default=0, through="Enrollment", related_name="participants")
     tags = models.ManyToManyField("Tag", through="TagAppear", related_name="tags")
     visit_count = models.IntegerField(default=0)
+    sum_rating = models.FloatField(default=0.0)
+    count_rating = models.IntegerField(default=0)
 
     def clone(self, user):
         return Activity(title=self.title, description=strip_tags(self.description), position = self.position, place_name = self.place_name, parent = self, price=self.price, limit_participants = self.limit_participants, user_own = user)
@@ -58,6 +60,13 @@ class Activity(models.Model):
         for tag in self.tags.all():
             keywords = keywords.join(tag.name + ",")
         return keywords
+
+class Rating(models.Model):
+    activity = models.ForeignKey("Activity")
+    user = models.ForeignKey(User)
+    creation_date = models.DateTimeField(auto_now_add=True)
+    rating = models.FloatField(default=0.0)
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, primary_key=True)
