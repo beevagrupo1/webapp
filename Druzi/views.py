@@ -3,7 +3,7 @@ from django.db.models import Count
 import operator
 import re
 from datetime import datetime
-from Druzi.models import Activity, Enrollment, Tag, TagAppear
+from Druzi.models import Activity, Enrollment, Tag, TagAppear, Rating
 from django.contrib import messages
 from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -12,7 +12,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import ActivityForm
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 from django.utils import timezone
+
 
 # Create your views here.
 
@@ -273,7 +275,28 @@ def activity_details(request, slug, id):
     activity = Activity.objects.get(id=id)
     activity.visit_count = activity.visit_count + 1
     activity.save()
-    return render(request, 'webapp/activity_details.html', {"activity": activity})
+    user_rating = activity.rating_set.filter(user = request.user)
+    if user_rating.count()>0:
+        user_rating = user_rating[0]
+    else:
+        user_rating = None
+    return render(request, 'webapp/activity_details.html', {"activity": activity, "user_rating" : user_rating})
+
+def stars_post(request, id):
+    activity = Activity.objects.get(id=id)
+    rating = Rating.objects.filter(activity=activity, user=request.user)
+    if rating.count() == 0:
+        if request.method == 'POST':
+            rating_val = request.POST['rating']
+            rating_val = float(rating_val)
+            rating_obj = Rating(activity=activity, user = request.user, rating=rating_val)
+            activity.sum_rating = activity.sum_rating + rating_val
+            activity.count_rating = activity.count_rating + 1
+            activity.save()
+            rating_obj.save()
+        return HttpResponse("ok", content_type='application/text')
+    else:
+        return HttpResponse("Ya habias votado esta actividad", content_type='application/text')
 
 @login_required
 def activity_list_repeat(request, slug, id, page="1"):

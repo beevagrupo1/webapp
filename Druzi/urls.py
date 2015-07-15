@@ -46,4 +46,5 @@ urlpatterns = [
     url(r'^activity/mylist/list/page/(?P<page>[0-9]+)/$', views.activity_mylist_pagination, name='my_list_page'),
     url(r'^activity/(?P<slug>[-\w\d]+),(?P<id>[.\w]+)/remove$', views.activity_remove, name='activity_remove'),
     url(r'^activity/(?P<slug>[-\w\d]+),(?P<id>[.\w]+)/modify$', views.activity_modify, name='activity_modify'),
+    url(r'^activity/get/(?P<id>[.\w]+)/stars_post/$', views.stars_post, name='stars_post'),
 ]

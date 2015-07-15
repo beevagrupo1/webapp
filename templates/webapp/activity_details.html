@@ -158,13 +158,23 @@
     </div>
 
     <div class="col-md-8 col-md-offset-2">
-        {% if user.is_authenticated %}
-            <div id="rateYo"></div>
+        {% if not activity.is_open %}
+            {% if user.is_authenticated %}
+                {% if user in activity.participants.all %}
+                    <div class="col-md-4 pull-left margen"><center class="text-danger">Tu Rating</center>
+                        <center><div id="rateYo"></div></center>
+                    </div>  
+                {% endif %}
+            {% endif %}
+            <div class="col-md-4 pull-right margen"><center class="text-danger"><strong style="font-size:20px">Rating general</strong></center>
+                <center><div id="rateYo2"></div></center>
+            </div>
         {% endif %}
+        
         <div class="row">
             <div class="col-md-12 text-center">
                 {% if activity.participants.all %}
-                    <div class="panel panel-default">
+                    <div class="panel panel-default margen">
                         <div class="panel-heading">
                             <h3 class="panel-title">Participantes inscritos</h3>
                         </div>
@@ -203,14 +213,70 @@
     <script type="text/javascript" src="{% static 'webapp/js/jquery.rateyo.js' %}"></script>
 
     <script>
-
         $(function () {
+            // using jQuery
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            var csrftoken = getCookie('csrftoken');
 
-            $("#rateYo").rateYo({
-                halfStar: true,
-                ratedFill: "#ff5722"
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+            {% if user_rating %}
+            $("#rateYo").rateYo({rating : {{ user_rating.rating|safe }}, readOnly: true});
+            {% else %}
+            $("#rateYo").rateYo();
+            {% endif %}
+            $("#rateYo").on("rateyo.set", function (e, data) {
+                    $.ajax({
+                        url: "{% url 'stars_post' activity.id %}",
+                        type: "post",
+                        data: data,
+
+                        success: function(response) {
+                            if (response=="ok") {
+                                alert("Se ha recibido el voto correctamente");
+                                var count_rating = {{ activity.count_rating|safe }}
+                                var sum_rating = {{ activity.sum_rating|safe }}
+                                var ratM = $("#rateYo").rateYo("option","rating");
+                                $("#rateYo2").rateYo("option", "rating", (sum_rating + ratM)/(count_rating+1));
+                                $("#rateYo").rateYo("option","readOnly",true);
+                            } else {
+                                alert(response)
+                            }
+                        },
+
+                        error: function() {
+                            alert("Error en la votación, prueba en un rato")
+                        }
+
+
+                    });
             });
         });
+
+            $("#rateYo2").rateYo({rating : {{ activity.get_rating }}, readOnly: true, starWidth: "40px"});
 
     </script>
 {% endblock %}
