@@ -285,7 +285,7 @@ def activity_list_repeat(request, slug, id, page="1"):
                    'url': 'activity_list_repeat', 'origin' : int(id)})
                    
 @login_required
-def activity_remove(request, id):
+def activity_remove(request, slug, id):
     activity = Activity.objects.get(id=id)
     if request.user == activity.user_own:
         if activity.is_enable:
@@ -298,7 +298,7 @@ def activity_remove(request, id):
     return HttpResponseRedirect('/')
 
 @login_required
-def activity_modify(request, id):
+def activity_modify(request, slug, id):
     activity = Activity.objects.get(id=id)
     if request.user == activity.user_own:
         if activity.is_enable:
@@ -335,7 +335,7 @@ def activity_modify(request, id):
                     activity.description = description
                     activity.save()
                     messages.success(request, 'Se ha modificado correctamente la actividad')
-                    return HttpResponseRedirect(reverse('activity_details', kwargs={'id': activity.id}))
+                    return HttpResponseRedirect(reverse('activity_details', kwargs={'slug' : slug , 'id': activity.id}))
         
             # if a GET (or any other method) we'll create a blank form
             else:
