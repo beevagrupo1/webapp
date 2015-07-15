@@ -1,11 +1,13 @@
 from unicodedata import decimal
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import permalink
 from geoposition.fields import GeopositionField
 from django.contrib.auth.models import User
-import datetime
+from datetime import datetime
 from django.utils.html import strip_tags
 from django.utils import timezone
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 class Activity(models.Model):
@@ -27,8 +29,17 @@ class Activity(models.Model):
     count_rating = models.IntegerField(default=0)
 
     def clone(self, user):
-        return Activity(title=self.title, description=strip_tags(self.description), position = self.position, place_name = self.place_name, parent = self, price=self.price, limit_participants = self.limit_participants, user_own = user)
+        return Activity(title=self.title, description=strip_tags(self.description), position=self.position,
+                        place_name=self.place_name, parent=self, price=self.price,
+                        limit_participants=self.limit_participants, user_own=user)
 
+    @property
+    def is_enable(self):
+        a = timezone.now() - self.creation_date
+        if a.total_seconds() < 5*60: #5*60 are 5 minutes
+            return True
+        return False    
+    
     @property
     def is_open(self):
         if self.activity_date > timezone.now():
@@ -38,10 +49,10 @@ class Activity(models.Model):
     @property
     def num_repeats(self):
         if self.parent == None:
-            num = Activity.objects.filter(parent = self).count()
+            num = Activity.objects.filter(parent=self).count()
             return num
         else:
-            num = Activity.objects.filter(parent = self.parent).count()
+            num = Activity.objects.filter(parent=self.parent).count()
             return num
 
     @property
@@ -69,13 +80,22 @@ class Activity(models.Model):
             keywords = keywords.join(tag.name + ",")
         return keywords
 
+    @property
+    def get_slug(self):
+        return slugify(self.title)
+
+    @permalink
+    def get_absolute_url(self):
+        return ('activity_details', (),  {
+            'slug': self.get_slug,
+            'id': self.id,
+        })
 
 class Rating(models.Model):
     activity = models.ForeignKey("Activity")
     user = models.ForeignKey(User)
     creation_date = models.DateTimeField(auto_now_add=True)
     rating = models.FloatField(default=0.0)
-
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, primary_key=True)

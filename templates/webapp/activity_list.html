@@ -23,7 +23,7 @@
                                     {% endif %}
                                 {% endif %}
                                 <div class="col-md-7 description">
-                                    <a href="{% url 'activity_details' activity.id %}"><h4>{{ activity.title }}</h4>
+                                    <a href="{{ activity.get_absolute_url }}"><h4>{{ activity.title }}</h4>
                                     </a>
                                     <p class="description">{{ activity.description|safe }}<p>
                                     <li class="label descriptionplan list-group-item grupo">                                    
@@ -40,10 +40,12 @@
                                 </div>
                                 {% if user.is_authenticated %}
                                     <div class="col-md-12 col-md descriptionplan">
-                                        {% if user in activity.participants.all %}
-                                            <a class="btn btn-lg btn-danger" href="{% url 'activity_unenrrollment' activity.id %}">Borrate</a>
-                                        {% else %}
-                                            <a class="btn btn-lg btn-success" href="{% url 'activity_enrrollment' activity.id %}">Inscribete</a>
+                                        {% if activity.is_open %}
+                                            {% if user in activity.participants.all %}
+                                                <a class="btn btn-lg btn-danger" href="{% url 'activity_unenrrollment' activity.get_slug activity.id  %}">Borrate</a>
+                                            {% else %}
+                                                <a class="btn btn-lg btn-success" href="{% url 'activity_enrrollment' activity.get_slug activity.id  %}">Inscribete</a>
+                                            {% endif %}
                                         {% endif %}
                                         
                                     </div>

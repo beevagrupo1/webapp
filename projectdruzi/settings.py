@@ -69,9 +69,6 @@ ROOT_URLCONF = 'projectdruzi.urls'
 WSGI_APPLICATION = 'projectdruzi.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -82,6 +79,10 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
 
 
 # Internationalization
@@ -103,7 +104,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = 'staticfiles'
 
 STATIC_URL = '/static/'
 
@@ -112,7 +113,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(BASE_DIR,'static'),
+    os.path.join(BASE_DIR, 'static'),
 )
 
 TEMPLATE_DIRS = (
@@ -182,3 +183,9 @@ BOOTSTRAP3 = {
 }
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+try:
+    if os.getenv('production','false') == 'true':
+        from heroku_settings import *
+except ImportError as e:
+    pass
