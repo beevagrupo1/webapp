@@ -165,13 +165,18 @@ def activity_mylist_pagination(request, page="1"):
 def activity_enrrolment(request, slug, id):
     activity = Activity.objects.get(id=id)
     enrollment = Enrollment(activity=activity, user=request.user)
+    count_participants = activity.participants.all().count()
     if activity.activity_date <= timezone.now() :
         messages.warning(request, "No te puedes inscribir, la actividad ya esta cerrada")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else :
-         enrollment.save()
-         messages.success(request, "Te has apuntado correctamente a la actividad")
-         return HttpResponseRedirect(reverse('activity_details', kwargs={'slug' : slug, 'id': id}))
+        if count_participants >= activity.limit_participants :
+            messages.warning(request, "No te puedes inscribir, se ha superado el limite de participantes")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else :
+            enrollment.save()
+            messages.success(request, "Te has apuntado correctamente a la actividad")
+            return HttpResponseRedirect(reverse('activity_details', kwargs={'id': id}))
 
 @login_required
 def activity_unenrrolment(request, slug, id):
