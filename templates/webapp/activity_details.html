@@ -150,17 +150,15 @@
     </div>
 
     <div class="col-md-8 col-md-offset-2">
-        {% if user.is_authenticated %}
-            {% if not activity.is_open %}
+        {% if not activity.is_open %}
+            {% if user.is_authenticated %}
                 {% if user in activity.participants.all %}
                     <div id="rateYo"></div>
-
-                    
-
                 {% endif %}
             {% endif %}
+            <div id="rateYo2"></div>
         {% endif %}
-        <div id="rateYo2"></div>
+
         <div class="row">
             <div class="col-md-12 text-center">
                 {% if activity.participants.all %}
@@ -229,35 +227,40 @@
                     }
                 }
             });
- 
-            $("#rateYo").rateYo()
-                          .on("rateyo.set", function (e, data) {
-                                $.ajax({
-                                    url: "{% url 'stars_post' activity.id %}",
-                                    type: "post",
-                                    data: data,
+            {% if user_rating %}
+            $("#rateYo").rateYo({rating : {{ user_rating.rating|safe }}, readOnly: true});
+            {% else %}
+            $("#rateYo").rateYo();
+            {% endif %}
+            $("#rateYo").on("rateyo.set", function (e, data) {
+                    $.ajax({
+                        url: "{% url 'stars_post' activity.id %}",
+                        type: "post",
+                        data: data,
 
-                                    success: function(data) {
-                                        if (data=="ok") {
-                                            alert("Se ha recibido el voto correctamente")
-                                            rating_obj = data+{{activity.sum_rating}}/{{activity.count_rating}}
-                                        } else {
-                                            alert(data)
-                                        }
-                                    },
+                        success: function(response) {
+                            if (response=="ok") {
+                                alert("Se ha recibido el voto correctamente");
+                                var count_rating = {{ activity.count_rating|safe }}
+                                var sum_rating = {{ activity.sum_rating|safe }}
+                                var ratM = $("#rateYo").rateYo("option","rating");
+                                $("#rateYo2").rateYo("option", "rating", (sum_rating + ratM)/(count_rating+1));
+                                $("#rateYo").rateYo("option","readOnly",true);
+                            } else {
+                                alert(response)
+                            }
+                        },
 
-                                    error: function() {
-                                        alert("Error en la votación, prueba en un rato")
-                                    }
+                        error: function() {
+                            alert("Error en la votación, prueba en un rato")
+                        }
 
 
-                                });
-                          });
+                    });
             });
+        });
 
-
- 
-            $("#rateYo2").rateYo();
+            $("#rateYo2").rateYo({rating : {{ activity.get_rating }}, readOnly: true});
 
     </script>
 {% endblock %}

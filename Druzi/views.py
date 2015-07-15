@@ -266,7 +266,12 @@ def activity_details(request, id):
     activity = Activity.objects.get(id=id)
     activity.visit_count = activity.visit_count + 1
     activity.save()
-    return render(request, 'webapp/activity_details.html', {"activity": activity})
+    user_rating = activity.rating_set.filter(user = request.user)
+    if user_rating.count()>0:
+        user_rating = user_rating[0]
+    else:
+        user_rating = None
+    return render(request, 'webapp/activity_details.html', {"activity": activity, "user_rating" : user_rating})
 
 def stars_post(request, id):
     activity = Activity.objects.get(id=id)

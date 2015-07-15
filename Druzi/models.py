@@ -1,3 +1,4 @@
+from unicodedata import decimal
 from django.core.exceptions import ValidationError
 from django.db import models
 from geoposition.fields import GeopositionField
@@ -44,6 +45,13 @@ class Activity(models.Model):
             return num
 
     @property
+    def get_rating(self):
+        if self.count_rating==0:
+            return 0
+        else:
+            return float(self.sum_rating / self.count_rating).__format__("f")
+
+    @property
     def get_description_text(self):
         return strip_tags(self.description)
 
@@ -60,6 +68,7 @@ class Activity(models.Model):
         for tag in self.tags.all():
             keywords = keywords.join(tag.name + ",")
         return keywords
+
 
 class Rating(models.Model):
     activity = models.ForeignKey("Activity")
