@@ -153,16 +153,20 @@
         {% if not activity.is_open %}
             {% if user.is_authenticated %}
                 {% if user in activity.participants.all %}
-                    <div id="rateYo"></div>
+                    <div class="col-md-4 pull-left margen"><center class="text-danger">Tu Rating</center>
+                        <center><div id="rateYo"></div></center>
+                    </div>  
                 {% endif %}
             {% endif %}
-            <div id="rateYo2"></div>
+            <div class="col-md-4 pull-right margen"><center class="text-danger"><strong style="font-size:20px">Rating general</strong></center>
+                <center><div id="rateYo2"></div></center>
+            </div>
         {% endif %}
-
+        
         <div class="row">
             <div class="col-md-12 text-center">
                 {% if activity.participants.all %}
-                    <div class="panel panel-default">
+                    <div class="panel panel-default margen">
                         <div class="panel-heading">
                             <h3 class="panel-title">Participantes inscritos</h3>
                         </div>
@@ -260,7 +264,7 @@
             });
         });
 
-            $("#rateYo2").rateYo({rating : {{ activity.get_rating }}, readOnly: true});
+            $("#rateYo2").rateYo({rating : {{ activity.get_rating }}, readOnly: true, starWidth: "40px"});
 
     </script>
 {% endblock %}
