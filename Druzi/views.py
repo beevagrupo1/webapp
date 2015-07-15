@@ -46,7 +46,7 @@ def activity_creation(request):
             activity.description = description
             activity.save()
             messages.success(request, 'Se ha creado correctamente la actividad')
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('activity_details', kwargs={'id': activity.id}))
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -147,7 +147,7 @@ def activity_mas_propuestos_pagination(request, page="1"):
 
 @login_required
 def activity_mylist_pagination(request, page="1"):
-    activity_list = Activity.objects.filter(participants=request.user).order_by('activity_date')
+    activity_list = Activity.objects.filter(participants=request.user).order_by('-activity_date')
     paginator = Paginator(activity_list, 10)
     try:
         lista = paginator.page(page)
@@ -208,7 +208,7 @@ def activity_repeat(request, slug, id):
             activity.description = description
             activity.save()
             messages.success(request, 'Se ha creado correctamente la actividad')
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('activity_details', kwargs={'id': activity.id}))
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -283,3 +283,69 @@ def activity_list_repeat(request, slug, id, page="1"):
     return render(request, 'webapp/activity_list.html',
                   {"activity_list": lista, "page": int(page), "last": paginator.num_pages,
                    'url': 'activity_list_repeat', 'origin' : int(id)})
+                   
+@login_required
+def activity_remove(request, id):
+    activity = Activity.objects.get(id=id)
+    if request.user == activity.user_own:
+        if activity.is_enable:
+            activity.delete()
+            messages.success(request, "Has borrado correctamente a la actividad")
+        else:
+            messages.warning(request, "Estas intentando borrar una actividad en un tiempo excesivo")
+    else:
+        messages.warning(request, "Estas intentando borrar una actividad que no has creado tu")
+    return HttpResponseRedirect('/')
+
+@login_required
+def activity_modify(request, id):
+    activity = Activity.objects.get(id=id)
+    if request.user == activity.user_own:
+        if activity.is_enable:
+            # if this is a POST request we need to process the form data
+            if request.method == 'POST':
+                # create a form instance and populate it with data from the request:
+                form = ActivityForm(request.POST)
+                # check whether it's valid:
+                if form.is_valid():
+                    activity_form = form.save(commit=False)
+                    
+                    activity.title = activity_form.title
+                    activity.description = activity_form.description
+                    activity.activity_date = activity_form.activity_date
+                    activity.position = activity_form.position
+                    activity.place_name = activity_form.place_name
+                    activity.price = activity_form.price
+                    activity.limit_participants = activity_form.limit_participants
+                    activity.tags.clear()
+                    
+                    tags = re.compile("\S*#(?:\[[^\]]+\]|\S+)").findall(activity.description)
+                    description = activity.description
+                    for t in tags:
+                        pos = activity.description.index(t)
+                        temp = Tag.objects.get_or_create(name=t[1:])[0]
+                        description = description.replace(t, '<a href="/search/tag/' + temp.name + '/">' + t + '</a>')
+                        temp.count = temp.count + 1
+                        temp.save()
+                        if temp:
+                            TagAppear(activity=activity, tag=temp, position=pos).save()
+                        else:
+                            tag = Tag(name=t[1:]).save()
+                            TagAppear(activity=activity, tag=tag, position=pos).save()
+                    activity.description = description
+                    activity.save()
+                    messages.success(request, 'Se ha modificado correctamente la actividad')
+                    return HttpResponseRedirect(reverse('activity_details', kwargs={'id': activity.id}))
+        
+            # if a GET (or any other method) we'll create a blank form
+            else:
+                activity = Activity.objects.get(id=id)
+                activity.description = activity.get_description_text
+                form = ActivityForm(instance=activity)
+            return render(request, 'webapp/actvity_creation.html', {'form': form})
+        else:
+            messages.warning(request, "Estas intentando modificar una actividad en un tiempo excesivo")
+    else:
+        messages.warning(request, "Estas intentando modificar una actividad que no has creado tu")
+    return HttpResponseRedirect('/')
+        

@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models import permalink
 from geoposition.fields import GeopositionField
 from django.contrib.auth.models import User
-import datetime
+from datetime import datetime
 from django.utils.html import strip_tags
 from django.utils import timezone
 from django.template.defaultfilters import slugify
@@ -30,6 +30,13 @@ class Activity(models.Model):
                         place_name=self.place_name, parent=self, price=self.price,
                         limit_participants=self.limit_participants, user_own=user)
 
+    @property
+    def is_enable(self):
+        a = timezone.now() - self.creation_date
+        if a.total_seconds() < 5*60: #5*60 are 5 minutes
+            return True
+        return False    
+    
     @property
     def is_open(self):
         if self.activity_date > timezone.now():
