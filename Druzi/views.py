@@ -170,13 +170,13 @@ def activity_enrrolment(request, slug, id):
         messages.warning(request, "No te puedes inscribir, la actividad ya esta cerrada")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else :
-        if count_participants >= activity.limit_participants :
+        if count_participants >= activity.limit_participants and activity.limit_participants!=0:
             messages.warning(request, "No te puedes inscribir, se ha superado el limite de participantes")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else :
             enrollment.save()
             messages.success(request, "Te has apuntado correctamente a la actividad")
-            return HttpResponseRedirect(reverse('activity_details', kwargs={'id': id}))
+            return HttpResponseRedirect(reverse('activity_details', kwargs={'slug' : activity.get_slug, 'id': id}))
 
 @login_required
 def activity_unenrrolment(request, slug, id):
@@ -218,7 +218,7 @@ def activity_repeat(request, slug, id):
             activity.description = description
             activity.save()
             messages.success(request, 'Se ha creado correctamente la actividad')
-            return HttpResponseRedirect(reverse('activity_details', kwargs={'id': activity.id}))
+            return HttpResponseRedirect(reverse('activity_details', kwargs={'slug' : activity.get_slug, 'id': activity.id}))
 
     # if a GET (or any other method) we'll create a blank form
     else:
