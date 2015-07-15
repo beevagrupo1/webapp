@@ -46,7 +46,7 @@ def activity_creation(request):
             activity.description = description
             activity.save()
             messages.success(request, 'Se ha creado correctamente la actividad')
-            return HttpResponseRedirect(reverse('activity_details', kwargs={'id': activity.id}))
+            return HttpResponseRedirect(reverse('activity_details', kwargs={'slug' : activity.get_slug , 'id': activity.id}))
 
     # if a GET (or any other method) we'll create a blank form
     else:
