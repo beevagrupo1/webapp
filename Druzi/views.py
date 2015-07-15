@@ -164,16 +164,16 @@ def activity_mylist_pagination(request, page="1"):
 
 
 @login_required
-def activity_enrrolment(request, id):
+def activity_enrrolment(request, slug, id):
     activity = Activity.objects.get(id=id)
     enrollment = Enrollment(activity=activity, user=request.user)
     enrollment.save()
     messages.success(request, "Te has apuntado correctamente a la actividad")
-    return HttpResponseRedirect(reverse('activity_details', kwargs={'id': id}))
+    return HttpResponseRedirect(reverse('activity_details', kwargs={'slug' : slug, 'id': id}))
 
 
 @login_required
-def activity_unenrrolment(request, id):
+def activity_unenrrolment(request, slug, id):
     activity = Activity.objects.get(id=id)
     enrollment = Enrollment.objects.get(activity=activity, user=request.user)
     enrollment.delete()
@@ -181,7 +181,7 @@ def activity_unenrrolment(request, id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required
-def activity_repeat(request, id):
+def activity_repeat(request, slug, id):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -261,14 +261,14 @@ def search_tag(request, tag):
     return render(request, 'webapp/activity_list.html', {"activity_list": list})
 
 
-def activity_details(request, id):
+def activity_details(request, slug, id):
     activity = Activity.objects.get(id=id)
     activity.visit_count = activity.visit_count + 1
     activity.save()
     return render(request, 'webapp/activity_details.html', {"activity": activity})
 
 @login_required
-def activity_list_repeat(request, id, page="1"):
+def activity_list_repeat(request, slug, id, page="1"):
     activity_list = Activity.objects.filter(Q(parent_id=id) | Q(id=id))
     paginator = Paginator(activity_list, 10)
     try:
