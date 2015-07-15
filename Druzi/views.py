@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import ActivityForm
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 # Create your views here.
 
@@ -167,18 +168,25 @@ def activity_mylist_pagination(request, page="1"):
 def activity_enrrolment(request, slug, id):
     activity = Activity.objects.get(id=id)
     enrollment = Enrollment(activity=activity, user=request.user)
-    enrollment.save()
-    messages.success(request, "Te has apuntado correctamente a la actividad")
-    return HttpResponseRedirect(reverse('activity_details', kwargs={'slug' : slug, 'id': id}))
-
+    if activity.activity_date <= timezone.now() :
+        messages.warning(request, "No te puedes inscribir, la actividad ya esta cerrada")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else :
+         enrollment.save()
+        messages.success(request, "Te has apuntado correctamente a la actividad")
+        return HttpResponseRedirect(reverse('activity_details', kwargs={'slug' : slug, 'id': id}))
 
 @login_required
 def activity_unenrrolment(request, slug, id):
     activity = Activity.objects.get(id=id)
     enrollment = Enrollment.objects.get(activity=activity, user=request.user)
-    enrollment.delete()
-    messages.success(request, "Te has borrado correctamente a la actividad")
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    if activity.activity_date <= timezone.now() :
+        messages.warning(request, "No te puedes borrar, la actividad ya esta cerrada")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else :
+        enrollment.delete()
+        messages.success(request, "Te has borrado correctamente a la actividad")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required
 def activity_repeat(request, slug, id):
