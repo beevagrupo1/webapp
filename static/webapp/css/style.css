@@ -482,3 +482,37 @@ p + p {
   background-color: #DDCE29;
   border-color: #B7AC37;
 }
+
+.facebook_hover {
+    width:40px;
+}
+/* entypo */
+[class*="entypo-"]:before {
+  font-family: 'entypo', sans-serif;
+}
+.jffooter {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.jfsocial {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+  line-height: 30px;
+  font-family: Entypo;
+  font-size: 15px;
+  text-align: center;
+  color: #bbb;
+  border-radius: 50%;
+  background: #eee;
+  overflow: hidden;
+  transition: color .3s;
+}
+
+.jfsocial:hover {
+  color: #000;
+  cursor: pointer;
+}
+
