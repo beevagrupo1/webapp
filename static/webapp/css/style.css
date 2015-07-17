@@ -499,7 +499,7 @@ p + p {
   display: inline-block;
   width: 30px;
   height: 30px;
-  margin: 0 10px;
+  margin: -3px 10px 0px 0px;
   line-height: 30px;
   font-family: Entypo;
   font-size: 15px;

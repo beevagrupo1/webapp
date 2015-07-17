@@ -133,19 +133,19 @@
 </main>
 <footer>
     <div class="col-sm-8 col-md-offset-2 margen2">
-        <div id="footer-nav" class="pull-left">
-            <ul class="list-inline">
+        <div id="footer-nav" class="pull-left margen">
+            <ul class="list-inline margen">
                 <li>¿Quienes somos?</li>
                 <li>¿Que propone Druzi?</li>    
             </ul>
+        
         </div>
         <div class="social pull-right">
-            <a class="btn btn-lg btn-social-icon btn-facebook" href="https://www.facebook.com/druziapp">
-                <i class="fa fa-facebook"></i>
-            </a>
-            <a class="btn btn-lg btn-social-icon btn-twitter" href="https://www.twitter.com/BeevaDruzi">
-                <i class="fa fa-twitter"></i>
-            </a>
+            <div class="jffooter">
+              <a title="[Druziapp] on Facebook" href="http://facebook.com/druziapp"><div class="jfsocial">&#62220;</div><a title="[Druziapp] on Twitter" href="http://yournetwork.ning.com"><div class="jfsocial">&#62217;</div>
+            </div>
+        </div>
+        </div>
     <script src="{% static 'webapp/js/typeahead.bundle.js' %}"></script>
     <script src="{% static 'webapp/js/bootstrap-tagsinput.js' %}"></script>
     <script>
@@ -203,9 +203,7 @@
     {% block custom_js %} {% endblock %}
 </footer>
 {# Read the documentation for more information #}
-<div class="jffooter">
-  <a title="[Druziapp] on Facebook" href="http://facebook.com/druziapp"><div class="jfsocial">&#62220;</div><a title="[Druziapp] on Twitter" href="http://yournetwork.ning.com"><div class="jfsocial">&#62217;</div>
-</div>
+
 </br>
 
 
