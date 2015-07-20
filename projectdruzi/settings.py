@@ -30,11 +30,15 @@ if BOOTSTRAP3_FOLDER not in sys.path:
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '+unlfbavpk1#h!hnv(-n(p6=k6onpaz)y&lp51%6_jw-ois7i$'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+PRODUCTION = os.getenv('production','false')
 
-ALLOWED_HOSTS = []
-
+try:
+    if PRODUCTION == 'true':
+        from aws_settings import *
+    else:
+        from local_settings import *
+except ImportError as e:
+    pass
 
 # Application definition
 
@@ -67,22 +71,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'projectdruzi.urls'
 
 WSGI_APPLICATION = 'projectdruzi.wsgi.application'
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'druzi',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
-
-
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
 
 
 # Internationalization
@@ -184,8 +172,6 @@ BOOTSTRAP3 = {
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
-try:
-    if os.getenv('production','false') == 'true':
-        from heroku_settings import *
-except ImportError as e:
-    pass
+
+
+
