@@ -83,6 +83,11 @@ class Activity(models.Model):
     @property
     def get_slug(self):
         return slugify(self.title)
+        
+    @property
+    def count_participantes(self):
+        count_participants = self.participants.all().count()
+        return count_participants
 
     @permalink
     def get_absolute_url(self):

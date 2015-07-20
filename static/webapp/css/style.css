@@ -482,6 +482,10 @@ p + p {
   margin-top: 80px;
 }
 
+.margen_botton{
+  margin-bottom: 8px;
+}
+
 .fin{
   background-color: #DDCE29;
   border-color: #B7AC37;
@@ -520,3 +524,6 @@ p + p {
   cursor: pointer;
 }
 
+.vertical{
+  vertical-align: middle;
+}
