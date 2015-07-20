@@ -31,9 +31,12 @@ if BOOTSTRAP3_FOLDER not in sys.path:
 SECRET_KEY = '+unlfbavpk1#h!hnv(-n(p6=k6onpaz)y&lp51%6_jw-ois7i$'
 
 PRODUCTION = os.getenv('production','false')
+TEST = os.getenv('test','false')
 
 try:
-    if PRODUCTION == 'true':
+    if TEST == 'true':
+        from test_settings import *
+    elif PRODUCTION == 'true':
         from aws_settings import *
     else:
         from local_settings import *
