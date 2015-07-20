@@ -19,6 +19,7 @@
     <link href="{% static 'webapp/css/theme.css' %}" rel="stylesheet">
     <link href="{% static 'webapp/css/style.css' %}" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+    <link href='http://weloveiconfonts.com/api/?family=entypo' rel='stylesheet' type='text/css'>
     {% block custom_css %}    {% endblock %}
 </head>
 <body>
@@ -131,6 +132,20 @@
     {% endblock %}
 </main>
 <footer>
+    <div class="col-sm-8 col-md-offset-2 margen2">
+        <div id="footer-nav" class="pull-left margen">
+            <ul class="list-inline margen">
+                <li>¿Quienes somos?</li>
+                <li>¿Que propone Druzi?</li>    
+            </ul>
+        
+        </div>
+        <div class="social pull-right">
+            <div class="jffooter">
+              <a title="Druziapp on Facebook" href="http://facebook.com/druziapp"TARGET="_new"><div class="jfsocial">&#62220;</div><a title="Druziapp on Twitter" href="https://twitter.com/BeevaDruzi"TARGET="_new"><div class="jfsocial">&#62217;</div>
+            </div>
+        </div>
+        </div>
     <script src="{% static 'webapp/js/typeahead.bundle.js' %}"></script>
     <script src="{% static 'webapp/js/bootstrap-tagsinput.js' %}"></script>
     <script>
@@ -188,5 +203,10 @@
     {% block custom_js %} {% endblock %}
 </footer>
 {# Read the documentation for more information #}
+
+</br>
+
+
+
 </body>
 </html>
