@@ -33,7 +33,7 @@ SECRET_KEY = '+unlfbavpk1#h!hnv(-n(p6=k6onpaz)y&lp51%6_jw-ois7i$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['druzi.elestudiodelpintor.com']
 
 
 # Application definition
@@ -73,8 +73,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'druzi',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'USER': 'druzi',
+        'PASSWORD': 'temporal12',
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -184,8 +184,10 @@ BOOTSTRAP3 = {
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
+PRODUCTION = os.getenv('production','false')
+
 try:
-    if os.getenv('production','false') == 'true':
+    if PRODUCTION == 'true':
         from heroku_settings import *
 except ImportError as e:
     pass
