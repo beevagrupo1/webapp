@@ -14,6 +14,7 @@ from .forms import ActivityForm
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -280,7 +281,7 @@ def activity_details(request, slug, id):
         user_rating = user_rating[0]
     else:
         user_rating = None
-    return render(request, 'webapp/activity_details.html', {"activity": activity, "user_rating" : user_rating})
+    return render(request, 'webapp/activity_details.html', {"activity": activity, "user_rating" : user_rating,})
 
 def stars_post(request, id):
     activity = Activity.objects.get(id=id)
@@ -378,4 +379,13 @@ def activity_modify(request, slug, id):
     else:
         messages.warning(request, "Estas intentando modificar una actividad que no has creado tu")
     return HttpResponseRedirect('/')
+
+@login_required
+def profile(request, username):
+    usuario = User.objects.get(username = username)
+    activity_list = Activity.objects.filter(user_own = usuario).order_by('-activity_date')
+    return render(request, 'webapp/profile.html',
+                  {"activity_list": activity_list, 'url': 'profile'})
+
+    
         
