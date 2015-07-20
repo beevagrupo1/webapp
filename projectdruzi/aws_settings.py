@@ -1,5 +1,7 @@
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+
+ALLOWED_HOSTS = ['druzi.elestudiodelpintor.com']
 
 DATABASES = { 'default' : { 
 	'ENGINE' : 'django.db.backends.mysql', 

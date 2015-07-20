@@ -27,4 +27,4 @@ test -d $RUNDIR || mkdir -p $RUNDIR
 # Start your Django Unicorn
 
 # Programs meant to be run under supervisor should not daemonize themselves (do not use –daemon)
-exec venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application –n $NAME –w $NUM_WORKERS –-max-requests $MAX_REQUESTS --user=$USER --group=$GROUP --bind=unix:${SOCKFILE}
+exec venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application –n $NAME –w $NUM_WORKERS –-max-requests $MAX_REQUESTS --user=$USER --group=$GROUP --bind=unix:${SOCKFILE} --reload
