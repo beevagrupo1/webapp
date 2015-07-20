@@ -46,8 +46,10 @@
                                                 <a class="btn btn-lg btn-danger"
                                                    href="{% url 'activity_unenrrollment' activity.get_slug activity.id %}">Borrate</a>
                                             {% else %}
-                                                <a class="btn btn-lg btn-success"
-                                                   href="{% url 'activity_enrrollment' activity.get_slug activity.id %}">Inscribete</a>
+                                                {% if count_participants >= activity.limit_participants %}
+                                                    <a class="btn btn-lg btn-success"
+                                                       href="{% url 'activity_enrrollment' activity.get_slug activity.id %}">Inscribete</a>
+                                                {% endif %}
                                             {% endif %}
                                         {% else %}
                                             <a class="btn btn-lg btn-warning fin"
