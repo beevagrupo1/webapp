@@ -276,13 +276,15 @@ def activity_details(request, slug, id):
     activity = Activity.objects.get(id=id)
     activity.visit_count = activity.visit_count + 1
     activity.save()
-    user_rating = activity.rating_set.filter(user = request.user)
-    if user_rating.count()>0:
-        user_rating = user_rating[0]
-    else:
-        user_rating = None
+    user_rating = None
+    if request.user.is_authenticated():
+        user_rating = activity.rating_set.filter(user = request.user)
+        if user_rating.count()>0:
+            user_rating = user_rating[0]
+
     return render(request, 'webapp/activity_details.html', {"activity": activity, "user_rating" : user_rating,})
 
+@login_required
 def stars_post(request, id):
     activity = Activity.objects.get(id=id)
     rating = Rating.objects.filter(activity=activity, user=request.user)
