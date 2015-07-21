@@ -1,11 +1,10 @@
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['druzi.elestudiodelpintor.com']
 
 DATABASES = { 'default' : { 
-	'ENGINE' : 'django.db.backends.mysql', 
-	'AUTOCOMMIT' : False ,
+	'ENGINE' : 'django.db.backends.mysql',
 	'NAME' : 'druzi',
 	'USER' : 'druzi',
 	'PASSWORD' : 'temporal12',
