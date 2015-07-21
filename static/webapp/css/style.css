@@ -524,6 +524,247 @@ p + p {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
+.button_about {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    float: left;
+    margin-right: 10px;
+
+}
+.button_about>a {
+    text-decoration: none;
+    color: black;
+
+}
+.button_about>a:hover{
+    color: black;
+}
+.navbar_about>a{
+    color: #ff5722;
+    text-align: center;
+}
+.circul_about_us{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(14, 150, 148, 0.8);
+    padding: 5%;
+    top: 0px;
+    left: 100%;
+    opacity: 0;
+    transform: rotate(180deg);
+    transition: all 500ms ease-in-out 0s;
+}
+
+.ch-item{
+    background-color: #ff5722;
+}
+.ch-grid {
+    margin: 20px 0 0 0;
+    padding: 0;
+    list-style: none;
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.ch-grid:after,
+.ch-item:before {
+    content: '';
+    display: table;
+}
+
+.ch-grid:after {
+    clear: both;
+}
+
+.ch-grid li {
+    width: 220px;
+    height: 220px;
+    display: inline-block;
+    margin: 20px;
+}
+
+
+.jffooter1 {
+  padding: 0;
+  text-align: center;
+}
+
+.jfsocial1 {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: -3px 10px 0px 0px;
+  line-height: 30px;
+  font-family: Entypo;
+  font-size: 15px;
+  text-align: center;
+  color: #bbb;
+  border-radius: 50%;
+  background: #eee;
+  overflow: hidden;
+  transition: color .3s;
+}
+
+.jfsocial1:hover {
+  color: #000;
+  cursor: pointer;
+}
+
+.service-desc h5 {
+	text-transform: uppercase;
+	font-weight: 700;
+	color: #666;
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+.heading {
+    padding: 3px 10px 15px;
+    margin-bottom: 40px;
+    display: block;
+}
+.margen300{
+    margin-top: 80px;
+}
+.margen301{
+    margin-top: 150px;
+}
+.min-height{
+min-height: 300px;
+}
+.encima_all{
+    position: fixed;
+    z-index: 100;
+}
+
 .vertical{
   vertical-align: middle;
 }
+
+/* ----------------------------------------------------about us images--------------------------------------------------------*/
+
+.ch-item {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    cursor: default;
+    box-shadow: 
+        inset 0 0 0 0 rgba(0,0,0,0.3),
+        inset 0 0 0 8px rgba(0,0,0,0.3),
+        0 1px 1px rgba(0,0,0,0.1);
+        
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.ch-img-1 { 
+    background-image: url(../images/capitan-america.png);
+    background-repeat: no-repeat;
+}
+
+.ch-img-2 { 
+    background-image: url(../images/hulk.png);
+    background-repeat: no-repeat;
+}
+
+.ch-img-3 { 
+    background-image: url(../images/pamela.png);
+    background-repeat: no-repeat;
+}
+.ch-img-4 { 
+    background-image: url(../images/iron-man.png);
+}
+
+.ch-info {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    opacity: 0;
+    
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+    
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -o-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    
+    -webkit-backface-visibility: hidden; /*for a smooth font */
+
+}
+
+.ch-info h3 {
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 14px;
+  margin: 0 15px;
+  padding: 40px 0 0 0;
+  height: 90px;
+  font-family: 'Open Sans', Arial, sans-serif;
+  text-shadow: 0 0 1px #fff, 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.ch-info p {
+    color: #fff;
+    padding: 10px 5px;
+    font-style: italic;
+    margin: 0 30px;
+    font-size: 12px;
+    border-top: 1px solid rgba(255,255,255,0.5);
+}
+
+.ch-info p a {
+    display: block;
+    color: #fff;
+    color: rgba(255,255,25,0.7);
+    font-style: normal;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding-top: 4px;
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+
+.ch-info p a:hover {
+    color: #fff222;
+    color: rgba(255,242,34, 0.8);
+}
+
+.ch-item:hover {
+    box-shadow: 
+        inset 0 0 0 110px rgba(0,0,0, 0.8),
+        inset 0 0 0 16px rgba(0,0,0,0.8),
+        0 1px 2px rgba(0,0,0,0.1);
+}
+
+.ch-item:hover .ch-info {
+    opacity: 1;
+    
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);    
+}
+
+
+/* ----------------------------------------------------about us images--------------------------------------------------------*/
+

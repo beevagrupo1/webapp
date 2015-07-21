@@ -399,5 +399,7 @@ def profile(request, username, page="1"):
     return render(request, 'webapp/profile.html',
                   {"activity_list": lista, 'url': 'profile', 'user_profile':usuario})
 
-    
         
+def about_us(request):
+
+    return render(request, 'webapp/about_us.html')      
