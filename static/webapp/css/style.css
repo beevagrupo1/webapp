@@ -481,4 +481,106 @@ p + p {
 .fin{
   background-color: #DDCE29;
   border-color: #B7AC37;
+
+}
+
+}
+
+.facebook_hover {
+    width:40px;
+}
+/* entypo */
+[class*="entypo-"]:before {
+  font-family: 'entypo', sans-serif;
+}
+.jffooter {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.jfsocial {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: -3px 10px 0px 0px;
+  line-height: 30px;
+  font-family: Entypo;
+  font-size: 15px;
+  text-align: center;
+  color: #bbb;
+  border-radius: 50%;
+  background: #eee;
+  overflow: hidden;
+  transition: color .3s;
+}
+
+.jfsocial:hover {
+  color: #000;
+  cursor: pointer;
+}
+
+.button_about {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    float: left;
+    margin-right: 10px;
+
+}
+.button_about>a {
+    text-decoration: none;
+    color: black;
+
+}
+.button_about>a:hover{
+    color: black;
+}
+.navbar_about>a{
+    color: #ff5722;
+    text-align: center;
+}
+.circul_about_us{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(14, 150, 148, 0.8);
+    padding: 5%;
+    top: 0px;
+    left: 100%;
+    opacity: 0;
+    transform: rotate(180deg);
+    transition: all 500ms ease-in-out 0s;
+}
+
+.ch-item{
+    background-color: #ff5722;
+}
+
+.jffooter1 {
+  padding: 0;
+  text-align: center;
+}
+
+.jfsocial1 {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: -3px 10px 0px 0px;
+  line-height: 30px;
+  font-family: Entypo;
+  font-size: 15px;
+  text-align: center;
+  color: #bbb;
+  border-radius: 50%;
+  background: #eee;
+  overflow: hidden;
+  transition: color .3s;
+}
+
+.jfsocial1:hover {
+  color: #000;
+  cursor: pointer;
 }

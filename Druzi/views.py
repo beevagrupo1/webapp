@@ -380,3 +380,6 @@ def activity_modify(request, slug, id):
         messages.warning(request, "Estas intentando modificar una actividad que no has creado tu")
     return HttpResponseRedirect('/')
         
+def about_us(request):
+
+    return render(request, 'webapp/about_us.html')      
