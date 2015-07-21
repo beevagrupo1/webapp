@@ -14,6 +14,7 @@ from .forms import ActivityForm
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -275,13 +276,15 @@ def activity_details(request, slug, id):
     activity = Activity.objects.get(id=id)
     activity.visit_count = activity.visit_count + 1
     activity.save()
-    user_rating = activity.rating_set.filter(user = request.user)
-    if user_rating.count()>0:
-        user_rating = user_rating[0]
-    else:
-        user_rating = None
-    return render(request, 'webapp/activity_details.html', {"activity": activity, "user_rating" : user_rating})
+    user_rating = None
+    if request.user.is_authenticated():
+        user_rating = activity.rating_set.filter(user = request.user)
+        if user_rating.count()>0:
+            user_rating = user_rating[0]
 
+    return render(request, 'webapp/activity_details.html', {"activity": activity, "user_rating" : user_rating,})
+
+@login_required
 def stars_post(request, id):
     activity = Activity.objects.get(id=id)
     rating = Rating.objects.filter(activity=activity, user=request.user)
@@ -379,12 +382,24 @@ def activity_modify(request, slug, id):
         messages.warning(request, "Estas intentando modificar una actividad que no has creado tu")
     return HttpResponseRedirect('/')
 
+@login_required
+def profile(request, username, page="1"):
+    usuario = User.objects.get(username = username)
+    activity_list = Activity.objects.filter(user_own = usuario).order_by('-activity_date')
+    paginator = Paginator(activity_list, 10)
+    try:
+        lista = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        lista = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        lista = paginator.page(paginator.num_pages)
+        
+    return render(request, 'webapp/profile.html',
+                  {"activity_list": lista, 'url': 'profile', 'user_profile':usuario})
+
         
 def about_us(request):
 
     return render(request, 'webapp/about_us.html')      
-
-
-
-def offer(request):
-    return render(request, 'webapp/offer.html')

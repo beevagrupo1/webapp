@@ -482,6 +482,10 @@ p + p {
   margin-top: 80px;
 }
 
+.margen_botton{
+  margin-bottom: 8px;
+}
+
 .fin{
   background-color: #DDCE29;
   border-color: #B7AC37;
@@ -520,6 +524,7 @@ p + p {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .button_about {
     background-color: Transparent;
     background-repeat:no-repeat;
@@ -637,6 +642,10 @@ min-height: 300px;
 .encima_all{
     position: fixed;
     z-index: 100;
+}
+
+.vertical{
+  vertical-align: middle;
 }
 
 /* ----------------------------------------------------about us images--------------------------------------------------------*/
@@ -758,3 +767,4 @@ min-height: 300px;
 
 
 /* ----------------------------------------------------about us images--------------------------------------------------------*/
+

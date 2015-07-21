@@ -6,3 +6,5 @@
 
 Druzi/migrations
 /vienv/
+/staticfiles/
+*.log

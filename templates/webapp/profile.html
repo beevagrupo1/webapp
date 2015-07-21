@@ -1,0 +1,77 @@
+{% extends "webapp/base.html" %}
+{% load staticfiles %}
+{% load gravatar %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-12">
+        <h1> <p style="text-align:center">Perfil de usuario</p></h1>
+        </div>
+        <br><br><br><br>
+        <div class="col-md-1 col-md-offset-4 margen">
+            <div class="img-circle recipe-author-picture"
+            style="background-image: url('{% gravatar_url user_profile.email %}')">
+                <img class="img-circle recipe-author" src="{% gravatar_url user_profile.email %}">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <br>
+            <div class="input-group input-primary margen">
+                    <span class="input-group-addon" id="basic-addon1">Usuario</span>
+                    <input type="text" class="form-control" disabled placeholder="Username"
+                           aria-describedby="basic-addon1" value="{{ user_profile.username }}">
+            </div>
+        </div>
+        
+        <div class="col-md-8 col-md-offset-2 margen2">
+            <h2> <p style="text-align:left">Actividades creadas por el usuario:</p></h2>
+            {% if activity_list %}
+                <div class="panel panel-default panel-body text-center listaplans">
+                    {% for activity in activity_list %}
+                        <div class="row bloque">
+                            <div class="panel">
+                                {% if url == 'activity_list_repeat' %}
+                                    {% if activity.id == origin %}
+                                        <h3><span class="label label-primary etiqueta-original">Original</span></h3>
+                                    {% endif %}
+                                {% endif %}
+                                <div class="col-md-8 description">
+                                    <a href="{{ activity.get_absolute_url }}"><h4>{{ activity.title }}</h4>
+                                    </a>
+                                    <p class="description">{{ activity.description|safe }}<p>
+                                </div>
+                                <div class="col-md-4 vertical">
+                                    {% if not activity.is_open %}
+                                        <h3>{{ activity.get_rating|floatformat:1 }}    
+                                        <img class="img margen_botton" src="{% static 'webapp/images/star_orange.png' %}"
+                                        alt="Generic placeholder image"></h3>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <nav>
+                        <ul class="pager">
+                            {% if activity_list.has_previous %}
+                                <li class="previous"><a
+                                        href="{% url url activity_list.previous_page_number %}"><span
+                                        aria-hidden="true">&larr;</span>
+                                    Anteriores</a></li>
+                            {% endif %}
+                            <li class="current">
+                                <span aria-hidden="true">Pagina {{ activity_list.number }} de {{ activity_list.paginator.num_pages }}</span>
+                            </li>
+                            {% if activity_list.has_next %}
+                                <li class="next"><a href="{% url url activity_list.next_page_number %}">Siguientes
+                                    <span aria-hidden="true">&rarr;</span></a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            {% else %}
+                <h3 align="center">No se encuentra ningun plan con estos parametros de busqueda</h3>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

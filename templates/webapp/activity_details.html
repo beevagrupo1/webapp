@@ -88,7 +88,7 @@
         <div class="row">
             <div class="col-md-12">
                 <!-- Author overlay -->
-                <a class="recipe-author-link" href="#">
+                <a class="recipe-author-link" href="{% url 'profile' activity.user_own.username %}">
                     <div class="img-circle recipe-author recipe-author-picture-container">
                         <div class="img-circle recipe-author-picture"
                              style="background-image: url('{% gravatar_url activity.user_own.email %}')">
@@ -194,7 +194,9 @@
                         {% if user in activity.participants.all %}
                             <a class="btn btn-lg btn-danger" href="{% url 'activity_unenrrollment' activity.get_slug activity.id %}">Borrate</a>
                         {% else %}
-                            <a class="btn btn-lg btn-success" href="{% url 'activity_enrrollment' activity.get_slug activity.id %}">Inscribete</a>
+                            {% if activity.count_participantes < activity.limit_participants %}
+                                <a class="btn btn-lg btn-success" href="{% url 'activity_enrrollment' activity.get_slug activity.id %}">Inscribete</a>
+                            {% endif %}
                         {% endif %}
                     {% endif %}
                 {% endif %}
