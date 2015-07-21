@@ -400,6 +400,6 @@ def profile(request, username, page="1"):
                   {"activity_list": lista, 'url': 'profile', 'user_profile':usuario})
 
         
-def about_us(request):
+def about_us(request, anchor = None):
 
     return render(request, 'webapp/about_us.html')      
