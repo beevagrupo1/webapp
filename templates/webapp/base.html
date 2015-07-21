@@ -132,6 +132,54 @@
     {% endblock %}
 </main>
 <footer>
+    {% if backend %}
+      <div id="email-required-modal" class="modal fade">
+        <form action="{% url "social:complete" backend=backend %}" method="post" role="form">{% csrf_token %}
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Email requerido</h4>
+              </div>
+
+              <div class="modal-body">
+                <p>Es necesario que introduzcas un correo electronico</p>
+                <div class="form-group">
+                  <label class="control-label" for="email">Email:</label>
+                  <input class="form-control" id="email" type="email" name="email" value="" />
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Continuar</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    {% endif %}
+
+    <div id="validation-sent-modal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Correo de verificación enviado</h4>
+          </div>
+
+          <div class="modal-body">
+            <p>Se ha enviado un correo de verificacion{% if email %} a <code>{{ email }}</code>{% endif %}.</p>
+            <p>Haz click en el enlace del correo para activar tu cuenta.</p>
+            <p>Si no recibes el correo contacta con nosotros.</p>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="col-sm-8 col-md-offset-2 margen2">
         <div id="footer-nav" class="pull-left margen">
             <ul class="list-inline margen">
@@ -198,6 +246,34 @@
             }
         });
 
+    </script>
+    <script type="text/javascript">
+      var modalDialog = function (modalId, modalLinkName, submitHandler) {
+        var $modal;
+        $modal = $(modalId).modal({show: false});
+        $modal.on('click', '.btn-primary', submitHandler || function (event) {
+          event.preventDefault();
+          $modal.find('form').submit();
+        });
+        if (modalLinkName) {
+          $('a[name="' + modalLinkName + '"]').on('click', function (event) {
+            event.preventDefault();
+            $modal.modal('toggle');
+          });
+        }
+        return $modal;
+      };
+      $(function () {
+        var $validationModal, $emailRequired;
+        $validationModal = modalDialog('#validation-sent-modal');
+        $emailRequired = modalDialog('#email-required-modal');
+        {% if validation_sent %}
+          $validationModal.modal('show');
+        {% endif %}
+        {% if email_required %}
+          $emailRequired.modal('show');
+        {% endif %}
+      });
     </script>
     {% bootstrap_javascript %}
     {% block custom_js %} {% endblock %}
