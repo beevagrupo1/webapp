@@ -399,6 +399,14 @@ def profile(request, username, page="1"):
     return render(request, 'webapp/profile.html',
                   {"activity_list": lista, 'url': 'profile', 'user_profile':usuario})
 
+def validation_sent(request):
+    return render(request, 'webapp/main.html', {"validation_sent" : True, "email" : request.session.get(
+        'email_validation_address')})
+
+
+def require_email(request):
+    backend = request.session['partial_pipeline']['backend']
+    return render(request, 'webapp/main.html', {"email_required" : True, "backend" : backend})
         
 def about_us(request):
 
