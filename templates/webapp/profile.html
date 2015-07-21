@@ -4,7 +4,27 @@
 
 {% block main %}
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12">
+        <h1> <p style="text-align:center">Perfil de usuario</p></h1>
+        </div>
+        <br><br><br><br>
+        <div class="col-md-1 col-md-offset-4 margen">
+            <div class="img-circle recipe-author-picture"
+            style="background-image: url('{% gravatar_url user_profile.email %}')">
+                <img class="img-circle recipe-author" src="{% gravatar_url user_profile.email %}">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <br>
+            <div class="input-group input-primary margen">
+                    <span class="input-group-addon" id="basic-addon1">Usuario</span>
+                    <input type="text" class="form-control" disabled placeholder="Username"
+                           aria-describedby="basic-addon1" value="{{ user_profile.username }}">
+            </div>
+        </div>
+        
+        <div class="col-md-8 col-md-offset-2 margen2">
+            <h2> <p style="text-align:left">Actividades creadas por el usuario:</p></h2>
             {% if activity_list %}
                 <div class="panel panel-default panel-body text-center listaplans">
                     {% for activity in activity_list %}
@@ -22,7 +42,7 @@
                                 </div>
                                 <div class="col-md-4 vertical">
                                     {% if not activity.is_open %}
-                                        <h3>{{ activity.get_rating }}    
+                                        <h3>{{ activity.get_rating|floatformat:1 }}    
                                         <img class="img margen_botton" src="{% static 'webapp/images/star_orange.png' %}"
                                         alt="Generic placeholder image"></h3>
                                     {% endif %}

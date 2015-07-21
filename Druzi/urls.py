@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': 'webapp/login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout,{'next_page':'main'}, name='logout'),
     url(r'^profile/(?P<username>[.\w]+)/$', views.profile, name='profile'),
+    url(r'^profile/(?P<username>[.\w]+)/page/(?P<page>[0-9]+)/$', views.profile, name='profile_page'),
     url(r'^activity/creation/$', views.activity_creation, name='activity_creation'),
     url(r'^activity/list/$', views.activity_pagination, name='activity_list'),
     url(r'^activity/list/page/(?P<page>[0-9]+)/$', views.activity_pagination, name='activity_list_page'),
@@ -49,4 +50,5 @@ urlpatterns = [
     url(r'^activity/get/(?P<id>[.\w]+)/stars_post/$', views.stars_post, name='stars_post'),
     url(r'^email-sent/', views.validation_sent, name='email_sent'),
     url(r'^email/$', views.require_email, name='require_email'),
+    url(r'^about_us/$', views.about_us, name='about_us'),
 ]
