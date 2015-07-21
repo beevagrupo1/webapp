@@ -88,7 +88,7 @@
         <div class="row">
             <div class="col-md-12">
                 <!-- Author overlay -->
-                <a class="recipe-author-link" href="#">
+                <a class="recipe-author-link" href="{% url 'profile' activity.user_own.username %}">
                     <div class="img-circle recipe-author recipe-author-picture-container">
                         <div class="img-circle recipe-author-picture"
                              style="background-image: url('{% gravatar_url activity.user_own.email %}')">
