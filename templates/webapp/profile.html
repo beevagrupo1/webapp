@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-md-4 vertical">
                                     {% if not activity.is_open %}
-                                        <h3>{{ activity.get_rating }}    
+                                        <h3>{{ activity.get_rating|floatformat:1 }}    
                                         <img class="img margen_botton" src="{% static 'webapp/images/star_orange.png' %}"
                                         alt="Generic placeholder image"></h3>
                                     {% endif %}
