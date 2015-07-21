@@ -139,18 +139,20 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 SOCIAL_AUTH_TWITTER_KEY = os.getenv('SOCIAL_AUTH_TWITTER_KEY', "")
 SOCIAL_AUTH_TWITTER_SECRET = os.getenv('SOCIAL_AUTH_TWITTER_SECRET', "")
-
-SOCIAL_AUTH_GITHUB_KEY = os.getenv('SOCIAL_AUTH_GITHUB_KEY', "")
-SOCIAL_AUTH_GITHUB_SECRET = os.getenv('SOCIAL_AUTH_GITHUB_SECRET', "")
-SOCIAL_AUTH_GITHUB_SCOPE = ['user:email ']
+SOCIAL_AUTH_TWITTER_FORCE_EMAIL_VALIDATION = True
 
 DISQUS_API_KEY = os.getenv('SOCIAL_AUTH_DISQUS_KEY', "")
 DISQUS_WEBSITE_SHORTNAME = os.getenv('DISQUS_WEBSITE_SHORTNAME', "")
 
 SOCIAL_AUTH_DISQUS_KEY = os.getenv('SOCIAL_AUTH_DISQUS_KEY', "")
 SOCIAL_AUTH_DISQUS_SECRET = os.getenv('SOCIAL_AUTH_DISQUS_SECRET', "")
+SOCIAL_AUTH_DISQUS_FORCE_EMAIL_VALIDATION = True
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+
+SOCIAL_AUTH_EMAIL_FORM_HTML = 'email_signup.html'
+SOCIAL_AUTH_EMAIL_VALIDATION_FUNCTION = 'Druzi.mail.send_validation'
+SOCIAL_AUTH_EMAIL_VALIDATION_URL = '/email-sent/'
 
 SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.social_details',
@@ -158,12 +160,70 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.auth_allowed',
     'social.pipeline.social_auth.social_user',
     'social.pipeline.user.get_username',
-    'social.pipeline.social_auth.associate_by_email',  # <--- enable this one
+    'Druzi.pipeline.require_email',
+    'social.pipeline.mail.mail_validation',
     'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_by_email',  # <--- enable this one
     'social.pipeline.social_auth.associate_user',
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details'
 )
+
+# A sample logging configuration. The only tangible logging
+# performed by this configuration is to send an email to
+# the site admins on every HTTP 500 error when DEBUG=False.
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console':{
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'eathub': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        }
+    }
+}
+
+
+#Configuration for django.core.mail.sendmail
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.getenv('DJANGO_EMAIL', "")
+EMAIL_HOST_PASSWORD = os.getenv('DJANGO_EMAIL_PASSWORD', "")
+EMAIL_PORT = 587
+EMAIL_SUBJECT_PREFIX = 'druzi: '
+EMAIL_USE_TLS = True
+EMAIL_FROM = os.getenv('DJANGO_EMAIL', "")
 
 # Settings for django-bootstrap3
 BOOTSTRAP3 = {

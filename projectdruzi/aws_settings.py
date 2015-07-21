@@ -4,8 +4,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['druzi.elestudiodelpintor.com']
 
 DATABASES = { 'default' : { 
-	'ENGINE' : 'django.db.backends.mysql', 
-	'AUTOCOMMIT' : False ,
+	'ENGINE' : 'django.db.backends.mysql',
 	'NAME' : 'druzi',
 	'USER' : 'druzi',
 	'PASSWORD' : 'temporal12',
