@@ -48,4 +48,6 @@ urlpatterns = [
     url(r'^activity/(?P<slug>[-\w\d]+),(?P<id>[.\w]+)/modify$', views.activity_modify, name='activity_modify'),
     url(r'^activity/get/(?P<id>[.\w]+)/stars_post/$', views.stars_post, name='stars_post'),
     url(r'^about_us/$', views.about_us, name='about_us'),
+    url(r'^offer/$', views.offer, name='offer'),
+
 ]

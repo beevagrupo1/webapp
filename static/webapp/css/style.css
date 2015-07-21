@@ -478,12 +478,13 @@ p + p {
   margin-top: 10px;
 }
 
+.margen2{
+  margin-top: 80px;
+}
+
 .fin{
   background-color: #DDCE29;
   border-color: #B7AC37;
-
-}
-
 }
 
 .facebook_hover {
@@ -583,4 +584,31 @@ p + p {
 .jfsocial1:hover {
   color: #000;
   cursor: pointer;
+}
+
+.service-desc h5 {
+	text-transform: uppercase;
+	font-weight: 700;
+	color: #666;
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+.heading {
+    padding: 3px 10px 15px;
+    margin-bottom: 40px;
+    display: block;
+}
+.margen300{
+    margin-top: 80px;
+}
+.margen301{
+    margin-top: 150px;
+}
+.min-height{
+min-height: 300px;
+}
+.encima_all{
+    position: fixed;
+    z-index: 100;
 }

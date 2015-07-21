@@ -72,7 +72,7 @@ def activity_pagination(request, page="1"):
         list = paginator.page(paginator.num_pages)
 
     return render(request, 'webapp/activity_list.html',
-                  {"activity_list": list, "page": page, "last": paginator.num_pages, 'url': 'activity_list_page'})
+                  {"activity_list": list, 'url': 'activity_list_page'})
 
 
 def activity_ultimos_propuestos_pagination(request, page="1"):
@@ -89,8 +89,7 @@ def activity_ultimos_propuestos_pagination(request, page="1"):
         list = paginator.page(paginator.num_pages)
 
     return render(request, 'webapp/activity_list.html',
-                  {"activity_list": list, "page": int(page), "last": paginator.num_pages,
-                   'url': 'activity_ultimos_propuestos_pagination'})
+                  {"activity_list": list, 'url': 'activity_ultimos_propuestos_pagination'})
 
 
 def activity_mas_buscados_pagination(request, page="1"):
@@ -107,8 +106,7 @@ def activity_mas_buscados_pagination(request, page="1"):
         list = paginator.page(paginator.num_pages)
 
     return render(request, 'webapp/activity_list.html',
-                  {"activity_list": list, "page": int(page), "last": paginator.num_pages,
-                   'url': 'activity_mas_buscados_pagination'})
+                  {"activity_list": list, 'url': 'activity_mas_buscados_pagination'})
 
 
 def activity_mas_baratos_pagination(request, page="1"):
@@ -125,8 +123,7 @@ def activity_mas_baratos_pagination(request, page="1"):
         list = paginator.page(paginator.num_pages)
 
     return render(request, 'webapp/activity_list.html',
-                  {"activity_list": list, "page": int(page), "last": paginator.num_pages,
-                   'url': 'activity_mas_baratos_pagination'})
+                  {"activity_list": list, 'url': 'activity_mas_baratos_pagination'})
 
 
 def activity_mas_propuestos_pagination(request, page="1"):
@@ -144,8 +141,7 @@ def activity_mas_propuestos_pagination(request, page="1"):
         lista = paginator.page(paginator.num_pages)
 
     return render(request, 'webapp/activity_list.html',
-                  {"activity_list": lista, "page": int(page), "last": paginator.num_pages,
-                   'url': 'activity_mas_propuestos_pagination'})
+                  {"activity_list": lista, 'url': 'activity_mas_propuestos_pagination'})
 
 
 @login_required
@@ -162,21 +158,25 @@ def activity_mylist_pagination(request, page="1"):
         lista = paginator.page(paginator.num_pages)
 
     return render(request, 'webapp/activity_list.html',
-                  {"activity_list": lista, "page": int(page), "last": paginator.num_pages,
-                   'url': 'activity_mylist_pagination'})
+                  {"activity_list": lista, 'url': 'activity_mylist_pagination'})
 
 
 @login_required
 def activity_enrrolment(request, slug, id):
     activity = Activity.objects.get(id=id)
     enrollment = Enrollment(activity=activity, user=request.user)
+    count_participants = activity.participants.all().count()
     if activity.activity_date <= timezone.now() :
         messages.warning(request, "No te puedes inscribir, la actividad ya esta cerrada")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else :
-         enrollment.save()
-         messages.success(request, "Te has apuntado correctamente a la actividad")
-         return HttpResponseRedirect(reverse('activity_details', kwargs={'slug' : slug, 'id': id}))
+        if count_participants >= activity.limit_participants and activity.limit_participants!=0:
+            messages.warning(request, "No te puedes inscribir, se ha superado el limite de participantes")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else :
+            enrollment.save()
+            messages.success(request, "Te has apuntado correctamente a la actividad")
+            return HttpResponseRedirect(reverse('activity_details', kwargs={'slug' : activity.get_slug, 'id': id}))
 
 @login_required
 def activity_unenrrolment(request, slug, id):
@@ -218,7 +218,7 @@ def activity_repeat(request, slug, id):
             activity.description = description
             activity.save()
             messages.success(request, 'Se ha creado correctamente la actividad')
-            return HttpResponseRedirect(reverse('activity_details', kwargs={'id': activity.id}))
+            return HttpResponseRedirect(reverse('activity_details', kwargs={'slug' : activity.get_slug, 'id': activity.id}))
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -312,8 +312,7 @@ def activity_list_repeat(request, slug, id, page="1"):
         lista = paginator.page(paginator.num_pages)
 
     return render(request, 'webapp/activity_list.html',
-                  {"activity_list": lista, "page": int(page), "last": paginator.num_pages,
-                   'url': 'activity_list_repeat', 'origin' : int(id)})
+                  {"activity_list": lista, 'url': 'activity_list_repeat', 'origin' : int(id)})
                    
 @login_required
 def activity_remove(request, slug, id):
@@ -379,7 +378,13 @@ def activity_modify(request, slug, id):
     else:
         messages.warning(request, "Estas intentando modificar una actividad que no has creado tu")
     return HttpResponseRedirect('/')
+
         
 def about_us(request):
 
     return render(request, 'webapp/about_us.html')      
+
+
+
+def offer(request):
+    return render(request, 'webapp/offer.html')
