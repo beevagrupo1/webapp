@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load disqus_tags %}
 {% load gravatar %}
+{% load bootstrap3 %}
 
 
 {% block custom_css %}
@@ -15,7 +16,8 @@
 {% block main %}
 
 		<script type="text/javascript" src="{% static 'webapp/js/modernizr.custom.79639.js' %}"></script> 
-
+<p role="presentation" class="navbar_about col-md-3"><a href="#top"></a></p>
+<a name="top"></a>
 <div class="col-mod-12 ">
 	<ul class="nav nav-pills nav-stacked ">
 	  <li role="presentation" class="navbar_about col-md-3"><a href="#Quienes">¿Quienes somos?</a></li>
@@ -174,23 +176,11 @@
                 <!-- Heading -->
                 <h2 class="margen301">Contacta con nosotros</h2><br>
 <body>
-    <div class="col-md-8 col-md-offset-2">
-        {% if errors %}
-            <ul>
-                {% for error in errors %}
-                <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    
-        <form action="" method="post">
+    <div class="col-md-8 col-md-offset-2">           
+        <form role="form" method="post">
             {% csrf_token %}
-            <p>Asunto: <input type="text" name="subject"></p>
-            <p>E-mail: <input type="text" name="email"></p>
-            <div class="col-md-12">             
-                <p>Mensaje: <textarea name="message" rows="10" cols="75%"></textarea></p>
-            </div>
-            <input type="submit" value="Enviar">
+            {% bootstrap_form form %}
+            {% buttons submit='Enviar' reset="Reset"%}{% endbuttons %}
         </form>
     </div>
 </body>

@@ -25,7 +25,7 @@ class ActivityForm(forms.ModelForm):
         model = Activity
         fields = ['title','description', 'activity_date', 'place_name', 'position', 'price', 'limit_participants']
         
-class ContactUs (forms.ModelForm):
+class ContactUs (forms.Form):
     asunto = forms.CharField(label='Asunto')
     email = forms.EmailField(label='Email')
     mensaje = forms.CharField(label='Mensaje', 
