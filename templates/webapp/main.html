@@ -16,70 +16,65 @@
 
     <div class="row busqueda">
         <div class="col-lg-8 col-lg-offset-2">
-            <div class="input-group">
-                <form class="navbar-form navbar-left" method="post" role="search" action="{% url 'search' %}">
-                    {% csrf_token %}
-                    <input name="query" data-role="tagsinput" type="text" class="typeahead form-control" type="text"
+            <form method="post" role="search" action="{% url 'search' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input class="form-control" name="query" data-role="tagsinput" type="text"
                            placeholder="Busca planes por palabras clave separadas por comas...">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="submit">Buscar</button>
-            </span>
-                </form>
-            </div>
+                </div>
+                <button class="btn btn-lg btn-primary center-block" type="submit">Buscar</button>
+            </form>
+
             <!-- /input-group -->
         </div>
         <!-- /.col-lg-12 -->
     </div><!-- /.row -->
 
-    <br></br>
+    <br>
 
     <div class="row">
         <div class="col-lg-6 prueba">
             <div style="text-align: center;">
-                <img class="img-rounded" src="{% static 'webapp/images/weird_orange.jpg' %}"
-                     alt="Generic placeholder image" height="200" width="75%">
-
-                <h2>Últimos planes propuestos</h2>
-
-                <p><a class="btn btn-default" href="{% url 'activity_ultimos_propuestos_pagination' %}" role="button">Ver
-                    planes »</a></p>
+                <a href="{% url 'activity_ultimos_propuestos_pagination' %}" role="button">
+                    <h2 class="page-header">Últimos planes propuestos</h2>
+                    <img class="img-rounded" src="{% static 'webapp/images/weird_orange.jpg' %}"
+                         alt="Generic placeholder image" height="200" width="75%">
+                    <p class="btn btn-primary btn-center margen">Ver planes »</p>
+                </a>
             </div>
         </div>
         <!-- /.col-lg-6 -->
         <div class="col-lg-6 prueba">
             <div style="text-align: center;">
-                <img class="img-rounded" src="{% static 'webapp/images/trending_orange.png' %}"
-                     alt="Generic placeholder image" height="200" width="75%">
-
-                <h2>Los más buscados</h2>
-
-                <p><a class="btn btn-default" href="{% url 'activity_mas_buscados_pagination' %}" role="button">Ver
-                    planes »</a></p>
+                <a href="{% url 'activity_mas_buscados_pagination' %}" role="button">
+                    <h2 class="page-header">Los más buscados</h2>
+                    <img class="img-rounded" src="{% static 'webapp/images/trending_orange.png' %}"
+                         alt="Generic placeholder image" height="200" width="75%">
+                    <p class="btn btn-primary btn-center margen">Ver planes »</p>
+                </a>
             </div>
         </div>
         <!-- /.col-lg-6 -->
 
         <div class="col-lg-6 prueba">
             <div style="text-align: center;">
-                <img class="img-rounded" src="{% static 'webapp/images/money_orange.jpg' %}"
-                     alt="Generic placeholder image" height="200" width="75%">
-
-                <h2>Los más baratos</h2>
-
-                <p><a class="btn btn-default" href="{% url 'activity_mas_baratos_pagination' %}" role="button">Ver
-                    planes »</a></p>
+                <a href="{% url 'activity_mas_baratos_pagination' %}" role="button">
+                    <h2 class="page-header">Los más baratos</h2>
+                    <img class="img-rounded" src="{% static 'webapp/images/money_orange.jpg' %}"
+                         alt="Generic placeholder image" height="200" width="75%">
+                    <p class="btn btn-primary btn-center margen">Ver planes »</p>
+                </a>
             </div>
         </div>
         <!-- /.col-lg-6 -->
         <div class="col-lg-6 prueba">
             <div style="text-align: center;">
-                <img class="img-rounded" src="{% static 'webapp/images/infinite_orange.jpg' %}"
-                     alt="Generic placeholder image" height="200" width="75%">
-
-                <h2>Los más propuestos</h2>
-
-                <p><a class="btn btn-default" href="{% url 'activity_mas_propuestos_pagination' %}" role="button">Ver
-                    planes »</a></p>
+                <a href="{% url 'activity_mas_propuestos_pagination' %}" role="button">
+                    <h2 class="page-header">Los más propuestos</h2>
+                    <img class="img-rounded" src="{% static 'webapp/images/infinite_orange.jpg' %}"
+                         alt="Generic placeholder image" height="200" width="75%">
+                    <p class="btn btn-primary btn-center margen">Ver planes »</p>
+                </a>
             </div>
         </div>
         <!-- /.col-lg-6 -->
