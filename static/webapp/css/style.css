@@ -455,7 +455,6 @@ p + p {
          url('socicon/font/socicon.svg#sociconregular') format('svg');
     font-weight: normal;
     font-style: normal;
-    text-transform: initial;
 }
 
 .socicon {
@@ -524,7 +523,6 @@ p + p {
   cursor: pointer;
 }
 
-<<<<<<< HEAD
 .button_about {
     background-color: Transparent;
     background-repeat:no-repeat;
@@ -770,3 +768,12 @@ min-height: 300px;
 .marg-left{
     margin-left: 15px;
 }
+
+#toTop{
+	position: fixed;
+	bottom: 95px;
+	right: 40px;
+	cursor: pointer;
+	display: none;
+}
+#toTop .fa {margin-right: 5px;}
