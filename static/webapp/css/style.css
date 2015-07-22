@@ -777,3 +777,31 @@ min-height: 300px;
 	display: none;
 }
 #toTop .fa {margin-right: 5px;}
+
+.imagen1{
+    /*background-image: url(../images/comunicacion.jpg);*/
+    background-color: #ffe0b2;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.imagen2{
+    /*background-image: url(../images/comunicacion.jpg);*/
+    background-color: #ffcc80;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.imagen3{
+    /*background-image: url(../images/comunicacion.jpg);*/
+    background-color: #ffb74d;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.negrita{
+    font-weight:bold;
+}
