@@ -777,3 +777,13 @@ min-height: 300px;
 	display: none;
 }
 #toTop .fa {margin-right: 5px;}
+
+.link_black {
+    text-decoration: none;
+    color: black;
+
+}
+.link_black:hover{
+    color: black;
+    text-decoration: none;
+}
