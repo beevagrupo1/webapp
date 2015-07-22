@@ -31,7 +31,11 @@
                                         {{ activity.activity_date }}
                                     </li>
                                     <li class="label descriptionplan list-group-item grupo">
-                                        {{ activity.price }} €
+                                        {% if activity.price == 0.0 %}
+                                            Gratis
+                                        {% else %}
+                                            {{ activity.price }} €
+                                        {% endif %}
                                     </li>
                                 </div>
                                 <div class="col-md-5 description">

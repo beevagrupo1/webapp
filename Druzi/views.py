@@ -399,7 +399,7 @@ def profile(request, username, page="1"):
         lista = paginator.page(paginator.num_pages)
         
     return render(request, 'webapp/profile.html',
-                  {"activity_list": lista, 'url': 'profile', 'user_profile':usuario})
+                  {"activity_list": lista, 'url': 'profile_page', 'user_profile':usuario})
 
 def validation_sent(request):
     return render(request, 'webapp/main.html', {"validation_sent" : True, "email" : request.session.get(
