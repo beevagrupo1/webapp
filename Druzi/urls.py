@@ -51,4 +51,6 @@ urlpatterns = [
     url(r'^email-sent/', views.validation_sent, name='email_sent'),
     url(r'^email/$', views.require_email, name='require_email'),
     url(r'^about_us/$', views.about_us, name='about_us'),
+    url(r'^about_us/#(?P<anchor>.*)$', views.about_us, name='about_us_a'),
+
 ]

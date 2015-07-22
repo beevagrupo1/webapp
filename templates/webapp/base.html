@@ -187,12 +187,9 @@
     <div class="col-sm-8 col-md-offset-2 margen2">
         <div id="footer-nav" class="pull-left margen">
             <ul class="list-inline margen">
-                <div class="button_about" style="float:left"><a href="/about_us">
-                    <li>¿Quienes somos?</li>
-                </a></div>
-                <div class="button_about marg-left" style="float:left"><a href="/about_us/#Que ofrecemos">
-                    <li>¿Que propone Druzi?</li>
-                </a></div>
+                <div class="button_about" style="float:left"><a href="{% url 'about_us' %}"><li>¿Quienes somos?</li></a></div>
+                <div class="button_about marg-left" style="float:left"><a href="{% url 'about_us_a' 'Que ofrecemos' %}"><li>¿Que propone Druzi?</li></a></div>
+                <div class="button_about marg-left" style="float:left"><a href="{% url 'about_us_a' 'Contacta con nosotros' %}"><li>Contacta con nosotros</li></a></div>
             </ul>
 
         </div>

@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load disqus_tags %}
 {% load gravatar %}
+{% load bootstrap3 %}
 
 
 {% block custom_css %}
@@ -15,11 +16,13 @@
 {% block main %}
 
 		<script type="text/javascript" src="{% static 'webapp/js/modernizr.custom.79639.js' %}"></script> 
-
+<p role="presentation" class="navbar_about col-md-3"><a href="#top"></a></p>
+<a name="top"></a>
 <div class="col-mod-12 ">
 	<ul class="nav nav-pills nav-stacked ">
 	  <li role="presentation" class="navbar_about col-md-3"><a href="#Quienes">¿Quienes somos?</a></li>
 	  <li role="presentation" class="navbar_about col-md-3"><a href="#Que ofrecemos">¿Que ofrecemos?</a></li>
+	  <li role="presentation" class="navbar_about col-md-3"><a href="#Contacta con nosotros">Contacta con nosotros</a></li>
 	</ul>
 </div>
 	<a name="Quienes">
@@ -165,8 +168,22 @@
         </div>
     </div>
 
-
-
+<a name="Contacta con nosotros"></a>
+    <div class="row">
+        <div class="text-center">
+		    <div class="container">
+		        <div class="heading text-center">
+                <!-- Heading -->
+                <h2 class="margen301">Contacta con nosotros</h2><br>
+<body>
+    <div class="col-md-8 col-md-offset-2">           
+        <form role="form" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons submit='Enviar' reset="Reset"%}{% endbuttons %}
+        </form>
+    </div>
+</body>
 
 
 

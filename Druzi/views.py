@@ -9,12 +9,14 @@ from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
-from .forms import ActivityForm
+from django.shortcuts import render, redirect
+from .forms import ActivityForm, ContactUs
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
+from django.core.mail import send_mail
 
 
 # Create your views here.
@@ -408,6 +410,19 @@ def require_email(request):
     backend = request.session['partial_pipeline']['backend']
     return render(request, 'webapp/main.html', {"email_required" : True, "backend" : backend})
         
-def about_us(request):
-
-    return render(request, 'webapp/about_us.html')      
+def about_us(request, anchor = None):
+    form = ContactUs(request.POST)
+ 
+    if request.method == 'POST':
+        form = ContactUs(request.POST)
+        if form.is_valid():
+            mail = form.cleaned_data
+            mensaje_with_email = 'Contenido: ' + mail.get('mensaje') +'\n Email: '+ mail.get('email')
+            send_mail(mail.get('asunto'), mensaje_with_email, mail.get('email'), ['druzi.beeva@gmail.com'])
+            messages.success(request, 'Se ha enviado correctamente el correo electronico')
+            return redirect(reverse('about_us_a', kwargs={'anchor': 'top'}))     
+ 
+    else: #GET
+        form = ContactUs()
+    
+    return render(request, 'webapp/about_us.html', {'form': form})      
