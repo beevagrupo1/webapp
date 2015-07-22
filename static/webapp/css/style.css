@@ -768,3 +768,12 @@ min-height: 300px;
 .marg-left{
     margin-left: 15px;
 }
+
+#toTop{
+	position: fixed;
+	bottom: 95px;
+	right: 40px;
+	cursor: pointer;
+	display: none;
+}
+#toTop .fa {margin-right: 5px;}

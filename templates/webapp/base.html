@@ -102,7 +102,8 @@
 
                                     <div class="social-buttons col-md-12">
                                         <a class="btn btn-primary social-login-btn social-disqus"
-                                           href="{% url 'social:begin' 'disqus' %}"><span class="socicon socicon-disqus"></span></a>
+                                           href="{% url 'social:begin' 'disqus' %}"><span
+                                                class="socicon socicon-disqus"></span></a>
                                     </div>
                                     <div class="social-buttons col-md-12" id="googleBtn">
                                         <a class="btn btn-primary social-login-btn social-google"><i
@@ -133,67 +134,77 @@
 </main>
 <footer>
     {% if backend %}
-      <div id="email-required-modal" class="modal fade">
-        <form action="{% url "social:complete" backend=backend %}" method="post" role="form">{% csrf_token %}
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Email requerido</h4>
-              </div>
+        <div id="email-required-modal" class="modal fade">
+            <form action="{% url "social:complete" backend=backend %}" method="post" role="form">{% csrf_token %}
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Email requerido</h4>
+                        </div>
 
-              <div class="modal-body">
-                <p>Es necesario que introduzcas un correo electronico</p>
-                <div class="form-group">
-                  <label class="control-label" for="email">Email:</label>
-                  <input class="form-control" id="email" type="email" name="email" value="" />
+                        <div class="modal-body">
+                            <p>Es necesario que introduzcas un correo electronico</p>
+
+                            <div class="form-group">
+                                <label class="control-label" for="email">Email:</label>
+                                <input class="form-control" id="email" type="email" name="email" value=""/>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary">Continuar</button>
+                        </div>
+                    </div>
                 </div>
-              </div>
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Continuar</button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
+            </form>
+        </div>
     {% endif %}
 
     <div id="validation-sent-modal" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Correo de verificación enviado</h4>
-          </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Correo de verificación enviado</h4>
+                </div>
 
-          <div class="modal-body">
-            <p>Se ha enviado un correo de verificacion{% if email %} a <code>{{ email }}</code>{% endif %}.</p>
-            <p>Haz click en el enlace del correo para activar tu cuenta.</p>
-            <p>Si no recibes el correo contacta con nosotros.</p>
-          </div>
+                <div class="modal-body">
+                    <p>Se ha enviado un correo de verificacion{% if email %} a <code>{{ email }}</code>{% endif %}.</p>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-          </div>
+                    <p>Haz click en el enlace del correo para activar tu cuenta.</p>
+
+                    <p>Si no recibes el correo contacta con nosotros.</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
     <div class="col-sm-8 col-md-offset-2 margen2">
         <div id="footer-nav" class="pull-left margen">
             <ul class="list-inline margen">
-                <div class="button_about" style="float:left"><a href="/about_us"><li>¿Quienes somos?</li></a></div>
-                <div class="button_about marg-left" style="float:left"><a href="/about_us/#Que ofrecemos"><li>¿Que propone Druzi?</li></a></div>   
+                <div class="button_about" style="float:left"><a href="/about_us">
+                    <li>¿Quienes somos?</li>
+                </a></div>
+                <div class="button_about marg-left" style="float:left"><a href="/about_us/#Que ofrecemos">
+                    <li>¿Que propone Druzi?</li>
+                </a></div>
             </ul>
-        
+
         </div>
         <div class="social pull-right">
             <div class="jffooter">
-              <a title="Druziapp on Facebook" href="http://facebook.com/druziapp"TARGET="_new"><div class="jfsocial">&#62220;</div><a title="Druziapp on Twitter" href="https://twitter.com/BeevaDruzi"TARGET="_new"><div class="jfsocial">&#62217;</div>
+                <a title="Druziapp on Facebook" href="http://facebook.com/druziapp" TARGET="_new">
+                    <div class="jfsocial">&#62220;</div>
+                    <a title="Druziapp on Twitter" href="https://twitter.com/BeevaDruzi" TARGET="_new">
+                        <div class="jfsocial">&#62217;</div>
             </div>
         </div>
-        </div>
+    </div>
     <script src="{% static 'webapp/js/typeahead.bundle.js' %}"></script>
     <script src="{% static 'webapp/js/bootstrap-tagsinput.js' %}"></script>
     <script>
@@ -248,32 +259,48 @@
 
     </script>
     <script type="text/javascript">
-      var modalDialog = function (modalId, modalLinkName, submitHandler) {
-        var $modal;
-        $modal = $(modalId).modal({show: false});
-        $modal.on('click', '.btn-primary', submitHandler || function (event) {
-          event.preventDefault();
-          $modal.find('form').submit();
+        var modalDialog = function (modalId, modalLinkName, submitHandler) {
+            var $modal;
+            $modal = $(modalId).modal({show: false});
+            $modal.on('click', '.btn-primary', submitHandler || function (event) {
+                        event.preventDefault();
+                        $modal.find('form').submit();
+                    });
+            if (modalLinkName) {
+                $('a[name="' + modalLinkName + '"]').on('click', function (event) {
+                    event.preventDefault();
+                    $modal.modal('toggle');
+                });
+            }
+            return $modal;
+        };
+        $(function () {
+            var $validationModal, $emailRequired;
+            $validationModal = modalDialog('#validation-sent-modal');
+            $emailRequired = modalDialog('#email-required-modal');
+            {% if validation_sent %}
+                $validationModal.modal('show');
+            {% endif %}
+            {% if email_required %}
+                $emailRequired.modal('show');
+            {% endif %}
         });
-        if (modalLinkName) {
-          $('a[name="' + modalLinkName + '"]').on('click', function (event) {
-            event.preventDefault();
-            $modal.modal('toggle');
-          });
-        }
-        return $modal;
-      };
-      $(function () {
-        var $validationModal, $emailRequired;
-        $validationModal = modalDialog('#validation-sent-modal');
-        $emailRequired = modalDialog('#email-required-modal');
-        {% if validation_sent %}
-          $validationModal.modal('show');
-        {% endif %}
-        {% if email_required %}
-          $emailRequired.modal('show');
-        {% endif %}
-      });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('body').append('<div id="toTop" class="btn btn-primary"><i class="fa fa-arrow-up"></i>Back to Top</div>');
+            $(window).scroll(function () {
+                if ($(this).scrollTop() != 0) {
+                    $('#toTop').fadeIn();
+                } else {
+                    $('#toTop').fadeOut();
+                }
+            });
+            $('#toTop').click(function () {
+                $("html, body").animate({scrollTop: 0}, 600);
+                return false;
+            });
+        });
     </script>
     {% bootstrap_javascript %}
     {% block custom_js %} {% endblock %}
@@ -281,7 +308,6 @@
 {# Read the documentation for more information #}
 
 </br>
-
 
 
 </body>
