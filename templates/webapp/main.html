@@ -19,7 +19,7 @@
             <form method="post" role="search" action="{% url 'search' %}">
                 {% csrf_token %}
                 <div class="form-group">
-                    <input class="form-control" name="query" data-role="tagsinput" type="text"
+                    <input id="search-main" class="typeahead form-control" name="query" data-role="tagsinput" type="text"
                            placeholder="Busca planes por palabras clave separadas por comas...">
                 </div>
                 <button class="btn btn-lg btn-primary center-block" type="submit">Buscar</button>
@@ -39,6 +39,7 @@
                     <h2 class="page-header">Últimos planes propuestos</h2>
                     <img class="img-rounded" src="{% static 'webapp/images/weird_orange.jpg' %}"
                          alt="Generic placeholder image" height="200" width="75%">
+
                     <p class="btn btn-primary btn-center margen">Ver planes »</p>
                 </a>
             </div>
@@ -50,6 +51,7 @@
                     <h2 class="page-header">Los más buscados</h2>
                     <img class="img-rounded" src="{% static 'webapp/images/trending_orange.png' %}"
                          alt="Generic placeholder image" height="200" width="75%">
+
                     <p class="btn btn-primary btn-center margen">Ver planes »</p>
                 </a>
             </div>
@@ -62,6 +64,7 @@
                     <h2 class="page-header">Los más baratos</h2>
                     <img class="img-rounded" src="{% static 'webapp/images/money_orange.jpg' %}"
                          alt="Generic placeholder image" height="200" width="75%">
+
                     <p class="btn btn-primary btn-center margen">Ver planes »</p>
                 </a>
             </div>
@@ -73,6 +76,7 @@
                     <h2 class="page-header">Los más propuestos</h2>
                     <img class="img-rounded" src="{% static 'webapp/images/infinite_orange.jpg' %}"
                          alt="Generic placeholder image" height="200" width="75%">
+
                     <p class="btn btn-primary btn-center margen">Ver planes »</p>
                 </a>
             </div>

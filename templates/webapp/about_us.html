@@ -8,188 +8,219 @@
 {% block custom_css %}
     <link href="{% static 'webapp/css/style.css' %}" rel="stylesheet">
 
-        <link rel="shortcut icon" href="../favicon.ico"> 
+    <link rel="shortcut icon" href="../favicon.ico">
 
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700' rel='stylesheet' type='text/css'/>
+    <style>
+        .container {
+            width: 100%;
+            padding: 0px;
+            max-width: 100%;
+        }
+
+        body {
+            padding-top: 50px;
+        }
+
+        .navbar {
+            margin-bottom: 0px;
+        }
+    </style>
 {% endblock %}
 
 {% block main %}
-
-		<script type="text/javascript" src="{% static 'webapp/js/modernizr.custom.79639.js' %}"></script> 
-<p role="presentation" class="navbar_about col-md-3"><a href="#top"></a></p>
-<a name="top"></a>
-<div class="col-mod-12 ">
-	<ul class="nav nav-pills nav-stacked ">
-	  <li role="presentation" class="navbar_about col-md-3"><a href="#Quienes">¿Quienes somos?</a></li>
-	  <li role="presentation" class="navbar_about col-md-3"><a href="#Que ofrecemos">¿Que ofrecemos?</a></li>
-	  <li role="presentation" class="navbar_about col-md-3"><a href="#Contacta con nosotros">Contacta con nosotros</a></li>
-	</ul>
-</div>
-	<a name="Quienes">
-
-	</a>
-<div class="col-mod-12  margen300">
-
-<section class="us heading text-center imagen1">
-
-<div class="heading text-center">
-<!-- Heading -->
-<div>
-    <h2>Equipo Druzi</h2><br>
-    <p class="negrita">El equipo creador y desarrollador de la comunidad Druzi es un equipo joven con ideas innovadoras.
-     <br>El equipo Druzi se compone de personas con diferentes culturas y nacionalidades lo que permite que nuestra propuesta sea plural.</p>
-    </div>
-    
-    <div class="margen2"></div>
-    <ul class="ch-grid">
-    	<li>
-    		<div class="ch-item ch-img-1 marge">
-    			<div class="ch-info">
-    				<h3>Sergio Garcia Alonso</h3>
-    				<p> 								            
-    					<div class="jffooter1">
-    	              		<a title="Sergio on Linkedin" href="https://es.linkedin.com/in/garciaalonsosergio"TARGET="_new">
-    	              			<div class="jfsocial1">&#62232;</div>
-    	              			<a title="Sergio on Twitter" href="https://twitter.com/sgavmp"TARGET="_new"><div class="jfsocial">&#62217;</div>  
-    	              		</a>
-    				</p>
-    			</div>
-    		</div>
-    	</li>
-    	<li>
-    		<div class="ch-item ch-img-2">
-    			<div class="ch-info">
-    				<h3>Vitaliy <br> Burdenyuk</h3>
-    				<p> 								            
-    					<div class="jffooter1">
-    	              		<a title="Vitaliy on Linkedin" href="https://es.linkedin.com/pub/vitaliy-burdenyuk/90/84/3b4"TARGET="_new">
-    	              			<div class="jfsocial1">&#62232;</div>
-    	              			<a title="Vitaliy on Twitter" href="https://twitter.com/VitaliyB87"TARGET="_new"><div class="jfsocial">&#62217;</div>  
-    	              		</a>
-    				</p>
-    			</div>
-    		</div>
-    	</li>
-    	<li>
-    		<div class="ch-item ch-img-3">
-    			<div class="ch-info">
-    				<h3>Pamela Vega Rodriguez</h3>
-    				<p> 								            
-    					<div class="jffooter1">
-    				    	<a title="Pamela on Twitter" href="https://twitter.com/pamevega"TARGET="_new">
-    				    		<div class="jfsocial">&#62217;</div>  
-    				    	</a>
-    				</p>
-    			</div>
-    		</div>
-    	</li>
-    	<li>
-    		<div class="ch-item ch-img-4">
-    			<div class="ch-info">
-    				<h3>Miguel Lumeras Gutierrez</h3>
-    				<p> 								            
-    					<div class="jffooter1">
-    				        <a title="Miguel on Linkedin" href="https://es.linkedin.com/pub/miguel-lumeras/ab/17/6a5"TARGET="_new">
-    				        	<div class="jfsocial1">&#62232;</div>
-    				        	<a title="Miguel on Twitter" href="https://twitter.com/m_lumeras"TARGET="_new"><div class="jfsocial">&#62217;</div>  
-    				</p>
-    			</div>
-    		</div>
-    	</li>
-    </ul>
-
-</section>
-
-<a name="Que ofrecemos"></a>
-<section class="imagen2">
-    <div class="row">
+    <div class="col-mod-12">
+    <a name="top"></a>
+    <a name="Quienes"></a>
+    <section class="us imagen1">
         <div class="text-center">
-		    <div class="container">
-		        <div class="heading text-center">
-                <!-- Heading -->
-                <h2 class="margen301">¿Qué propone Druzi?</h2><br>
-                <p class="negrita">Druzi es una comunidad que nace de la necesidad de disfrutar del tiempo libre para personas que se encuentran fuera de su área o circulo de amistades.
-                 <br>De esta manera Druzi te propone la oportunidad de conectarte con gente  mediante planes de ocio en los que uno puede ...</p>
-             	</div>
+            <!-- Heading -->
+            <div class="container">
+                <h2 class="margen301">Equipo Druzi</h2><br>
+
+                <p class="negrita">El equipo creador y desarrollador de la comunidad Druzi es un equipo joven con
+                    ideas innovadoras.
+                    <br>El equipo Druzi se compone de personas con diferentes culturas y nacionalidades lo que
+                    permite que nuestra propuesta sea plural.</p>
             </div>
-            <div class="row animatedParent">
-                <div class="col-xs-6 col-sm-3 col-md-3">
-                    <div class="service-box">
-					    <div class="service-icon">
-                            <img src="/static/webapp/images/register.png">
-					    </div>
-					<div class="service-desc">
-						<h5>Suscribirse</h5>
-					</div>
-                    <div class="divider-header"></div>
-                        <p>Los usuarios podrán suscribirse en actividades de su interés, mediante una cuenta de google, discuss, twitter o facebook.</p>
+
+            <div class="margen2"></div>
+            <ul class="ch-grid">
+                <li>
+                    <div class="ch-item ch-img-1 marge">
+                        <div class="ch-info">
+                            <h3>Sergio Garcia Alonso</h3>
+
+                            <p>
+
+                            <div class="jffooter1">
+                                <a title="Sergio on Linkedin" href="https://es.linkedin.com/in/garciaalonsosergio"
+                                   TARGET="_new">
+                                    <div class="jfsocial1">&#62232;</div>
+                                </a>
+                                <a title="Sergio on Twitter" href="https://twitter.com/sgavmp" TARGET="_new">
+                                    <div class="jfsocial">&#62217;</div>
+                                </a>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="ch-item ch-img-2">
+                        <div class="ch-info">
+                            <h3>Vitaliy <br> Burdenyuk</h3>
+
+                            <p>
+
+                            <div class="jffooter1">
+                                <a title="Vitaliy on Linkedin"
+                                   href="https://es.linkedin.com/pub/vitaliy-burdenyuk/90/84/3b4" TARGET="_new">
+                                    <div class="jfsocial1">&#62232;</div>
+                                </a>
+                                <a title="Vitaliy on Twitter" href="https://twitter.com/VitaliyB87"
+                                   TARGET="_new">
+                                    <div class="jfsocial">&#62217;</div>
+                                </a>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="ch-item ch-img-3">
+                        <div class="ch-info">
+                            <h3>Pamela Vega Rodriguez</h3>
+
+                            <p>
+
+                            <div class="jffooter1">
+                                < title="Pamela on Twitter" href="https://twitter.com/pamevega" TARGET="_new">
+                                <div class="jfsocial">&#62217;</div>
+                                </a>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="ch-item ch-img-4">
+                        <div class="ch-info">
+                            <h3>Miguel Lumeras Gutierrez</h3>
+
+                            <p>
+
+                            <div class="jffooter1">
+                                <a title="Miguel on Linkedin"
+                                   href="https://es.linkedin.com/pub/miguel-lumeras/ab/17/6a5" TARGET="_new">
+                                    <div class="jfsocial1">&#62232;</div>
+                                </a>
+                                <a title="Miguel on Twitter" href="https://twitter.com/m_lumeras" TARGET="_new">
+                                    <div class="jfsocial">&#62217;</div>
+                                </a>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <a name="Que ofrecemos"></a>
+    <section class="imagen2">
+        <div class="text-center">
+            <div class="container">
+                <div class="text-center">
+                    <!-- Heading -->
+                    <h2 class="margen301">¿Qué propone Druzi?</h2><br>
+
+                    <p class="negrita">Druzi es una comunidad que nace de la necesidad de disfrutar del tiempo
+                        libre para personas que se encuentran fuera de su área o circulo de amistades.
+                        <br>De esta manera Druzi te propone la oportunidad de conectarte con gente mediante
+                        planes de ocio en los que uno puede ...</p>
+                </div>
+                <div class="animatedParent margen2">
+                    <div class="col-xs-6 col-sm-3 col-md-3">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <img src="/static/webapp/images/register.png">
+                            </div>
+                            <div class="service-desc">
+                                <h5>Suscribirse</h5>
+                            </div>
+                            <div class="divider-header"></div>
+                            <p>Los usuarios podrán suscribirse en actividades de su interés, mediante una cuenta de
+                                google, discuss, twitter o facebook.</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 min-height">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <img src="/static/webapp/images/airplane.png">
+                            </div>
+                            <div class="service-desc">
+                                <h5>Crear</h5>
+                            </div>
+                            <div class="divider-header">
+                                <p>Los usuarios podrán crear actividades y ganar popularidad en la comunidad.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <img src="/static/webapp/images/share.png">
+                            </div>
+                            <div class="service-desc">
+                                <h5>Compartir</h5>
+                            </div>
+                            <div class="divider-header">
+                                <p>Los usuarios podrán compartir las actividades creadas o en las que participen en
+                                    sus redes sociales.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <img class="img-rounded" src="/static/webapp/images/heart.png">
+                            </div>
+                            <div class="service-desc">
+                                <h5>Valorar</h5>
+                            </div>
+                            <div class="divider-header">
+                                <p>Los usuarios podrán valorar y comentar las actividades en las que hayan
+                                    participado.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-			<div class="col-xs-6 col-sm-3 col-md-3 min-height">
-                <div class="service-box">
-					<div class="service-icon">
-						<img src="/static/webapp/images/airplane.png">
-					</div>
-					<div class="service-desc">
-						<h5>Crear</h5>
-					</div>
-                    <div class="divider-header">
-                        <p>Los usuarios podrán crear actividades y ganar popularidad en la comunidad.</p>
-                    </div>
-                </div>
-            </div>
-			<div class="col-xs-6 col-sm-3 col-md-3">
-                <div class="service-box">
-					<div class="service-icon">
-						<img src="/static/webapp/images/share.png">
-					</div>
-					<div class="service-desc">
-						<h5>Compartir</h5>
-					</div>
-                    <div class="divider-header">
-                        <p>Los usuarios podrán compartir las actividades creadas o en las que participen en sus redes sociales.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-3 col-md-3">
-                <div class="service-box">
-					<div class="service-icon">
-						<img class="img-rounded" src="/static/webapp/images/heart.png">
-					</div>
-					<div class="service-desc">
-						<h5>Valorar</h5>
-					</div>
-                    <div class="divider-header">
-                        <p>Los usuarios podrán valorar y comentar las actividades en las que hayan participado.</p>
-                    </div>
-                </div>
-            </div>
-            </div>
             </div>
         </div>
-    </div>
-</div>
-</setion>
+    </section>
 
-<a name="Contacta con nosotros"></a>
-<section class="imagen3">
-    <div class="row">
+    <a name="Contacta con nosotros"></a>
+    <section class="imagen3">
         <div class="text-center">
-		    <div class="container">
-		        <div class="heading text-center">
-                <!-- Heading -->
-                <h2 class="margen301">Contacta con nosotros</h2><br>
-<body>
-    <div class="col-md-8 col-md-offset-2">           
-        <form role="form" method="post">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons submit='Enviar' reset="Reset"%}{% endbuttons %}
-        </form>
-    </div>
-</body>
-</section>
+            <div class="container">
+                <div class="text-center">
+                    <!-- Heading -->
+                    <h2 class="margen301">Contacta con nosotros</h2><br>
 
+                    <div class="col-md-8 col-md-offset-2">
+                        <form role="form" method="post">
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            {% buttons submit='Enviar' reset="Reset" %}{% endbuttons %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
 
-				
+{% block custom_js %}
+    <script type="text/javascript" src="{% static 'webapp/js/modernizr.custom.79639.js' %}"></script>
 {% endblock %}
