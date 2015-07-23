@@ -19,7 +19,7 @@
             <form method="post" role="search" action="{% url 'search' %}">
                 {% csrf_token %}
                 <div class="form-group">
-                    <input class="form-control" name="query" data-role="tagsinput" type="text"
+                    <input id="search-main" class="typeahead form-control" name="query" data-role="tagsinput" type="text"
                            placeholder="Busca planes por palabras clave separadas por comas...">
                 </div>
                 <button class="btn btn-lg btn-primary center-block" type="submit">Buscar</button>
