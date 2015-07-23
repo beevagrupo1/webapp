@@ -7,6 +7,7 @@
 
 {% block custom_css %}
     <link href="{% static 'webapp/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'webapp/css/stylex.css' %}" rel="stylesheet">
 
         <link rel="shortcut icon" href="../favicon.ico"> 
 
@@ -167,24 +168,22 @@
             </div>
         </div>
     </div>
-
-<a name="Contacta con nosotros"></a>
-    <div class="row">
-        <div class="text-center">
-		    <div class="container">
-		        <div class="heading text-center">
-                <!-- Heading -->
-                <h2 class="margen301">Contacta con nosotros</h2><br>
-<body>
-    <div class="col-md-8 col-md-offset-2">           
-        <form role="form" method="post">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons submit='Enviar' reset="Reset"%}{% endbuttons %}
-        </form>
-    </div>
-</body>
-
+<div class="row contact_us col-md-16">
+	<a name="Contacta con nosotros"></a>
+	    <div class="row">
+	        <div class="text-center">
+			    <div class="container">
+			        <div class="heading text-center">
+	                <!-- Heading -->
+	                <h2 class="margen301">Contacta con nosotros</h2><br>
+	    <div class="col-md-8 col-md-offset-2">           
+	        <form role="form" method="post">
+	            {% csrf_token %}
+	            {% bootstrap_form form %}
+	            {% buttons submit='Enviar' reset="Reset"%}{% endbuttons %}
+	        </form>
+    	</div>
+</div>
 
 
 				

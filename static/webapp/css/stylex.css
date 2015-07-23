@@ -1,5 +1,5 @@
 body {
-    padding-top: 70px;
+    padding-top: 0px;
 }
 
 .starter-template {
@@ -159,7 +159,10 @@ html {
     *overflow-x: hidden;
 }
 
-
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+}
 
 .tt-menu,
 .gist {
@@ -777,7 +780,7 @@ min-height: 300px;
 
 .contact_us{
     background-image: url(../images/contact_us.jpg);
-    background-size: 100%;
    background-repeat: no-repeat;
    background-attachment: fixed;
+   : inherit;
 }
