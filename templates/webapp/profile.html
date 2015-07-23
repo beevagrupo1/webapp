@@ -54,7 +54,7 @@
                         <ul class="pager">
                             {% if activity_list.has_previous %}
                                 <li class="previous"><a
-                                        href="{% url url activity_list.previous_page_number %}"><span
+                                        href="{% url url user_profile.username activity_list.previous_page_number %}"><span
                                         aria-hidden="true">&larr;</span>
                                     Anteriores</a></li>
                             {% endif %}
@@ -62,7 +62,7 @@
                                 <span aria-hidden="true">Pagina {{ activity_list.number }} de {{ activity_list.paginator.num_pages }}</span>
                             </li>
                             {% if activity_list.has_next %}
-                                <li class="next"><a href="{% url url activity_list.next_page_number %}">Siguientes
+                                <li class="next"><a href="{% url url user_profile.username activity_list.next_page_number %}">Siguientes
                                     <span aria-hidden="true">&rarr;</span></a></li>
                             {% endif %}
                         </ul>

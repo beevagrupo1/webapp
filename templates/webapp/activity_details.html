@@ -140,7 +140,7 @@
                 <div class="input-group input-primary">
                     <span class="input-group-addon" id="basic-addon1">Precio</span>
                     <input type="text" class="form-control" disabled placeholder="Username"
-                           aria-describedby="basic-addon1" value="{{ activity.price }}">
+                           aria-describedby="basic-addon1" value="{% if activity.price == 0.0 %}Gratis {% else %} {{ activity.price }} €{% endif %}">
                     <span class="input-group-addon" id="basic-addon1">€</span>
                 </div>
             </div>
@@ -149,7 +149,7 @@
                 <div class="input-group input-primary">
                     <span class="input-group-addon" id="basic-addon1">Nº max.</span>
                     <input type="text" class="form-control" disabled placeholder="Username"
-                           aria-describedby="basic-addon1" value="{{ activity.limit_participants }}">
+                           aria-describedby="basic-addon1" value="{% if activity.limit_participants == 0 %}Sin limite{% else %}{{ activity.limit_participants }}{% endif %}">
                     <span class="input-group-addon" id="basic-addon1">P</span>
                 </div>
             </div>
@@ -180,7 +180,7 @@
                         </div>
                         <div class="panel-body">
                             {% for userP in activity.participants.all %}
-                                <a title="{{ userP.username }}" onclick="return false;">
+                                <a title="{{ userP.username }}" href="{% url 'profile' userP.username %}">
                                     <img src="{% gravatar_url userP.email %}" alt="{{ userP.username }}">
                                 </a>
                             {% endfor %}
